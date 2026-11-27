@@ -10,6 +10,7 @@ module
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.InnerProductSpace.Basic
 public import Mathlib.Data.Matrix.Mul
 public import Mathlib.Data.Fin.VecNotation
 public import Mathlib.Data.Nat.Factorial.Basic
