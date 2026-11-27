@@ -4,7 +4,7 @@
 
 set shell := ["bash", "-euo", "pipefail", "-c"]
 
-# Build and verify all 10 Lean 4.35.0 theorems + Palomar bridge + 572-theorem axiom audit
+# Build and verify all 10 Lean 4.35.0 theorems + Palomar bridge + 568-theorem axiom audit
 lean-verify:
     cd lean && lake exe cache get && lake build SpectralEclipse Challenge Solution VerifyAxioms
     cd lean && lake env lean VerifyAxioms.lean

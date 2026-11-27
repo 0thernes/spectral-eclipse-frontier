@@ -77,5 +77,4 @@ warning: batteries: repository has local changes:
 'SpectralEclipse.ComparatorTarget.target_theorem_10b_ese_ete_duality' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
-ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 572 theorems across SpectralEclipse — 0 disallowed axioms.
-
+ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 568 theorems across SpectralEclipse — 0 disallowed axioms.

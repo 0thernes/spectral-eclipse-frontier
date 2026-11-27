@@ -13,7 +13,7 @@ This project makes **no speed, latency, or SOTA runtime performance claims** (`r
 | Stage | Command | Observed Duration | Notes |
 | :--- | :--- | :---: | :--- |
 | Lean full build (cached Mathlib) | `cd lean && lake build SpectralEclipse Challenge Solution VerifyAxioms` | ~140 s | `Critical9x9Certs.lean` (~60 s) + `Critical9x9.lean` (~41 s) + `VerifyAxioms.lean` (~36 s) |
-| Lean axiom audit (572 theorems) | `cd lean && lake env lean VerifyAxioms.lean` | ~18 s | Audits all 49 explicit `#print axioms` + 572 `Lean.collectAxioms` constants |
+| Lean axiom audit (568 theorems) | `cd lean && lake env lean VerifyAxioms.lean` | ~18 s | Audits all 49 explicit `#print axioms` + 568 `Lean.collectAxioms` constants |
 | Lean negative tests (3 cases) | `python scripts/test_lean_negative.py` | ~15 s | Confirms kernel rejection of mutated thresholds |
 | Python pytest ladder (15 tests) | `python -m pytest -v tests/` | 2.9–3.1 s | Includes 1,000-case Hypothesis metamorphic suite |
 | B13 mutation audit (10 mutants) | `python scripts/mutation_audit.py` | ~42 s | Isolated sandbox copy; 10/10 mutants killed (100.0%) |

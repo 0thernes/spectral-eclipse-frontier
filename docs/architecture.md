@@ -7,7 +7,7 @@ The **Spectral Eclipse Frontier** repository is organized into six cleanly separ
 ```mermaid
 flowchart TD
     A["Isolated Mathlib-Only Spec\nlean/Challenge.lean (12 Targets)"] --> B["Six-Checker Palomar Replay\nlake comparator --paranoid"]
-    C["Lean 4.35.0 Proof Library\nlean/SpectralEclipse/ (12 modules, 572 thms)"] --> D["Sorry-Free Bridge\nlean/Solution.lean"]
+    C["Lean 4.35.0 Proof Library\nlean/SpectralEclipse/ (12 modules, 568 thms)"] --> D["Sorry-Free Bridge\nlean/Solution.lean"]
     D --> B
     C --> E["Exhaustive Axiom Audit\nlean/VerifyAxioms.lean"]
     F["Exact Ground-Truth Oracle\nreference/exact_oracle.py (SymPy Sturm + mp80)"] --> G["8-Engine Cross-Parity\nscripts/run_polyglot_parity.py"]

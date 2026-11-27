@@ -2,7 +2,7 @@
 # Project manifest for Build Standard for LLMs v1.2.0.
 standard: "1.2.0"
 name: "spectral-eclipse-frontier"
-description: "Complete Lean 4.35.0 formal proof (572 audited theorems, 6-checker Palomar comparator, 0 sorry), 8-engine polyglot/quantum cross-verification (AVX2 ASM, C11, C++20, Rust, Zig Q, Eshkol AD, Moonlab 32-dim WASM, QGTL/QRNG), pre-registered QRNG disorder study, and AMS-LaTeX preprint resolving Conjecture 4.1 (arXiv:2507.18767v1) and establishing sharp even/odd rupture thresholds (N=8, N=11 at M*=12), Critical 9x9 No-ESE, universal 3R+2 phase transition, non-symmetric complex J_{a,b}, and QGTL/Mandelstam-Tamm speed limits."
+description: "Complete Lean 4.35.0 formal proof (568 audited theorems, 6-checker Palomar comparator, 0 sorry), 8-engine polyglot/quantum cross-verification (AVX2 ASM, C11, C++20, Rust, Zig Q, Eshkol AD, Moonlab 32-dim WASM, QGTL/QRNG), pre-registered QRNG disorder study, and AMS-LaTeX preprint resolving Conjecture 4.1 (arXiv:2507.18767v1) and establishing sharp even/odd rupture thresholds (N=8, N=11 at M*=12), Critical 9x9 No-ESE, universal 3R+2 phase transition, non-symmetric complex J_{a,b}, and QGTL/Mandelstam-Tamm speed limits."
 owner: "Alexander S. Donahue (0thernes)"
 year: "2026"
 project_type: research
@@ -91,7 +91,7 @@ items:
   B19: {status: done, evidence: "Deterministic parallel Rayon scan in engines/rust with zero shared mutable state"}
   B20: {status: done, evidence: "Genuine float64 cancellation hazard near t=pi discovered, guarded, regression-tested, and documented"}
   B21: {status: done, evidence: "Vendored offline-reproducible third_party sources + Eshkol automatic Python dual-number fallback"}
-  B22: {status: done, evidence: "Lean 4.35.0 formalization (572 theorems, 12 isolated comparator targets, 6-checker lake comparator --paranoid)"}
+  B22: {status: done, evidence: "Lean 4.35.0 formalization (568 theorems, 12 isolated comparator targets, 6-checker lake comparator --paranoid)"}
   B23: {status: n/a, note: "Deductive Lean 4 real-analysis theorem proving rather than finite-state model checking"}
   B24: {status: done, evidence: "Proofs written directly in Lean 4.35.0 dependent type theory"}
   B25: {status: done, evidence: "CBMC bounded model checking harness engines/c/cbmc_harness.c + AVX2 assembly parity against scalar C11/Zig/mpmath"}

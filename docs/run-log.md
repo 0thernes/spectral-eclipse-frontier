@@ -13,7 +13,7 @@ Chronological log of verified local and CI execution runs for `spectral-eclipse-
 - **Output (`results/lean-axioms-all.log`):**
   - **0 errors, 0 warnings, 0 `sorry`, 0 `admit`, 0 custom `axiom`, 0 `native_decide`**.
   - **49 explicit `#print axioms` declarations** strictly within `[propext, Classical.choice, Quot.sound]`.
-  - **Exhaustive `Lean.collectAxioms` sentinel:** `ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 572 theorems across SpectralEclipse — 0 disallowed axioms.`
+  - **Exhaustive `Lean.collectAxioms` sentinel:** `ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 568 theorems across SpectralEclipse — 0 disallowed axioms.`
 - **Negative Kernel Elaboration Gate (`python scripts/test_lean_negative.py`):**
   - `mutated_11x11_threshold_m5` -> REJECTED by kernel (`PASS`)
   - `mutated_4x4_false_p3` -> REJECTED by kernel (`PASS`)
@@ -42,7 +42,7 @@ Chronological log of verified local and CI execution runs for `spectral-eclipse-
 - **Figures (`python scripts/generate_figures.py`):** Generated 5 Okabe–Ito vector PDF figures + 1280×640 social preview; all 14 manuscript pages visually inspected as rendered PNGs.
 - **Tectonic AMS-LaTeX (`cd paper && tectonic -X compile main.tex --print`):** **14 pages, 0 errors, 0 Overfull `\hbox`, 0 warnings**; frozen to `dist/Donahue_2026_spectral_eclipse_frontier.pdf`.
 - **arXiv Package (`python scripts/package_arxiv.py`):** Clean-room unpacked & compile-verified `dist/arxiv_submission.tar.gz` (8 files).
-- **Axiom Sync (`python scripts/check_readme_axioms.py --require-exhaustive`):** **PASS** (49 declarations + 572 exhaustive audit + 29 README verbatim matches).
+- **Axiom Sync (`python scripts/check_readme_axioms.py --require-exhaustive`):** **PASS** (49 declarations + 568 exhaustive audit + 29 README verbatim matches).
 - **Blueprint & Pages (`python scripts/build_blueprint.py && python scripts/build_site.py`):** **PASS** (`build/site/`).
 - **SHA-256 Manifest & Dual Timestamps (`generate_manifest.py` + `stamp_timestamps.py`):** Verified LF-only manifest cryptographically bound by DigiCert RFC 3161 `.tsr` and multi-calendar Bitcoin OpenTimestamps `.ots`.
 

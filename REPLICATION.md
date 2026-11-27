@@ -25,7 +25,7 @@ python scripts/check_readme_axioms.py --require-exhaustive
 ```
 
 Expected sentinel:
-`ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 572 theorems across SpectralEclipse — 0 disallowed axioms.`
+`ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 568 theorems across SpectralEclipse — 0 disallowed axioms.`
 
 ## Step 2: Python Verification Ladder & B13 Mutation Audit
 
@@ -85,7 +85,7 @@ python scripts/stamp_timestamps.py --verify
 
 | Date | Operator / Environment | Scope | Outcome |
 |---|---|---|---|
-| 2026-11-27 | Author (A. S. Donahue) — Local Windows 11 x86-64 clean-room run | Lean 4.35.0 (572 audited theorems, 0 sorry), 8/8 polyglot engines (0 mismatches), 15/15 pytest, 10/10 mutation kill, clean-room arXiv tarball | PASS (internal) |
+| 2026-11-27 | Author (A. S. Donahue) — Local Windows 11 x86-64 clean-room run | Lean 4.35.0 (568 audited theorems, 0 sorry), 8/8 polyglot engines (0 mismatches), 15/15 pytest, 10/10 mutation kill, clean-room arXiv tarball | PASS (internal) |
 | 2026-11-27 | Hosted GitHub Actions CI (`ubuntu-latest`, `windows-latest`, `macos-latest`, `ubuntu-24.04`) | 3-OS Python/Hypothesis/manifest/timestamp matrix + Ubuntu native C11/ASan/C++20/Rust/Moonlab/QGTL + 6-checker `lake comparator --paranoid` | PASS (hosted CI) |
 
 - **Independent Outside Human Operator Replication (`B44`):** **OPEN** (`0` independent external human operators have filed a replication report yet; issue reports or replication confirmations are welcomed via GitHub Issues; `repo.yaml` retains `B44: partial` until an external human operator logs an independent run).

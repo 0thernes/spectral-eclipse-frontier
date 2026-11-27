@@ -21,4 +21,4 @@ This document maps every mathematical theorem stated in `paper/main.tex` to its 
 
 ## Axiom Verification Summary
 
-All 49 explicit `#print axioms` declarations and all **572** theorem constants discovered by the `Lean.collectAxioms` metaprogram in `lean/VerifyAxioms.lean` depend strictly on `[propext, Classical.choice, Quot.sound]` with **0 disallowed axioms** and **0 `sorry`**.
+All 49 explicit `#print axioms` declarations and all **568** theorem constants discovered by the `Lean.collectAxioms` metaprogram in `lean/VerifyAxioms.lean` depend strictly on `[propext, Classical.choice, Quot.sound]` with **0 disallowed axioms** and **0 `sorry`**.

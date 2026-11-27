@@ -1,6 +1,6 @@
 # The Spectral Eclipse Frontier
 
-[![Lean 4.35.0](https://img.shields.io/badge/Lean-4.35.0%20(572%20theorems%2C%200%20sorry)-2563EB?style=flat-square)](lean/VerifyAxioms.lean)
+[![Lean 4.35.0](https://img.shields.io/badge/Lean-4.35.0%20(568%20theorems%2C%200%20sorry)-2563EB?style=flat-square)](lean/VerifyAxioms.lean)
 [![6-Checker Palomar](https://img.shields.io/badge/Palomar%20Comparator-6%20Checkers%20(12%20Targets)-059669?style=flat-square)](lean/comparator.json)
 [![8 Polyglot Engines](https://img.shields.io/badge/Polyglot%20%26%20Quantum-8%20Engines%20(0%20Mismatches)-7C3AED?style=flat-square)](results/polyglot_parity.json)
 [![Code License: Apache-2.0](https://img.shields.io/badge/Code-Apache--2.0-blue?style=flat-square)](LICENSE)
@@ -42,7 +42,7 @@ This repository establishes a complete, machine-checked ten-theorem theory of **
 ## Quickstart
 
 ```bash
-# 1. Verify all 10 Lean 4.35.0 theorems, Palomar Challenge/Solution bridge, and 572-theorem axiom audit
+# 1. Verify all 10 Lean 4.35.0 theorems, Palomar Challenge/Solution bridge, and 568-theorem axiom audit
 cd lean && lake exe cache get && lake build SpectralEclipse Challenge Solution VerifyAxioms
 lake env lean VerifyAxioms.lean
 cd ..
@@ -125,7 +125,7 @@ Verified automatically against CI and committed logs by `python scripts/check_re
 'SpectralEclipse.ComparatorTarget.target_theorem_9_nonsymmetric_family' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SpectralEclipse.ComparatorTarget.target_theorem_10a_qsl_and_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SpectralEclipse.ComparatorTarget.target_theorem_10b_ese_ete_duality' depends on axioms: [propext, Classical.choice, Quot.sound]
-ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 572 theorems across SpectralEclipse — 0 disallowed axioms.
+ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 568 theorems across SpectralEclipse — 0 disallowed axioms.
 ```
 
 ---

@@ -2,7 +2,7 @@
 
 ## 1. Formal Proof Boundary vs. Computational & Empirical Scope
 
-- **Machine-Checked in Lean 4.35.0 (`[LEAN-6K]`):** Theorems 1–10 (all 12 isolated targets in `lean/Challenge.lean`, 15 non-vacuity witnesses, and 5 adversarial refutations; 572 audited theorem constants strictly within `[propext, Classical.choice, Quot.sound]`).
+- **Machine-Checked in Lean 4.35.0 (`[LEAN-6K]`):** Theorems 1–10 (all 12 isolated targets in `lean/Challenge.lean`, 15 non-vacuity witnesses, and 5 adversarial refutations; 568 audited theorem constants strictly within `[propext, Classical.choice, Quot.sound]`).
 - **Exact Computational (`[EXACT-COMP]`):** Finite-$M$ critical rupture thresholds for higher Krawtchouk cores $R=4$ ($N=14, M^*=30$) and $R=5$ ($N=17, M^*=78$) are verified by multi-core Rust, C++20, and SymPy rather than Lean 4 kernel certificates.
 - **Empirical (`[EMPIRICAL]`):** The 4-arm QRNG static-disorder robustness study (`PREREGISTRATION.md`, `results/qgtl_qrng_analysis.json`) is a finite-sample ($K=30$ paired seeds per arm) empirical simulation under uniform static diagonal disorder $\varepsilon \in [0, 0.10]$. It does not prove analytical disorder thresholds for arbitrary noise models (e.g., off-diagonal coupling jitter or time-dependent dephasing).
 

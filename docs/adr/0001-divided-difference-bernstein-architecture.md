@@ -16,5 +16,5 @@ Proving the Critical $9\times 9$ No-ESE Theorem (Theorem 6), Conjecture 4.1 for 
 
 ## Consequences
 
-- **Positive:** Every single theorem (572 audited declarations) compiles strictly within `[propext, Classical.choice, Quot.sound]` and replays cleanly across all 6 independent Lean 4.35.0 proof checkers in `lake comparator --paranoid`.
+- **Positive:** Every single theorem (568 audited declarations) compiles strictly within `[propext, Classical.choice, Quot.sound]` and replays cleanly across all 6 independent Lean 4.35.0 proof checkers in `lake comparator --paranoid`.
 - **Trade-off:** Constructing explicit rational certificates took substantial upfront algebraic factoring and sub-box splitting (e.g., splitting boxes `Z1, Z2, Z3a, Z5` in `Critical9x9.lean`), which is permanently preserved as fast, auditable kernel code.

@@ -27,7 +27,7 @@ Every quantitative and mathematical claim in `spectral-eclipse-frontier` carries
 
 ## 3. Quality Assurance Gates
 
-1. **Axiom Audit:** `lean/VerifyAxioms.lean` checks 49 explicit declarations + exhaustive `Lean.collectAxioms` across all **572 theorems** in `SpectralEclipse` (`0` disallowed axioms). Verified verbatim against `README.md` by `scripts/check_readme_axioms.py --require-exhaustive`.
+1. **Axiom Audit:** `lean/VerifyAxioms.lean` checks 49 explicit declarations + exhaustive `Lean.collectAxioms` across all **568 theorems** in `SpectralEclipse` (`0` disallowed axioms). Verified verbatim against `README.md` by `scripts/check_readme_axioms.py --require-exhaustive`.
 2. **Negative Kernel Tests:** `scripts/test_lean_negative.py` verifies live that the Lean 4.35.0 kernel rejects 3 mutated false theorems (`3/3 PASS`).
 3. **Mutation Audit (`B13`):** `scripts/mutation_audit.py` injects 10 single-point source faults into an isolated copy of `python/spectral_eclipse/core.py` and runs `pytest`: **10/10 killed (`100.0%` kill rate, `0` survived)**.
 4. **Property-Based & Metamorphic Tests (`B10`, `B14`):** 1,000-case Hypothesis suite in `tests/test_all.py` checking spectral shift & positive rescaling invariance of ESE, plus B20 cancellation guards.
