@@ -37,14 +37,15 @@ def jacobiMatrix {n : ℕ} (a b : Fin n → ℝ) : Matrix (Fin n) (Fin n) ℝ :=
 def IsPersymmetricJacobi {n : ℕ} (a b : Fin n → ℝ) : Prop :=
   (∀ i : Fin n, a (Fin.rev i) = a i) ∧
   (∀ i : Fin n, (hi : (i : ℕ) + 1 < n) →
-    b ⟨n - 2 - (i : ℕ), by omega⟩ = b i)
+    b ⟨n - 2 - (i : ℕ),
+      Nat.lt_of_le_of_lt (Nat.sub_le (n - 2) (i : ℕ))
+        (Nat.sub_lt (Nat.lt_trans (Nat.zero_lt_succ (i : ℕ)) hi) Nat.zero_lt_two)⟩ = b i)
 
 /-- Spectral state vector `ψ(t) = ∑_k (u_k 0) e^{-i λ_k t} u_k ∈ ℂ^n`. -/
 noncomputable def spectralState {n : ℕ} (lam : Fin n → ℝ) (u : Fin n → Fin n → ℝ)
     (t : ℝ) : Fin n → ℂ :=
   fun j => ∑ k : Fin n,
-    ((u k ⟨0, Nat.pos_of_ne_zero (by
-        intro h0; subst h0; exact Fin.elim0 j)⟩ : ℝ) : ℂ) *
+    ((u k ⟨0, Nat.lt_of_le_of_lt (Nat.zero_le (j : ℕ)) j.isLt⟩ : ℝ) : ℂ) *
       Complex.exp (-Complex.I * (lam k : ℂ) * (t : ℂ)) * (u k j : ℂ)
 
 /-- Return amplitude `⟨e^{-iJt} e_0, e_0⟩ = ∑_k w_k e^{-i λ_k t}` in `ℂ`. -/
@@ -246,9 +247,10 @@ theorem target_theorem_9_nonsymmetric_family {a k : ℕ} (ha_odd : Odd a) (ha_nd
 theorem target_theorem_10a_qsl_and_variance :
     (∀ {n : ℕ} (hn : 2 ≤ n) (a b : Fin n → ℝ),
       ∑ i : Fin n,
-        ((jacobiMatrix a b) i ⟨0, by omega⟩ -
-          (if i = ⟨0, by omega⟩ then a ⟨0, by omega⟩ else 0)) ^ 2 =
-        (b ⟨0, by omega⟩) ^ 2) ∧
+        ((jacobiMatrix a b) i ⟨0, Nat.lt_of_lt_of_le Nat.zero_lt_two hn⟩ -
+          (if i = ⟨0, Nat.lt_of_lt_of_le Nat.zero_lt_two hn⟩ then
+            a ⟨0, Nat.lt_of_lt_of_le Nat.zero_lt_two hn⟩ else 0)) ^ 2 =
+        (b ⟨0, Nat.lt_of_lt_of_le Nat.zero_lt_two hn⟩) ^ 2) ∧
     (∀ {n : ℕ} (lam w : Fin n → ℝ) (μ σ τ : ℝ),
       (∀ k, 0 ≤ w k) → (∑ k : Fin n, w k = 1) →
       (∑ k : Fin n, w k * lam k = μ) →
