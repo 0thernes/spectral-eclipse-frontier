@@ -21,7 +21,8 @@
         "Mia Gabriella Escobar",
         "Valentin Garcia",
         "Anastasiia Minenkova"
-      ]
+      ],
+      "title_overlap": 1.0
     },
     {
       "key": "christandl2004",
@@ -40,7 +41,8 @@
         "Datta, Nilanjana",
         "Ekert, Artur",
         "Landahl, Andrew J."
-      ]
+      ],
+      "title_overlap": 1.0
     },
     {
       "key": "christandl2005",
@@ -61,7 +63,8 @@
         "Ekert, Artur",
         "Kay, Alastair",
         "Landahl, Andrew J."
-      ]
+      ],
+      "title_overlap": 1.0
     },
     {
       "key": "kay2010",
@@ -77,7 +80,8 @@
       "api_title": "PERFECT, EFFICIENT, STATE TRANSFER AND ITS APPLICATION AS A CONSTRUCTIVE TOOL",
       "api_authors": [
         "KAY, ALASTAIR"
-      ]
+      ],
+      "title_overlap": 1.0
     },
     {
       "key": "vinet2012",
@@ -94,7 +98,8 @@
       "api_authors": [
         "Vinet, Luc",
         "Zhedanov, Alexei"
-      ]
+      ],
+      "title_overlap": 1.0
     },
     {
       "key": "godsil2012",
@@ -110,7 +115,8 @@
       "api_title": "State transfer on graphs",
       "api_authors": [
         "Godsil, Chris"
-      ]
+      ],
+      "title_overlap": 1.0
     },
     {
       "key": "hochstadt1967",
@@ -126,7 +132,8 @@
       "api_title": "On some inverse problems in matrix theory",
       "api_authors": [
         "Hochstadt, Harry"
-      ]
+      ],
+      "title_overlap": 1.0
     },
     {
       "key": "hochstadt1974",
@@ -142,7 +149,8 @@
       "api_title": "On the construction of a Jacobi matrix from spectral data",
       "api_authors": [
         "Hochstadt, Harry"
-      ]
+      ],
+      "title_overlap": 1.0
     },
     {
       "key": "deboor1978",
@@ -159,7 +167,8 @@
       "api_authors": [
         "de Boor, C.",
         "Golub, G.H."
-      ]
+      ],
+      "title_overlap": 1.0
     },
     {
       "key": "fleming1973",
@@ -175,7 +184,8 @@
       "api_title": "A unitarity bound on the evolution of nonstationary states",
       "api_authors": [
         "Fleming, G. N."
-      ]
+      ],
+      "title_overlap": 1.0
     },
     {
       "key": "bhattacharyya1983",
@@ -191,7 +201,8 @@
       "api_title": "Quantum decay and the Mandelstam-Tamm-energy inequality",
       "api_authors": [
         "Bhattacharyya, K"
-      ]
+      ],
+      "title_overlap": 1.0
     },
     {
       "key": "provost1980",
@@ -208,7 +219,8 @@
       "api_authors": [
         "Provost, J. P.",
         "Vallee, G."
-      ]
+      ],
+      "title_overlap": 1.0
     },
     {
       "key": "deffner2017",
@@ -225,7 +237,8 @@
       "api_authors": [
         "Deffner, Sebastian",
         "Campbell, Steve"
-      ]
+      ],
+      "title_overlap": 1.0
     },
     {
       "key": "demoura2021",
@@ -242,7 +255,8 @@
       "api_authors": [
         "Moura, Leonardo de",
         "Ullrich, Sebastian"
-      ]
+      ],
+      "title_overlap": 1.0
     },
     {
       "key": "cliff1993",
@@ -258,7 +272,8 @@
       "api_title": "Dominance statistics: Ordinal analyses to answer ordinal questions.",
       "api_authors": [
         "Cliff, Norman"
-      ]
+      ],
+      "title_overlap": 1.0
     }
   ]
 }

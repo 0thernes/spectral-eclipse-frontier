@@ -116,9 +116,7 @@ async function runSimulation(m, aDiag, bHop, totalTime, steps) {
   // 2. Evolve to t = pi (exact PST to site 4!)
   const resPST = await runSimulation(m, aDiag, bHop, PI, 600);
 
-  // 3. Also test 5-qubit symmetric Krawtchouk chain {0, +-1, +-2}: a = 0, b = (sqrt(4), sqrt(6), sqrt(6), sqrt(4))?
-  // Exact 5x5 Krawtchouk b_k = sqrt((k+1)*(4-k)) / 2? Wait: eigenvalues {-2,-1,0,1,2} => b_k = sqrt((k+1)*(4-k)) / 2:
-  // k=0: sqrt(4)/2 = 1, k=1: sqrt(6)/2, k=2: sqrt(6)/2, k=3: 1! Check frob = 2*(1+1.5+1.5+1) = 10 = 4+1+0+1+4!
+  // 3. 5-qubit symmetric Krawtchouk chain {0, +-1, +-2}: a = 0, b_k = sqrt((k+1)(4-k))/2 = (1, sqrt(3/2), sqrt(3/2), 1)
   const krawA = [0.0, 0.0, 0.0, 0.0, 0.0];
   const krawB = [1.0, Math.sqrt(1.5), Math.sqrt(1.5), 1.0];
   const resKrawMid = await runSimulation(m, krawA, krawB, PI / 3.0, 200);

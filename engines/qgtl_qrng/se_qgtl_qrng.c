@@ -108,44 +108,61 @@ static double return_amp_abs(size_t n, const double *evals, const double *evec0,
 }
 
 /* Pre-registered interior minimum m(J_eps) = min_{t in [0.05*T0, 0.95*T0]} |<e_0|e^{-i J_eps t}|e_0>|
- * via 500-point uniform interior grid + golden-section refinement (matches PREREGISTRATION.md!). */
+ * via 500-point uniform interior grid + golden-section refinement on EVERY local-minimum bracket
+ * (fixes single-bracket boundary trapping at t = 0.95*T0; see DEVIATIONS.md). */
 static double compute_interior_min(size_t n, const double *evals, const double *evec0,
                                    double t0, double *tau_min_out) {
     const int grid = 500;
     const double t_lo = 0.05 * t0;
     const double t_hi = 0.95 * t0;
-    double best_val = 1e9;
-    int best_idx = 0;
+    double vals[501];
     for (int i = 0; i <= grid; ++i) {
         double t = t_lo + (t_hi - t_lo) * (double)i / (double)grid;
-        double v = return_amp_abs(n, evals, evec0, t);
-        if (v < best_val) {
-            best_val = v;
-            best_idx = i;
-        }
+        vals[i] = return_amp_abs(n, evals, evec0, t);
     }
-    double a = t_lo + (t_hi - t_lo) * (double)(best_idx > 0 ? best_idx - 1 : 0) / (double)grid;
-    double b = t_lo + (t_hi - t_lo) * (double)(best_idx < grid ? best_idx + 1 : grid) / (double)grid;
+    double best_val = vals[0];
+    double best_t = t_lo;
+    if (vals[grid] < best_val) {
+        best_val = vals[grid];
+        best_t = t_hi;
+    }
     const double inv_phi = 0.6180339887498949;
-    double c = b - inv_phi * (b - a);
-    double d = a + inv_phi * (b - a);
-    double fc = return_amp_abs(n, evals, evec0, c);
-    double fd = return_amp_abs(n, evals, evec0, d);
-    for (int it = 0; it < 50; ++it) {
-        if (fc < fd) {
-            b = d; d = c; fd = fc;
-            c = b - inv_phi * (b - a);
-            fc = return_amp_abs(n, evals, evec0, c);
+    for (int i = 0; i <= grid; ++i) {
+        int is_local_min = 0;
+        if (i == 0) {
+            is_local_min = (vals[0] <= vals[1]);
+        } else if (i == grid) {
+            is_local_min = (vals[grid] <= vals[grid - 1]);
         } else {
-            a = c; c = d; fc = fd;
-            d = a + inv_phi * (b - a);
-            fd = return_amp_abs(n, evals, evec0, d);
+            is_local_min = (vals[i] <= vals[i - 1] && vals[i] <= vals[i + 1]);
+        }
+        if (!is_local_min) continue;
+        double a = t_lo + (t_hi - t_lo) * (double)(i > 0 ? i - 1 : 0) / (double)grid;
+        double b = t_lo + (t_hi - t_lo) * (double)(i < grid ? i + 1 : grid) / (double)grid;
+        double c = b - inv_phi * (b - a);
+        double d = a + inv_phi * (b - a);
+        double fc = return_amp_abs(n, evals, evec0, c);
+        double fd = return_amp_abs(n, evals, evec0, d);
+        for (int it = 0; it < 50; ++it) {
+            if (fc < fd) {
+                b = d; d = c; fd = fc;
+                c = b - inv_phi * (b - a);
+                fc = return_amp_abs(n, evals, evec0, c);
+            } else {
+                a = c; c = d; fc = fd;
+                d = a + inv_phi * (b - a);
+                fd = return_amp_abs(n, evals, evec0, d);
+            }
+        }
+        double t_opt = 0.5 * (a + b);
+        double v_opt = return_amp_abs(n, evals, evec0, t_opt);
+        if (v_opt < best_val) {
+            best_val = v_opt;
+            best_t = t_opt;
         }
     }
-    double t_opt = 0.5 * (a + b);
-    double v_opt = return_amp_abs(n, evals, evec0, t_opt);
-    if (tau_min_out) *tau_min_out = t_opt;
-    return v_opt;
+    if (tau_min_out) *tau_min_out = best_t;
+    return best_val;
 }
 
 typedef struct {
@@ -171,7 +188,10 @@ static void init_chain_from_spec(ChainSpec *cs, const char *name, size_t n, cons
     cs->b_mean = sum_b / (double)(n - 1);
     cs->b0 = cs->b[0];
     double evals[16], evec0[16];
-    tridiag_ql_c(n, cs->a, cs->b, evals, evec0);
+    if (tridiag_ql_c(n, cs->a, cs->b, evals, evec0) != 0) {
+        fprintf(stderr, "tridiag_ql_c failed while initializing %s\n", name);
+        exit(3);
+    }
     /* Locate FIRST real-amplitude zero crossing tau_1 in (0, pi) for exact QSL efficiency eta! */
     cs->tau_ideal = M_PI;
     double prev_re = 1.0;
@@ -334,6 +354,7 @@ int main(int argc, char **argv) {
                 qrng_ctx *qctx = NULL;
                 if (qrng_init(&qctx, seed_buf, sizeof(seed_buf)) != QRNG_SUCCESS) {
                     fprintf(stderr, "qrng_init failed\n");
+                    fclose(fp);
                     return 13;
                 }
                 double xi[16];
@@ -345,8 +366,12 @@ int main(int argc, char **argv) {
                 double a_t[16], a_c[16], ev_t[16], v0_t[16], ev_c[16], v0_c[16];
                 for (size_t k = 0; k < treat[h].n; ++k) a_t[k] = treat[h].a[k] + eps * treat[h].b_mean * xi[k];
                 for (size_t k = 0; k < ctrl[h].n; ++k)  a_c[k] = ctrl[h].a[k] + eps * ctrl[h].b_mean * xi[k];
-                tridiag_ql_c(treat[h].n, a_t, treat[h].b, ev_t, v0_t);
-                tridiag_ql_c(ctrl[h].n,  a_c, ctrl[h].b,  ev_c, v0_c);
+                if (tridiag_ql_c(treat[h].n, a_t, treat[h].b, ev_t, v0_t) != 0 ||
+                    tridiag_ql_c(ctrl[h].n,  a_c, ctrl[h].b,  ev_c, v0_c) != 0) {
+                    fprintf(stderr, "tridiag_ql_c failed during disorder study\n");
+                    fclose(fp);
+                    return 14;
+                }
                 t_mins[s - 1] = compute_interior_min(treat[h].n, ev_t, v0_t, M_PI, &t_taus[s - 1]);
                 double dummy_tau = 0.0;
                 c_mins[s - 1] = compute_interior_min(ctrl[h].n, ev_c, v0_c, M_PI, &dummy_tau);

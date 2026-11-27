@@ -1,0 +1,11 @@
+# Literature Search Log (Playbook v1.3 Checklist #15)
+
+Recorded search provenance verifying novelty, exact source statement fidelity, and non-duplication for **`spectral-eclipse-frontier` (`v1.1.0`)**. Only queries actually executed are listed; subscription databases not directly queried are explicitly marked **Not Queried**.
+
+| Date (UTC) | Database / Source | Exact Query / Identifier | Outcome & Relevance |
+| :--- | :--- | :--- | :--- |
+| 2026-11-26 | **arXiv API** (`export.arxiv.org`) | `id_list=2507.18767` | Confirmed exact live metadata for **Escobar, Mia Gabriella; Garcia, Valentin; Minenkova, Anastasiia**, *"Early State Exclusion in 7-Qubit Spin Chains"* (`arXiv:2507.18767v1`, `quant-ph`). Verified literal formulation of Conjecture 4.1 (`7 × 7` symmetric PST spin chains). |
+| 2026-11-26 | **arXiv Search** | `"early state exclusion" spin chain` / `Minenkova "early state exclusion"` | Identified the foundational 4-qubit and 5-qubit dichotomies and confirmed no published resolution of Conjecture 4.1 (`7 × 7`), Critical `9 × 9`, sharp `N = 8` / `N = 11` (`M* = 12`) ruptures, universal `3R + 2` phase law, or non-symmetric staggered-field complex ESE family `J_{a,b}`. |
+| 2026-11-27 | **Crossref REST API** (`api.crossref.org`) | Automated lookup of all 14 DOI-bearing references in `paper/refs.bib` via `scripts/check_citations.py --live` | **14/14** DOIs resolved HTTP 200 with title word-overlap verification ($\ge 0.50$) and **0 retractions** (`update-to` & `updated-by` checked). Covering Christandl et al. (2004, 2005), Kay (2010), Vinet–Zhedanov (2012), Godsil (2012), Hochstadt (1967, 1974), de Boor–Golub (1978), Fleming (1973), Bhattacharyya (1983), Provost–Vallee (1980), Deffner–Campbell (2017), de Moura–Ullrich (2021), Cliff (1993). |
+| 2026-11-27 | **Unsolved Problems Mega-Atlas** (`v2.9.0`) | Programmatic scan of `0thernes/unsolved-problems-mega-atlas` (`2,000` catalogued entries) | Confirmed **`0 / 2,000`** Mega-Atlas grand problems retired (`docs/MEGA_ATLAS_CROSSCHECK.md`); adjacent entries `FLD-057` and `QC-038` remain 100% OPEN. |
+| — | **MathSciNet / zbMATH** | **Not directly queried** (subscription paywalls) | Disclosed transparently per Playbook v1.3 §6. Independent human referees with institutional MathSciNet/zbMATH access are invited to flag any omitted prior art via GitHub Issues (tracked in `ERRATA.md`). |

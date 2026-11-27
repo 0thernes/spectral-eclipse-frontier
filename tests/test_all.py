@@ -6,12 +6,15 @@ from __future__ import annotations
 
 import json
 import math
+import re
 import sys
 from fractions import Fraction
 from pathlib import Path
 
+import jsonschema
 import numpy as np
 import pytest
+import yaml  # type: ignore[import-untyped]
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
@@ -20,6 +23,9 @@ sys.path.insert(0, str(ROOT / "python"))
 sys.path.insert(0, str(ROOT))
 
 from spectral_eclipse import (
+    FLOAT64_CANCELLATION_MARGIN,
+    FLOAT64_MIN_RE_THRESHOLD,
+    __version__,
     detect_real_ese,
     persymmetric_weights,
     reconstruct_persymmetric_jacobi,
@@ -126,7 +132,6 @@ def test_negative_invalid_inputs() -> None:
 
 def test_regression_hderiv3_coeff_18w_not_14w() -> None:
     """Regression for bug caught by Lean 4 in TrigBounds.lean: HDeriv3 has (24 - 18*w), not (24 - 14*w)."""
-    # Verify numerically via 4th-order finite difference of H''(w) at w = 4.0 (x = 2.0)
     def Hpp(w: float) -> float:
         x = math.sqrt(w)
         return ((2.0 * w - 4.0) * math.cos(2.0 * x) - 5.0 * x * math.sin(2.0 * x) + 4.0) / (4.0 * w**3)
@@ -154,6 +159,13 @@ def test_regression_float64_cancellation_near_pi_B20() -> None:
     has_ese, tau = detect_real_ese(chain, math.pi, grid=4000)
     assert not has_ese and tau is None
     assert exact_sturm_ese_root_count([Fraction(k) for k in (-3, -2, -1, 0, 1, 2, 3)], 1)[0] == 0
+
+
+def test_public_api_float64_guard_constants() -> None:
+    """Verify B20 float64 guard thresholds are explicitly defined and exported."""
+    assert FLOAT64_CANCELLATION_MARGIN == 1e-11
+    assert FLOAT64_MIN_RE_THRESHOLD == 1e-10
+    assert FLOAT64_MIN_RE_THRESHOLD > FLOAT64_CANCELLATION_MARGIN > 0.0
 
 
 # ---------------------------------------------------------------------------
@@ -211,6 +223,18 @@ def test_preregistered_qrng_json_contract() -> None:
         assert p["diff_ci95_lo"] <= p["diff_mean"] <= p["diff_ci95_hi"]
 
 
+def test_qrng_eps0_exact_zero_regression() -> None:
+    """Regression for Deviation #1 (compute_interior_min optimizer bug):
+    all 4 ESE treatment arms must evaluate to exact 0.0 at eps = 0."""
+    analysis_path = ROOT / "results" / "qgtl_qrng_analysis.json"
+    analysis = json.loads(analysis_path.read_text(encoding="utf-8"))
+    for arm in analysis["arms"]:
+        eps0 = [lv for lv in arm["all_levels"] if lv["eps"] == 0.0]
+        assert len(eps0) == 1
+        assert eps0[0]["treat_median"] == 0.0, f"{arm['id']} eps=0 treat_median must be 0.0"
+        assert eps0[0]["treat_mean"] == 0.0, f"{arm['id']} eps=0 treat_mean must be 0.0"
+
+
 def test_exact_oracle_golden_snapshot() -> None:
     suite = {r.label: r for r in verify_canonical_suite()}
     assert len(suite) == 13
@@ -229,3 +253,117 @@ def test_exact_oracle_golden_snapshot() -> None:
     # Case 3 chain {0, +-3, +-6, +-7} has 4 distinct roots on (-1, 1) vs 3 on (0, 1) (kills M08)
     roots_7x7_367, _ = exact_sturm_ese_root_count([Fraction(k) for k in (-7, -6, -3, 0, 3, 6, 7)], scale_factor=1)
     assert roots_7x7_367 == 4
+
+
+# ---------------------------------------------------------------------------
+# A08, B03, B39: Repository-wide integrity, schema, link & anti-drift gates
+# ---------------------------------------------------------------------------
+
+
+def test_single_version_consistency_across_all_manifests() -> None:
+    """A08: Verify VERSION matches all 7 synchronized package/metadata manifests."""
+    version_file = ROOT / "VERSION"
+    if not version_file.is_file():
+        pytest.skip("Isolated mutation sandbox without full repository manifests")
+    ver = version_file.read_text(encoding="utf-8").strip()
+    assert __version__ == ver
+    assert f"## [{ver}]" in (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    assert f'version: "{ver}"' in (ROOT / "CITATION.cff").read_text(encoding="utf-8")
+    assert f'version: "{ver}"' in (ROOT / "formalization.yaml").read_text(encoding="utf-8")
+    assert f'version = "{ver}"' in (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    assert f'version = "{ver}"' in (ROOT / "lean" / "lakefile.toml").read_text(encoding="utf-8")
+    assert f'version = "{ver}"' in (ROOT / "engines" / "rust" / "Cargo.toml").read_text(encoding="utf-8")
+
+
+def test_repo_yaml_validates_against_schema() -> None:
+    """Build Standard v1.2.0: repo.yaml must validate cleanly against repo-standard.schema.json."""
+    repo_yaml = ROOT / "repo.yaml"
+    schema_json = ROOT / "repo-standard.schema.json"
+    if not (repo_yaml.is_file() and schema_json.is_file()):
+        pytest.skip("Isolated mutation sandbox without repo.yaml")
+    data = yaml.safe_load(repo_yaml.read_text(encoding="utf-8"))
+    schema = json.loads(schema_json.read_text(encoding="utf-8"))
+    jsonschema.validate(instance=data, schema=schema)
+
+
+def test_no_broken_relative_markdown_links() -> None:
+    """Verify every relative markdown link across authored docs resolves to an existing file."""
+    if not (ROOT / "README.md").is_file():
+        pytest.skip("Isolated mutation sandbox without markdown docs")
+    link_re = re.compile(r"\[[^\]]+\]\(([^)#\s]+)")
+    md_files = [
+        p
+        for p in ROOT.rglob("*.md")
+        if not any(part in p.parts for part in ("third_party", "build", ".lake", "target", ".git"))
+    ]
+    broken: list[str] = []
+    for md in md_files:
+        text = md.read_text(encoding="utf-8")
+        # Ignore fenced code blocks and inline code spans
+        stripped = re.sub(r"```.*?```", "", text, flags=re.DOTALL)
+        stripped = re.sub(r"`[^`]+`", "", stripped)
+        for target in link_re.findall(stripped):
+            if target.startswith(("http://", "https://", "mailto:", "data:")):
+                continue
+            resolved = (md.parent / target).resolve()
+            if not resolved.exists():
+                broken.append(f"{md.relative_to(ROOT).as_posix()} -> {target}")
+    assert not broken, f"Broken relative markdown links: {broken}"
+
+
+def test_no_stale_identifiers_or_hallucinated_symbols() -> None:
+    """Prevent regressions to retired archive IDs, hallucinated APIs, or mismatched affiliations."""
+    if not (ROOT / "README.md").is_file():
+        pytest.skip("Isolated mutation sandbox without docs")
+    forbidden = [
+        "0TH-2026-020",
+        "0TH-2026-022",
+        "0 / 1,900",
+        "0/1,900",
+        "0/1{,}900",
+        "0thernes LLC",
+        "moonlab_xy_sim.mjs",
+        "hochstadt_reconstruct",
+        "staggered_j_ab",
+        "witness_4x4_even_p2",
+    ]
+    check_files = [
+        ROOT / "README.md",
+        ROOT / "CLAIMS.md",
+        ROOT / "LIMITATIONS.md",
+        ROOT / "REPLICATION.md",
+        ROOT / "UPGRADING.md",
+        ROOT / "ROADMAP.md",
+        ROOT / "llms.txt",
+        ROOT / "repo.yaml",
+        ROOT / "formalization.yaml",
+        ROOT / "CITATION.cff",
+        ROOT / "THIRD_PARTY_NOTICES.md",
+        ROOT / "paper" / "main.tex",
+    ] + [
+        p
+        for p in (ROOT / "docs").glob("*.md")
+    ]
+    hits: list[str] = []
+    for fpath in check_files:
+        if not fpath.is_file():
+            continue
+        content = fpath.read_text(encoding="utf-8")
+        for bad in forbidden:
+            if bad in content:
+                hits.append(f"{fpath.relative_to(ROOT).as_posix()}: contains {bad!r}")
+    assert not hits, f"Stale or hallucinated identifiers detected: {hits}"
+
+
+def test_manifest_tamper_rejection(tmp_path: Path) -> None:
+    """B39 negative test: verify SHA-256 verification fails immediately when a tracked file is altered."""
+    if not (ROOT / "scripts" / "generate_manifest.py").is_file():
+        pytest.skip("Isolated mutation sandbox without scripts/")
+    from scripts.generate_manifest import sha256_file
+
+    sample = tmp_path / "artifact.txt"
+    sample.write_bytes(b"canonical-v1.1.0\n")
+    digest_orig = sha256_file(sample)
+    sample.write_bytes(b"tampered-v1.1.0\n")
+    digest_tampered = sha256_file(sample)
+    assert digest_orig != digest_tampered

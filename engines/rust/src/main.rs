@@ -102,10 +102,9 @@ pub fn detect_real_ese(lam: &[f64], pst_time: f64, grid: usize) -> (bool, f64, O
     (has_ese, min_re, first_tau)
 }
 
-/// Build symmetric (R, r) Krawtchouk-core + high-energy-cluster PST spectrum of size N = 2R + 2r - 1 (odd R) or 2R + 2r (even R).
-/// Wait: unify directly by core size R (number of core levels: R=2 -> {-1/2,1/2}, R=3 -> {-1,0,1},
-/// R=4 -> {-3/2,-1/2,1/2,3/2}, R=5 -> {-2,-1,0,1,2}) and cluster size r at offset M (parity-consistent!).
-/// Total matrix size N = R + 2r.
+/// Build symmetric (R, r) Krawtchouk-core + high-energy-cluster PST spectrum of total size N = R + 2r
+/// (odd R: {-(R-1)/2, ..., 0, ..., (R-1)/2}; even R: {-(R-1)/2, ..., -1/2, +1/2, ..., +(R-1)/2})
+/// paired with a parity-consistent symmetric r-pair unit-spaced cluster at offset M.
 pub fn build_core_cluster_spectrum(core_r: usize, cluster_r: usize, m_shift: usize) -> Vec<f64> {
     let mut lam = Vec::with_capacity(core_r + 2 * cluster_r);
     if core_r % 2 == 1 {

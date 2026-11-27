@@ -140,4 +140,81 @@ theorem witness_J14_qsl_variance :
       nlinarith [Real.sqrt_nonneg 15]
     exact div_lt_div_of_pos_left Real.pi_pos (by norm_num) hrt
 
+/-- Non-vacuity witness for unreduced real-scaled Conjecture 4.1 (`c = 2`, `(x,y,z) = (3,6,9)`,
+`g = 3`, `T₀ = π/6`, `3 ∣ 6 ∧ 3 ∣ 9` -> no ESE on `(0, π/6)`). -/
+theorem witness_7x7_unreduced_c2_3_6_9 :
+    ∀ τ : ℝ, 0 < τ → τ < Real.pi / 6 → amp7 6 12 18 τ ≠ 0 := by
+  have h := (conjecture_4_1_7x7_unreduced (c := 2) (by norm_num) (x := 3) (y := 6) (z := 9)
+    ⟨1, rfl⟩ ⟨3, rfl⟩ ⟨4, rfl⟩ (by decide) (by decide)).mpr ⟨by decide, by decide⟩
+  have hgcd : Nat.gcd 3 (Nat.gcd 6 9) = 3 := by decide
+  rw [hgcd] at h
+  norm_num at h
+  exact h
+
+/-- Non-vacuity witness for Theorem 8 (`universal_phase_transition_3R_plus_2` at `R = 3`) and
+`cluster_self_gap_sum` at `r = 4`, proving `Φ(3, 4, 12) = 1`. -/
+theorem witness_universal_3R_plus_2_R3 :
+    clusterToCoreRatio 3 3 12 = 1 / 4 ∧
+    clusterToCoreRatio 3 4 12 = 1 ∧
+    ∑ j ∈ Finset.range 4, (1 : ℝ) / ((j.factorial : ℝ) * ((4 - 1 - j).factorial : ℝ)) = 4 / 3 := by
+  have h8 := universal_phase_transition_3R_plus_2 (R := 3) (by decide)
+  have hcrit := (h8.2.1 12 (by norm_num)).1
+  have hsup := h8.2.2.2.1 12 (by norm_num)
+  norm_num at hcrit hsup
+  refine ⟨hcrit, hsup, ?_⟩
+  rw [cluster_self_gap_sum 4 (by decide)]
+  norm_num [Nat.factorial]
+
+/-- Non-vacuity witness for Theorem 10B (`ese_ete_duality`) instantiated on `J_{1,4}` at `t = π/3`,
+proving exact Early Target Exclusion `targetAmpComplex _ (stagEigvals 1 4) (stagEigvecs 1 4) (2π/3) = 0`. -/
+theorem witness_J14_ese_ete_duality :
+    Complex.normSq
+      (targetAmpComplex (n := 5) (by decide) (stagEigvals 1 4) (stagEigvecs 1 4) (2 * Real.pi / 3)) = 0 := by
+  have hparity : ∀ k : Fin 5,
+      stagEigvecs 1 4 k ⟨5 - 1, by decide⟩ = (-1 : ℝ) ^ (k : ℕ) * stagEigvecs 1 4 k ⟨0, by decide⟩ := by
+    intro k
+    fin_cases k <;> (simp [stagEigvecs, neg_div]; try norm_num)
+  have hpst : ∀ k : Fin 5,
+      Complex.exp (-Complex.I * (stagEigvals 1 4 k : ℂ) * (Real.pi : ℂ)) =
+        (1 : ℂ) * (-1 : ℂ) ^ (k : ℕ) := by
+    have hexp_even : ∀ m : ℕ,
+        Complex.exp (-Complex.I * ((2 * m : ℕ) : ℂ) * (Real.pi : ℂ)) = 1 := by
+      intro m
+      have : -Complex.I * ((2 * m : ℕ) : ℂ) * (Real.pi : ℂ) =
+          ((-m : ℤ) : ℂ) * (2 * Real.pi * Complex.I) := by push_cast; ring
+      rw [this, Complex.exp_int_mul_two_pi_mul_I]
+    have hexp_odd : ∀ m : ℕ,
+        Complex.exp (-Complex.I * ((2 * m + 1 : ℕ) : ℂ) * (Real.pi : ℂ)) = -1 := by
+      intro m
+      have : -Complex.I * ((2 * m + 1 : ℕ) : ℂ) * (Real.pi : ℂ) =
+          -(Real.pi * Complex.I) + ((-m : ℤ) : ℂ) * (2 * Real.pi * Complex.I) := by push_cast; ring
+      rw [this, Complex.exp_add, Complex.exp_int_mul_two_pi_mul_I, mul_one,
+          Complex.exp_neg, Complex.exp_pi_mul_I, inv_neg, inv_one]
+    intro k
+    fin_cases k
+    · dsimp only; simp [stagEigvals]
+    · dsimp only; simpa [stagEigvals] using hexp_odd 0
+    · dsimp only; simpa [stagEigvals] using hexp_even 2
+    · dsimp only
+      have h9 : (stagEigvals 1 4 3 : ℂ) = ((2 * 4 + 1 : ℕ) : ℂ) := by norm_num [stagEigvals]
+      change Complex.exp (-Complex.I * (stagEigvals 1 4 3 : ℂ) * ↑Real.pi) = 1 * (-1 : ℂ) ^ (3 : ℕ)
+      rw [h9, hexp_odd 4]; norm_num
+    · dsimp only
+      have h10 : (stagEigvals 1 4 4 : ℂ) = ((2 * 5 : ℕ) : ℂ) := by norm_num [stagEigvals]
+      change Complex.exp (-Complex.I * (stagEigvals 1 4 4 : ℂ) * ↑Real.pi) = 1 * (-1 : ℂ) ^ (4 : ℕ)
+      rw [h10, hexp_even 5]; norm_num
+  have hdual := ese_ete_duality (n := 5) (by decide) (stagEigvals 1 4) (stagEigvecs 1 4)
+    Real.pi 1 (by simp) hparity hpst (Real.pi / 3)
+  have htime : Real.pi - Real.pi / 3 = 2 * Real.pi / 3 := by ring
+  rw [htime] at hdual
+  rw [hdual]
+  have hfid := schrodinger_solution_fidelity (n := 5) (by decide)
+    (stagJacobi 1 4) (stagEigvals 1 4) (stagEigvecs 1 4)
+    (stagJacobi_eigpairs (by norm_num) (by norm_num))
+    (stagJacobi_init_complete (by norm_num) (by norm_num))
+  have hret := hfid.2.2.1 (Real.pi / 3)
+  have hzero : spectralState (stagEigvals 1 4) (stagEigvecs 1 4) (Real.pi / 3) ⟨0, by decide⟩ = 0 :=
+    witness_J14_staggered_complex_ESE.2.2.2.2
+  rw [← hret, hzero, map_zero]
+
 end SpectralEclipse.NonVacuity

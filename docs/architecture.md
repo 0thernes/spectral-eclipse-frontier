@@ -7,7 +7,7 @@ The **Spectral Eclipse Frontier** repository is organized into six cleanly separ
 ```mermaid
 flowchart TD
     A["Isolated Mathlib-Only Spec\nlean/Challenge.lean (12 Targets)"] --> B["Six-Checker Palomar Replay\nlake comparator --paranoid"]
-    C["Lean 4.35.0 Proof Library\nlean/SpectralEclipse/ (12 modules, 568 thms)"] --> D["Sorry-Free Bridge\nlean/Solution.lean"]
+    C["Lean 4.35.0 Proof Library\nlean/SpectralEclipse/ (12 modules, 572 thms)"] --> D["Sorry-Free Bridge\nlean/Solution.lean"]
     D --> B
     C --> E["Exhaustive Axiom Audit\nlean/VerifyAxioms.lean"]
     F["Exact Ground-Truth Oracle\nreference/exact_oracle.py (SymPy Sturm + mp80)"] --> G["8-Engine Cross-Parity\nscripts/run_polyglot_parity.py"]
@@ -25,7 +25,7 @@ flowchart TD
 | `lean/` | Lean 4.35.0 formalization (`SpectralEclipse/*.lean`), isolated `Challenge.lean`, `Solution.lean`, `VerifyAxioms.lean`, `comparator.json`. |
 | `engines/asm/`, `engines/c/` | NASM x86-64 AVX2+FMA tridiagonal SpMV & Chebyshev propagator linked with ISO C11 driver (`100,000`-iter Hochstadt fuzz). |
 | `engines/cpp/` | ISO C++20 direct QL eigendecomposition & matrix-exponential propagator with B20 float64 cancellation guard. |
-| `engines/rust/` | Safe Rust (`#![forbid(unsafe_code)]`) multi-core Rayon $(R,r)$ phase-diagram scanner ($R=2\dots 5$) and QSL stress tester. |
+| `engines/rust/` | Safe Rust (`#![forbid(unsafe_code)]`) multi-core `std::thread` $(R,r)$ phase-diagram scanner ($R=2\dots 5$, zero external crates) and QSL stress tester. |
 | `engines/zig/` | Zig 0.17.0 exact arbitrary-precision rational ($\mathbb{Q}$) Hochstadt reconstructor (zero floating point). |
 | `engines/eshkol/` | Eshkol v1.3.6 compiler-native forward-mode AD Newton ESE root finder + triple-nested $H'''(16)$ oracle (with automatic Python dual fallback). |
 | `engines/moonlab/` | Node.js harness executing full $2^5 = 32$-dimensional 5-qubit $XY+Z$ Strang-Trotter circuits on vendored `third_party/moonlab/moonlab.wasm`. |

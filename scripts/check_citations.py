@@ -42,11 +42,26 @@ def parse_bib(text: str) -> list[dict[str, str]]:
     return entries
 
 
+def _title_tokens(title: str) -> set[str]:
+    clean = re.sub(r"[{}]", "", title).lower()
+    words = re.findall(r"[a-z0-9]{3,}", clean)
+    stop = {"the", "and", "for", "from", "with", "into", "some", "its"}
+    return {w for w in words if w not in stop}
+
+
+def title_overlap_ratio(bib_title: str, api_title: str) -> float:
+    b_toks = _title_tokens(bib_title)
+    a_toks = _title_tokens(api_title)
+    if not b_toks:
+        return 0.0
+    return len(b_toks & a_toks) / len(b_toks)
+
+
 def fetch_crossref(doi: str) -> dict[str, object]:
     url = f"https://api.crossref.org/works/{urllib.parse.quote(doi, safe='')}"
     req = urllib.request.Request(
         url,
-        headers={"User-Agent": "SpectralEclipseCitationAudit/1.0 (mailto:0_0@0thernes.art)"},
+        headers={"User-Agent": "SpectralEclipseCitationAudit/1.1 (mailto:0_0@0thernes.art)"},
     )
     with urllib.request.urlopen(req, timeout=20) as resp:
         data = json.loads(resp.read().decode("utf-8"))
@@ -57,9 +72,10 @@ def fetch_crossref(doi: str) -> dict[str, object]:
             for a in msg.get("author", [])
         ]
         retracted = False
-        for upd in msg.get("update-to", []) or []:
-            if str(upd.get("type", "")).lower() == "retraction":
-                retracted = True
+        for field in ("update-to", "updated-by"):
+            for upd in msg.get(field, []) or []:
+                if "retract" in str(upd.get("type", "")).lower() or "retract" in str(upd.get("label", "")).lower():
+                    retracted = True
         return {
             "http_status": resp.status,
             "source": "crossref",
@@ -140,14 +156,22 @@ def main() -> int:
         }
         try:
             meta = fetch_crossref(doi) if doi else fetch_arxiv(eprint or "")
+            api_title = str(meta["title"])
+            overlap = title_overlap_ratio(e.get("title", ""), api_title)
             rec["api_source"] = meta["source"]
             rec["http_status"] = meta["http_status"]
-            rec["api_title"] = meta["title"]
+            rec["api_title"] = api_title
             rec["api_authors"] = meta["authors"]
+            rec["title_overlap"] = round(overlap, 4)
             rec["retracted"] = bool(meta["retracted"])
-            rec["verified"] = (meta["http_status"] == 200) and bool(meta["title"]) and not rec["retracted"]
+            rec["verified"] = (
+                (meta["http_status"] == 200)
+                and bool(api_title)
+                and (overlap >= 0.5)
+                and not rec["retracted"]
+            )
             if not rec["verified"]:
-                failures.append(f"{key}: verification failed ({meta})")
+                failures.append(f"{key}: verification failed (overlap={overlap:.2f}, meta={meta})")
         except (urllib.error.URLError, ValueError, TimeoutError) as exc:
             rec["error"] = str(exc)
             failures.append(f"{key}: {exc}")

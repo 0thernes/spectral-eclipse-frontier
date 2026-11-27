@@ -226,11 +226,13 @@ theorem He_sq {x : ℝ} (hx : 0 < x) : He (x ^ 2) = Real.sin x / x := by
 
 /-! ### Hochstadt-Normalized Return Amplitudes for Symmetric PST Chains -/
 
-/-- General unnormalized Hochstadt weight for odd `(2n+1) × (2n+1)` symmetric spectrum
-`{0, ±lam 0, ..., ±lam (n-1)}`: `W_0 = ∏_i 1/lam_i²`, `W_{k+1} = 1 / (lam_k² ∏_{i≠k} |lam_k² - lam_i²|)`. -/
+/-- Unnormalized Hochstadt weight for the zero eigenvalue of an odd `(2n+1) × (2n+1)` symmetric
+spectrum `{0, ±lam 0, ..., ±lam (n-1)}`: `W_0 = (∏_i lam_i²)⁻¹`. -/
 noncomputable def hochstadtWeightOdd0 {n : ℕ} (lam : Fin n → ℝ) : ℝ :=
   (∏ i : Fin n, (lam i) ^ 2)⁻¹
 
+/-- Unnormalized Hochstadt weight for the `±lam k` pair of an odd `(2n+1) × (2n+1)` symmetric
+spectrum `{0, ±lam 0, ..., ±lam (n-1)}`: `W_{k+1} = (lam_k² ∏_{i≠k} |lam_k² - lam_i²|)⁻¹`. -/
 noncomputable def hochstadtWeightOdd {n : ℕ} (lam : Fin n → ℝ) (k : Fin n) : ℝ :=
   ((lam k) ^ 2 * ∏ i ∈ Finset.univ.erase k, |(lam k) ^ 2 - (lam i) ^ 2|)⁻¹
 

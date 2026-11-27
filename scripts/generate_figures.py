@@ -321,12 +321,17 @@ def make_fig5_qgtl_qrng() -> None:
 
     # Left panel: Paired treatment-vs-control eclipse floor at primary endpoint eps = 0.05
     arms = data["arms"]
-    labels = [
-        "H1: 7×7\nConj. 4.1\n(p=0.0004)",
-        "H2: 8×8\nvs 6×6\n(p=0.0004)",
-        "H3: 11×11\nm=6 vs m=5\n(p=0.0008)",
-        "H4: 5×5 J₁,₄\nComplex\n(p=0.988 NS)",
+    arm_meta = [
+        ("H1: 7×7\nConj. 4.1", C_BLUE, "o-", r"H1 $7\times 7$", "codim-1"),
+        ("H2: 8×8\nvs 6×6", C_GREEN, "s-", r"H2 $8\times 8$", "codim-1"),
+        ("H3: 11×11\nm=6 vs m=5", C_PURPLE, "^-", r"H3 $11\times 11$", "codim-1"),
+        ("H4: 5×5 J₁,₄\nComplex", C_VERM, "D--", r"H4 $J_{1,4}$", "codim-2 null"),
     ]
+    labels = []
+    for arm, (title_prefix, _col, _fmt, _short, _kind) in zip(arms, arm_meta):
+        p_holm = arm["primary_eps05"]["p_holm_bonferroni"]
+        sig_tag = "" if arm["primary_eps05"]["significant_fwer_005"] else " NS"
+        labels.append(f"{title_prefix}\n(p={p_holm:.4f}{sig_tag})")
     x = np.arange(len(arms))
     w = 0.35
     treat_med = [a["primary_eps05"]["treat_median"] for a in arms]
@@ -341,26 +346,23 @@ def make_fig5_qgtl_qrng() -> None:
     ax1.set_xticks(x)
     ax1.set_xticklabels(labels, fontsize=7.8)
     ax1.set_ylabel(r"Eclipse survival floor $\min |A(t)|$ ($\varepsilon = 0.05$)")
-    ax1.set_title(r"(a) Pre-Registered QRNG Study ($n=30$ seeds, Holm FWER)")
+    ax1.set_title(r"(a) Pre-Registered QRNG Study ($K=30$ seeds, Holm FWER)")
     ax1.legend(frameon=False, loc="upper left", fontsize=7.6)
     ax1.grid(axis="y", alpha=0.25, ls=":")
 
     # Right panel: Disorder scaling log-log across eps = 0.01, 0.02, 0.05, 0.10 for all 4 treatment arms
     eps_vals = [0.01, 0.02, 0.05, 0.10]
-    styles = [
-        ("H1", C_BLUE, "o-", r"H1 $7\times 7$ ($\beta=0.80$, codim-1)"),
-        ("H2", C_GREEN, "s-", r"H2 $8\times 8$ ($\beta=1.08$, codim-1)"),
-        ("H3", C_PURPLE, "^-", r"H3 $11\times 11$ ($\beta=0.93$, codim-1)"),
-        ("H4", C_VERM, "D--", r"H4 $J_{1,4}$ ($\beta=0.72$, codim-2 null)"),
-    ]
-    for arm, (_aid, col, fmt, lbl) in zip(arms, styles):
+    for arm, (_prefix, col, fmt, short_lbl, kind_lbl) in zip(arms, arm_meta):
+        beta = arm["exploratory_power_law_beta"]
+        lbl = f"{short_lbl} ($\\beta={beta:.2f}$, {kind_lbl})"
         lvls = {lv["eps"]: lv["treat_median"] for lv in arm["all_levels"]}
         ys = [lvls[e] for e in eps_vals]
         ax2.loglog(eps_vals, ys, fmt, color=col, lw=1.6, ms=5.5, label=lbl)
+    ax2.set_ylim(3.0e-4, 3.0e-2)
     ax2.set_xlabel(r"Static QRNG diagonal disorder strength $\varepsilon$")
     ax2.set_ylabel(r"Median perturbed eclipse floor $\min |A_\varepsilon(t)|$")
     ax2.set_title(r"(b) Disorder Scaling: Codim-1 Real vs. Codim-2 Complex Zero")
-    ax2.legend(frameon=False, loc="upper left", fontsize=7.6)
+    ax2.legend(frameon=True, facecolor="white", framealpha=0.92, edgecolor="none", loc="lower right", fontsize=7.5)
     ax2.grid(which="both", alpha=0.22, ls=":")
 
     fig.tight_layout()

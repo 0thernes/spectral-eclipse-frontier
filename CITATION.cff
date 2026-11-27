@@ -2,9 +2,13 @@ cff-version: 1.2.0
 title: "The Spectral Eclipse Frontier: Complete Resolution of Conjecture 4.1, Sharp Even/Odd Rupture Thresholds, Universal 3R+2 Phase Transition, Non-Symmetric Complex Eclipses, and Quantum Geometric Speed Limits"
 message: "If you use this software, Lean 4 formalization, or preprint, please cite it as below."
 type: software
-version: "1.0.0"
-date-released: "2026-11-26"
+version: "1.1.0"
+date-released: "2026-11-27"
 license: Apache-2.0
+identifiers:
+  - type: swh
+    value: "swh:1:snp:37fd5b55ad30a2e1cedc2949415bfacf4d5d1efc"
+    description: "Software Heritage archival snapshot (v1.0.0 release baseline)"
 authors:
   - family-names: "Donahue"
     given-names: "Alexander Stephen"

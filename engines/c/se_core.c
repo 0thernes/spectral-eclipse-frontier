@@ -208,16 +208,16 @@ void se_target_amplitude_complex(size_t n, const double *lambda, const double *w
 }
 
 /* Bessel function J_m(z) via Miller's backward recurrence (stable for all m >= 0). */
-static void bessel_j_array(double z, int max_m, double *jm_out) {
+static int bessel_j_array(double z, int max_m, double *jm_out) {
     if (z == 0.0) {
         jm_out[0] = 1.0;
         for (int m = 1; m <= max_m; ++m) jm_out[m] = 0.0;
-        return;
+        return 0;
     }
     int start = max_m + (int)(40.0 + 1.5 * fabs(z));
     if (start < max_m + 40) start = max_m + 40;
     double *tmp = (double *)calloc((size_t)(start + 2), sizeof(double));
-    if (!tmp) return;
+    if (!tmp) return -3;
     tmp[start] = 1e-200;
     tmp[start + 1] = 0.0;
     for (int k = start; k >= 1; --k) {
@@ -229,8 +229,13 @@ static void bessel_j_array(double z, int max_m, double *jm_out) {
     /* Normalization: J_0(z) + 2 * sum_{k>=1} J_{2k}(z) = 1. */
     double norm = tmp[0];
     for (int k = 2; k <= start; k += 2) norm += 2.0 * tmp[k];
+    if (norm == 0.0 || !isfinite(norm)) {
+        free(tmp);
+        return -4;
+    }
     for (int m = 0; m <= max_m; ++m) jm_out[m] = tmp[m] / norm;
     free(tmp);
+    return 0;
 }
 
 int se_chebyshev_propagate(size_t n, const double *a, const double *b,
@@ -270,7 +275,12 @@ int se_chebyshev_propagate(size_t n, const double *a, const double *b,
         free(jx); free(jm); free(acc_re); free(acc_im);
         return -3;
     }
-    bessel_j_array(tau, max_m, jm);
+    int bessel_rc = bessel_j_array(tau, max_m, jm);
+    if (bessel_rc != 0) {
+        free(a_s); free(b_s); free(t_prev); free(t_curr); free(t_next);
+        free(jx); free(jm); free(acc_re); free(acc_im);
+        return bessel_rc;
+    }
 
     /* T_0(H_s) e_0 = e_0 */
     t_prev[0] = 1.0;

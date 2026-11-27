@@ -1,20 +1,618 @@
-# Spectral Eclipse Frontier — Full LLM Index (v1.0.0)
+# Spectral Eclipse Frontier (v1.1.0) — Full LLM Context Bundle
 
-## 1. Scientific Summary (Theorems 1–10, All `[LEAN-6K]`)
-- **Theorem 1 (`dichotomy_4x4`):** Reduced $4\times 4$ symmetric PST chain avoids ESE on $(0,\pi) \iff p=1$.
-- **Theorem 2 (`dichotomy_5x5`):** Reduced $5\times 5$ symmetric PST chain avoids ESE on $(0,\pi) \iff y=1$.
-- **Theorem 3 (`dichotomy_6x6`, `even_hasESE_of_min_ge_three`):** Universal even orthogonality converse ($\forall 2n$) and complete $6\times 6$ dichotomy $\neg\mathrm{ESE}\iff p=1$.
-- **Theorem 4 (`conjecture_4_1_7x7`, `conjecture_4_1_7x7_unreduced`):** Complete resolution of Conjecture 4.1 of Escobar, Garcia, and Minenkova (`arXiv:2507.18767v1`) in both reduced and arbitrary real-scaled unreduced forms, via `H_slope_strictAnti` (forward) and discrete Fourier coset averaging with universal shift $s=2/z$ (converse).
-- **Theorem 5 (`even_rupture_8x8`):** Sharp even rupture at $N_{\mathrm{crit}}^{\mathrm{even}} = 8$: for every $m\ge 1$, $\{ \pm 1/2, \pm(4m+3)/2, \pm(4m+5)/2, \pm(4m+7)/2 \}$ has $A_8(2\pi/(4m+5))<0$ despite $p_1=1$.
-- **Theorem 6 (`odd_critical_9x9_no_ESE`):** Critical $9\times 9$ No-ESE Theorem: for EVERY alternating-parity triple $1<b<c<d$, $A_9(1,b,c,d;t)>0$ on $[0,\pi)$, certified via second divided difference `H2dd`, confluent derivative `Hww`, and 20 exact univariate/bivariate Bernstein positivity certificates (`Critical9x9Certs.lean`).
-- **Theorem 7 (`odd_rupture_11x11_threshold`):** Sharp odd rupture at $N_{\mathrm{crit}}^{\mathrm{odd}} = 11$: for $S(m)=\{0,\pm 1,\pm 2m,\pm(2m+1),\pm(2m+2),\pm(2m+3)\}$, $\mathrm{HasESEReal}\iff m\ge 6$ ($M^*=12$), with 5 exact global rational SOS certificates for $m=1..5$ and exact degree-8 positive polynomial for all $m\ge 6$.
-- **Theorem 8 (`universal_phase_transition_3R_plus_2`, `cluster_self_gap_sum`):** Universal $(R,r)$ Krawtchouk-core vs. spectral-cluster phase transition at $r_{\mathrm{crit}}(R)=R+1$, $N_{\mathrm{crit}}(R)=3R+2$, predicting $M^*(3)=3\cdot 2^2=12$ exactly.
-- **Theorem 9 (`theorem_9_nonsymmetric_family`):** First infinite non-symmetric staggered-field $5\times 5$ Jacobi family $J_{a,b}$ (`a` odd, $3\nmid a$, $b=a+6k+3$) with exact Schrödinger fidelity, exact PST $\psi_4(\pi)=1$, and exact complex ESE $\psi_0(\pi/3)=0\in\mathbb{C}$.
-- **Theorem 10 (`jacobi_energy_variance_eq_b0_sq`, `spectral_variance_eq_b0_sq`, `mandelstam_tamm_ese_bound`, `ese_ete_duality`):** Exact QGTL metric $g_{tt}=b_0^2$, universal Mandelstam–Tamm QSL $\tau\ge\pi/(2|b_0|)$, and exact ESE–ETE time-reversal duality.
+> Generated deterministically by `scripts/generate_llms_full.py` (Build Standard A32).
+> Do not hand-edit this file; re-run `python scripts/generate_llms_full.py` after updating sources.
 
-## 2. Verification & Architecture Inventory
-- **Lean 4.35.0 (`lean/`):** 12 `module`-header files, `Challenge.lean` (Mathlib-only, 12 targets), `Solution.lean` (sorry-free bridge), `NonVacuity.lean` (15 witnesses), `AdversarialTests.lean` (5 refutations), `VerifyAxioms.lean` (568 audited theorems, 0 disallowed axioms).
-- **8 Polyglot & Quantum Engines (`engines/`, `reference/`):** NASM AVX2+FMA + ISO C11, ISO C++20, Safe Rust (`#![forbid(unsafe_code)]`), Zig 0.17.0 exact $\mathbb{Q}$, Eshkol v1.3.6 native AD, Moonlab WASM 32-dim 5-qubit simulator, vendored QGTL + Quantum-RNG, SymPy Sturm + 80-digit `mpmath`. Cross-parity: 0 mismatches (`results/polyglot_parity.json`).
-- **Pre-Registered QRNG Study (`PREREGISTRATION.md`, `results/qgtl_qrng_analysis.json`):** 4 arms $\times$ 5 disorder levels $\times$ 30 paired seeds. Primary $\varepsilon=0.05$ Holm-Bonferroni verdicts: H1 SIG ($p=0.0004, d_z=0.91$), H2 SIG ($p=0.0004, d_z=14.99$), H3 SIG ($p=0.0008, d_z=0.75$), H4 HONEST NULL ($p=0.988, d_z=0.00$; codimension-2 complex zero lifting).
-- **Genuine Numerical Discovery (B20):** Naive float64 sign-change detection suffers false-positive ESE flips near $t=\pi$ due to $A_N(t)=O((\pi-t)^{N-1})$ underflow below unit roundoff; guarded in C++20/Python and regression-tested in `tests/test_all.py`.
-- **QA & Integrity:** 15/15 pytest (incl. 1,000-case Hypothesis), 10/10 B13 mutation kill rate, 15/15 live HTTP-200 citations (0 retracted), 0 ruff / 0 mypy-strict errors, LF-normalized `data/MANIFEST.sha256` + DigiCert RFC 3161 `.tsr` + Bitcoin OpenTimestamps `.ots`.
+---
+
+## Repository Overview (README.md)
+
+# The Spectral Eclipse Frontier
+
+[![CI](https://github.com/0thernes/spectral-eclipse-frontier/actions/workflows/ci.yml/badge.svg)](https://github.com/0thernes/spectral-eclipse-frontier/actions/workflows/ci.yml)
+[![Lean 4 & Palomar 6-Checker](https://github.com/0thernes/spectral-eclipse-frontier/actions/workflows/lean-verify.yml/badge.svg)](https://github.com/0thernes/spectral-eclipse-frontier/actions/workflows/lean-verify.yml)
+[![GitHub Pages](https://github.com/0thernes/spectral-eclipse-frontier/actions/workflows/pages.yml/badge.svg)](https://0thernes.github.io/spectral-eclipse-frontier/)
+[![Lean 4.35.0](https://img.shields.io/badge/Lean-4.35.0%20%28572%20theorems%2C%200%20sorry%29-2563EB?style=flat-square)](lean/VerifyAxioms.lean)
+[![6-Checker Palomar](https://img.shields.io/badge/Palomar%20Comparator-6%20Checkers%20%2812%20Targets%29-059669?style=flat-square)](lean/comparator.json)
+[![8 Polyglot Engines](https://img.shields.io/badge/Polyglot%20%26%20Quantum-8%20Engines%20%280%20Mismatches%29-7C3AED?style=flat-square)](results/polyglot_parity.json)
+[![Code License: Apache-2.0](https://img.shields.io/badge/Code-Apache--2.0-blue?style=flat-square)](LICENSE)
+[![Docs License: CC-BY-4.0](https://img.shields.io/badge/Docs%20%26%20Paper-CC--BY--4.0-orange?style=flat-square)](LICENSE-DOCS)
+[![Status: Active](https://img.shields.io/badge/RepoStatus-Active%20v1.1.0-10B981?style=flat-square)](VERSION)
+[![ORCID](https://img.shields.io/badge/ORCID-0009--0006--8168--9648-A6CE39?style=flat-square)](https://orcid.org/0009-0006-8168-9648)
+
+> **Unrefereed Research Preprint & Machine-Checked Formal Proof Repository (v1.1.0)**  
+> **Author:** Alexander S. Donahue (`Independent Researcher, Spokane, WA, USA` · ORCID [0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648))  
+> **AI Disclosure:** Analytical proof discovery, Lean 4.35.0 formalization, polyglot engineering, and manuscript drafting were AI-assisted (Google Gemini / Antigravity) under sole human direction and audit oversight. No external peer review or journal submission has occurred yet.
+
+![Spectral Eclipse Frontier Preview](docs/media/social-preview.png)
+
+---
+
+## Overview
+
+This repository establishes a complete, machine-checked ten-theorem theory of **Early State Exclusion (ESE)** in one-dimensional $XX$ quantum spin chains realizing **Perfect State Transfer (PST)**—resolving **Conjecture 4.1** of Escobar, Garcia, and Minenkova ([arXiv:2507.18767v1](https://arxiv.org/abs/2507.18767)) in full generality and mapping the exact structural, geometric, and topological frontier across all chain lengths $N$:
+
+| Pillar | Headline Result | Epistemic Tag | Lean 4.35.0 / Verification Artifact |
+| :--- | :--- | :--- | :--- |
+| **I (Thms. 1–3)** | Complete $4\times 4, 5\times 5, 6\times 6$ dichotomies & universal even-chain converse ($\forall 2n$) | `[LEAN-6K]` | `dichotomy_{4x4,5x5,6x6}`, `even_hasESE_of_min_ge_three` |
+| **II (Thm. 4)** | Complete resolution of **Conjecture 4.1** ($7\times 7$, reduced & arbitrary real-scaled unreduced) | `[LEAN-6K]` | `conjecture_4_1_7x7`, `conjecture_4_1_7x7_unreduced` |
+| **III (Thm. 5)** | Sharp even rupture at $N_{\mathrm{crit}}^{\mathrm{even}} = 8$ ($\forall m \ge 1$) | `[LEAN-6K]` | `even_rupture_8x8` |
+| **III (Thm. 6)** | **Critical $9\times 9$ No-ESE Theorem**: $A_9(1,b,c,d;t)>0$ on $[0,\pi)$ for ALL $1<b<c<d$ | `[LEAN-6K]` | `odd_critical_9x9_no_ESE` (+ 19 Bernstein certs) |
+| **III (Thm. 7)** | Sharp odd rupture at $N_{\mathrm{crit}}^{\mathrm{odd}} = 11$: exact threshold $m \ge 6 \iff M^* = 12$ | `[LEAN-6K]` | `odd_rupture_11x11_threshold` |
+| **IV (Thm. 8)** | Universal $(R,r)$ Krawtchouk-core vs. spectral-cluster phase transition at $N_{\mathrm{crit}}(R) = 3R + 2$ | `[LEAN-6K]` | `universal_phase_transition_3R_plus_2` |
+| **V (Thm. 9)** | First infinite non-symmetric staggered-field $5\times 5$ complex ESE family $J_{a,b}$ ($A(\pi/3)=0\in\C$) | `[LEAN-6K]` | `theorem_9_nonsymmetric_family` |
+| **VI (Thm. 10)** | Exact QGTL metric $g_{tt}=b_0^2$, Mandelstam–Tamm QSL $\tau\ge\pi/(2|b_0|)$, & ESE–ETE duality | `[LEAN-6K]` | `mandelstam_tamm_ese_bound`, `ese_ete_duality` |
+| **Empirical** | Pre-registered 4-arm QRNG static-disorder study ($K=30$ seeds, Holm FWER): H1–H3 SIG, **H4 honest null** | `[EMPIRICAL]` | `PREREGISTRATION.md`, `DEVIATIONS.md`, `results/qgtl_qrng_analysis.json` |
+
+- **Preprint PDF:** [dist/Donahue_2026_spectral_eclipse_frontier.pdf](dist/Donahue_2026_spectral_eclipse_frontier.pdf)
+- **Standalone arXiv Source Tarball:** [dist/arxiv_submission.tar.gz](dist/arxiv_submission.tar.gz)
+- **Interactive Observatory & Lean Blueprint:** [https://0thernes.github.io/spectral-eclipse-frontier/](https://0thernes.github.io/spectral-eclipse-frontier/)
+- **Mega-Atlas Cross-Check:** `0 / 2,000` Mega-Atlas grand problems claimed ([docs/MEGA_ATLAS_CROSSCHECK.md](docs/MEGA_ATLAS_CROSSCHECK.md)).
+
+---
+
+## Quickstart
+
+```bash
+# 1. Verify all 10 Lean 4.35.0 theorems, Palomar Challenge/Solution bridge, Batteries linter & 572-theorem axiom audit
+cd lean && lake exe cache get && lake build SpectralEclipse Challenge Solution VerifyAxioms
+lake env lean VerifyAxioms.lean
+lake exe runLinter SpectralEclipse Solution
+cd ..
+
+# 2. Install pinned Python environment + editable package and run the full verification ladder (22 tests + 1,000-case Hypothesis)
+python -m pip install -r requirements.txt
+python -m pip install --no-deps -e .
+python -m pytest -v tests/
+
+# 3. Run the independent exact rational Sturm + 80-digit mpmath oracle & example quickstart
+python reference/exact_oracle.py
+python examples/quickstart.py
+
+# 4. Run 100% B13 mutation audit, live citation/retraction audit, axiom-sync, manifest & timestamp checks
+python scripts/mutation_audit.py
+python scripts/check_citations.py
+python scripts/check_readme_axioms.py --require-exhaustive
+python scripts/generate_manifest.py --verify
+python scripts/stamp_timestamps.py --verify
+```
+
+See [justfile](justfile) and [REPLICATION.md](REPLICATION.md) for single-command recipes covering all 8 polyglot/quantum engines (AVX2 NASM Assembly, ISO C11, ISO C++20, Safe Rust, Zig exact $\mathbb{Q}$, Eshkol v1.3.6 native AD, Moonlab 32-dim 5-qubit WASM, and vendored QGTL/QRNG).
+
+---
+
+## Usage
+
+```python
+import math
+from spectral_eclipse import (
+    FLOAT64_CANCELLATION_MARGIN,
+    detect_real_ese,
+    persymmetric_weights,
+    reconstruct_persymmetric_jacobi,
+    return_amplitude,
+    target_amplitude,
+)
+
+# Example 1: Conjecture 4.1 ESE witness {0, +-3, +-4, +-5}
+chain7 = reconstruct_persymmetric_jacobi([-5, -4, -3, 0, 3, 4, 5])
+has_ese, tau = detect_real_ese(chain7)
+print(f"7x7 ESE={has_ese}, tau={tau:.6f}, QSL={chain7.qsl_bound:.6f}, b0^2={chain7.b0_sq:.4f}")
+
+# Example 2: Theorem 9 staggered-field non-symmetric J_{1,4} {0, 1, 4, 9, 10}
+j14 = reconstruct_persymmetric_jacobi([0, 1, 4, 9, 10])
+print(f"J14 |A(pi/3)| = {abs(return_amplitude(j14, math.pi / 3)):.3e}")
+print(f"J14 |T(pi)|   = {abs(target_amplitude(j14, math.pi)):.12f}")
+print(f"B20 guard     = {FLOAT64_CANCELLATION_MARGIN:.1e}")
+
+# Example 3: Boundary validation (non-strictly-increasing spectra raise ValueError)
+try:
+    persymmetric_weights([0.0, 1.0, 1.0, 2.0])
+except ValueError as exc:
+    print(f"Rejected invalid spectrum: {exc}")
+```
+
+---
+
+## Verbatim Lean 4.35.0 Axiom Audit (`results/lean-axioms-all.log`)
+
+Verified automatically against CI and committed logs by `python scripts/check_readme_axioms.py --require-exhaustive`:
+
+```text
+'SpectralEclipse.schrodinger_solution_fidelity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.even_hasESE_of_min_ge_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.dichotomy_4x4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.dichotomy_5x5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.dichotomy_6x6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.conjecture_4_1_7x7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.conjecture_4_1_7x7_unreduced' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.even_rupture_8x8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.odd_critical_9x9_no_ESE' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.odd_rupture_11x11_threshold' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.cluster_self_gap_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.universal_phase_transition_3R_plus_2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.theorem_9_nonsymmetric_family' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.jacobi_energy_variance_eq_b0_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.spectral_variance_eq_b0_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.mandelstam_tamm_ese_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ese_ete_duality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_1_4x4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_2_5x5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_3_6x6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_4_conjecture_4_1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_4_conjecture_4_1_unreduced' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_5_even_rupture_8x8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_6_critical_9x9' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_7_odd_rupture_11x11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_8_universal_3R_plus_2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_9_nonsymmetric_family' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_10a_qsl_and_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_10b_ese_ete_duality' depends on axioms: [propext, Classical.choice, Quot.sound]
+ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 572 theorems across SpectralEclipse — 0 disallowed axioms.
+```
+
+---
+
+## Polyglot & Quantum Engine Matrix (0 Mismatches)
+
+| # | Engine | Location | Verified Role |
+| :-: | :--- | :--- | :--- |
+| 1 | **NASM x86-64 AVX2+FMA + ISO C11** | `engines/asm/`, `engines/c/` | Hardware SIMD tridiagonal SpMV & Chebyshev propagation; $10^5$-iter Hochstadt fuzz |
+| 2 | **ISO C++20** | `engines/cpp/` | Direct QL eigendecomposition & matrix exponential ($16$ chains, B20 cancellation guard) |
+| 3 | **Safe Rust** (`#![forbid(unsafe_code)]`) | `engines/rust/` | Multi-core (`std::thread`) $(R,r)$ phase-diagram scanner ($R=2\dots 5$) + $965$ random QSL chains |
+| 4 | **Zig 0.17.0 Exact $\mathbb{Q}$** | `engines/zig/` | Zero-float arbitrary-precision rational Hochstadt reconstruction ($J_{1,4}$ exact) |
+| 5 | **Eshkol v1.3.6 Native AD** | `engines/eshkol/` | Compiler-native forward-mode AD Newton roots & triple-nested $H'''(16)$ |
+| 6 | **Moonlab WASM (32-dim)** | `engines/moonlab/` | Full 5-qubit many-body $XY+Z$ Trotter circuit on vendored `moonlab.wasm` |
+| 7 | **Vendored QGTL + Quantum-RNG** | `engines/qgtl_qrng/` | Real `differential_geometry.c` $g_{tt}=b_0^2$ + pre-registered 4-arm QRNG study |
+| 8 | **SymPy Sturm + 80-digit `mpmath`** | `reference/exact_oracle.py` | Exact rational square-free Sturm root isolation + 80-digit $\tau_{\mathrm{ESE}}$ |
+
+---
+
+## Accessibility & i18n
+
+All publication figures use the Okabe–Ito colorblind-safe palette with direct curve annotations, and the GitHub Pages observatory (`web/index.html`, `web/observatory.js`, `web/blueprint/index.html`) implements WCAG 2.2 AA contrast, skip-navigation links, keyboard focus rings, ARIA live regions, and strict Content Security Policy headers (`script-src 'self'`). Text and documentation are authored in UTF-8 English (`en-US`).
+
+## Maintenance Status
+
+**Active (`v1.1.0`).** This repository is maintained by Alexander S. Donahue (`0_0@0thernes.art`) as part of the [0thernes-research-archive](https://github.com/0thernes/0thernes-research-archive) (`0TH-2026-024`). See [ROADMAP.md](ROADMAP.md), [ERRATA.md](ERRATA.md), [DEVIATIONS.md](DEVIATIONS.md), [CLAIMS.md](CLAIMS.md), [LIMITATIONS.md](LIMITATIONS.md), [HARDENING_INDEX.md](HARDENING_INDEX.md), and [HARDENING_LOG.md](HARDENING_LOG.md).
+
+## License
+
+Dual-licensed:
+- **Code, Lean 4 proofs, engines, scripts, tests, CI:** [Apache License 2.0](LICENSE)
+- **Manuscript, PDFs, figures, documentation, datasets:** [Creative Commons Attribution 4.0 International (CC-BY-4.0)](LICENSE-DOCS)
+
+See [NOTICE](NOTICE) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for vendored MIT/Apache-2.0 libraries (`moonlab`, `qgtl`, `quantum_rng`).
+
+---
+
+## Claims Registry & Falsification Protocol (CLAIMS.md)
+
+# Claims Registry & Explicit Falsification Protocol
+
+Every scientific, mathematical, and empirical claim in **The Spectral Eclipse Frontier** (`v1.1.0`) is enumerated below with its exact verification tag, executable verification command, and concrete falsification criterion (**What Would Prove Us Wrong**).
+
+## Verification Tag Taxonomy
+
+- **`[LEAN-6K]`**: Machine-checked inside the Lean 4.35.0 kernel (`autoImplicit = false`, zero `sorry`, zero custom axioms, strictly `[propext, Classical.choice, Quot.sound]`, zero Batteries `runLinter` errors), backed by isolated Mathlib-only `Challenge.lean` / `Solution.lean` targets replayed across six independent checker runs (`lake comparator --config comparator.json --paranoid`) plus a live `sorry`-tamper negative comparator CI gate.
+- **`[EXACT-COMP]`**: Verified by exact rational arithmetic over $\mathbb{Q}$ (`reference/exact_oracle.py` SymPy square-free Sturm root isolation, `engines/zig` arbitrary-precision rational Hochstadt engine) or exhaustive deterministic integer scans (`engines/rust`, `engines/cpp`).
+- **`[EMPIRICAL]`**: Pre-registered computational experiment locked in `PREREGISTRATION.md` (commit `1dac632`) before data generation (with post-hoc optimizer bug-fix Deviation #1 logged in `DEVIATIONS.md`), analyzed via paired exact permutation tests and Holm–Bonferroni FWER control.
+
+## Master Claims Table (C1–C12)
+
+| Claim | Statement | Tag | Primary Evidence / Artifact | Falsification Condition (What Would Prove Us Wrong) |
+| :--- | :--- | :--- | :--- | :--- |
+| **C1** | Complete $4\times 4$ dichotomy: $\neg\mathrm{ESE}\iff p=1$ | `[LEAN-6K]` | `SpectralEclipse.dichotomy_4x4` (`target_theorem_1_4x4`) | A reduced $4\times 4$ PST chain with $p=1$ exhibiting $A_4(\tau)=0$ on $(0,\pi)$, or $p\ge 3$ remaining strictly positive on $(0,\pi)$. |
+| **C2** | Complete $5\times 5$ dichotomy: $\neg\mathrm{ESE}\iff y=1$ | `[LEAN-6K]` | `SpectralEclipse.dichotomy_5x5` (`target_theorem_2_5x5`) | A reduced $5\times 5$ symmetric PST chain violating $\neg\mathrm{ESE}\iff y=1$. |
+| **C3** | Complete $6\times 6$ even dichotomy: $\neg\mathrm{ESE}\iff p=1$ + universal even converse | `[LEAN-6K]` | `SpectralEclipse.dichotomy_6x6`, `even_hasESE_of_min_ge_three` | Any $6\times 6$ chain with $p=1$ crossing zero on $(0,\pi)$, or any even $2n$ chain with $p_1\ge 3$ avoiding zero. |
+| **C4** | Complete resolution of **Conjecture 4.1** (`arXiv:2507.18767v1`), reduced & unreduced real-scaled | `[LEAN-6K]` | `conjecture_4_1_7x7`, `conjecture_4_1_7x7_unreduced` | Any $7\times 7$ symmetric PST chain with $x\mid y, x\mid z$ having ESE, or with $x\nmid y$ or $x\nmid z$ avoiding ESE. |
+| **C5** | Sharp even rupture at $N_{\mathrm{crit}}^{\mathrm{even}} = 8$ ($\forall m \ge 1$) | `[LEAN-6K]` | `SpectralEclipse.even_rupture_8x8` | Any integer $m\ge 1$ for which $A_8(1, 4m+3, 4m+5, 4m+7; 2\pi/(4m+5)) \ge 0$. |
+| **C6** | **Critical $9\times 9$ No-ESE Theorem**: $\forall 1<b<c<d$ alternating parity, $A_9(1,b,c,d;t)>0$ on $[0,\pi)$ | `[LEAN-6K]` | `SpectralEclipse.odd_critical_9x9_no_ESE` + 19 Bernstein certs | Any alternating-parity triple $(b,c,d)$ with $1<b<c<d$ and any $t\in[0,\pi)$ with $A_9(1,b,c,d;t)\le 0$. |
+| **C7** | Sharp odd rupture at $N_{\mathrm{crit}}^{\mathrm{odd}} = 11$: $S(m)$ has ESE $\iff m\ge 6$ ($M^*=12$) | `[LEAN-6K]` | `SpectralEclipse.odd_rupture_11x11_threshold` | Any $m\in\{1..5\}$ crossing zero on $(0,\pi)$ or any $m\ge 6$ remaining nonnegative on $(0,\pi)$. |
+| **C8** | Universal $(R,r)$ phase transition at $r_{\mathrm{crit}}(R)=R+1$, $N_{\mathrm{crit}}(R)=3R+2$ | `[LEAN-6K]` | `universal_phase_transition_3R_plus_2`, `cluster_self_gap_sum` | Failure of $\Phi(R,r,M)$ to vanish for $r<R$, stabilize at $2^{-(R-1)}$ for $r=R$, or diverge for $r\ge R+1$. |
+| **C9** | Infinite non-symmetric staggered-field $5\times 5$ complex ESE family $J_{a,b}$ | `[LEAN-6K]` | `theorem_9_nonsymmetric_family` | Any odd $a$ ($3\nmid a$) and $b=a+6k+3$ where $J_{a,b}$ fails persymmetry, PST $\psi_4(\pi)=1$, or complex ESE $\psi_0(\pi/3)=0\in\mathbb{C}$. |
+| **C10** | Exact QGTL metric $g_{tt}=b_0^2$, Mandelstam–Tamm QSL $\tau\ge\pi/(2|b_0|)$, & ESE–ETE duality | `[LEAN-6K]` | `jacobi_energy_variance_eq_b0_sq`, `mandelstam_tamm_ese_bound`, `ese_ete_duality` | Any real Jacobi chain with $\mathrm{Var}_{e_0}(J)\ne b_0^2$, any ESE time $\tau < \pi/(2|b_0|)$, or any PST chain breaking $|\psi_{N-1}(T_0-t)|=|\psi_0(t)|$. |
+| **C11** | Finite-$M$ critical thresholds $M^*(4)=30$ ($N=14$), $M^*(5)=78$ ($N=17$) | `[EXACT-COMP]` | `engines/rust/src/main.rs`, `engines/cpp/se_propagator.cpp` | Exact Sturm root count disagreeing with $m=15$ ($N=14$) or $m=39$ ($N=17$). |
+| **C12** | Pre-registered QRNG static-disorder study: H1–H3 significant ($p_{\mathrm{Holm}}=0.0004$), H4 clean null ($p_{\mathrm{Holm}}=0.9855$) | `[EMPIRICAL]` | `PREREGISTRATION.md`, `DEVIATIONS.md`, `results/qgtl_qrng_analysis.json` | Independent re-execution of `engines/qgtl_qrng/se_qgtl_qrng` + `scripts/analyze_qrng_study.py` yielding contradictory statistics or contradicting Holm FWER verdicts. |
+
+## Explicit Falsification Protocol (How to Attack This Repo)
+
+1. **Formal Proof Attack:** Inspect `lean/Challenge.lean` (290 lines, Mathlib-only) line by line to confirm definitions match textbook Jacobi matrices, Schrödinger evolution, and Hochstadt amplitudes; then run `cd lean && lake comparator --config comparator.json --paranoid`, `lake env lean VerifyAxioms.lean`, and `lake exe runLinter SpectralEclipse Solution`.
+2. **Definition-Fidelity & Tamper Attack:** Inspect `lean/SpectralEclipse/NonVacuity.lean` (18 witnesses) and `lean/SpectralEclipse/AdversarialTests.lean` (5 refutations), and run `python scripts/test_lean_negative.py`.
+3. **Numerical / Physical Attack:** Run `python scripts/run_polyglot_parity.py` to independently compare all 8 engines (including full 32-dim 5-qubit Moonlab WASM and zero-float Zig $\mathbb{Q}$) against the 80-digit Sturm oracle.
+4. **Mutation Attack:** Run `python scripts/mutation_audit.py` to verify 10/10 semantic mutants are killed by `tests/test_all.py`.
+
+---
+
+## Limitations & Epistemic Boundaries (LIMITATIONS.md)
+
+# Limitations, Scope Boundaries, and Epistemic Honesty
+
+## 1. Formal Proof Boundary vs. Computational & Empirical Scope
+
+- **Machine-Checked in Lean 4.35.0 (`[LEAN-6K]`):** Theorems 1–10 (all 12 isolated targets in `lean/Challenge.lean`, 18 non-vacuity witnesses, and 5 adversarial refutations; **572 audited theorem constants** strictly within `[propext, Classical.choice, Quot.sound]`, zero Batteries `runLinter` errors, and a live `sorry`-tamper negative comparator CI gate).
+- **Exact Computational (`[EXACT-COMP]`):** Finite-$M$ critical rupture thresholds for higher Krawtchouk cores $R=4$ ($N=14, M^*=30$) and $R=5$ ($N=17, M^*=78$) are verified by multi-core Rust (`std::thread`), C++20, and SymPy rather than Lean 4 kernel certificates.
+- **Empirical (`[EMPIRICAL]`):** The 4-arm QRNG static-disorder robustness study (`PREREGISTRATION.md`, `DEVIATIONS.md`, `results/qgtl_qrng_analysis.json`) is a finite-sample ($K=30$ paired seeds per arm) empirical simulation under uniform static diagonal disorder $\varepsilon \in [0, 0.10]$ scaled by mean hopping $\bar{b}$. It does not prove analytical disorder thresholds for arbitrary noise models (e.g., off-diagonal coupling jitter or time-dependent dephasing).
+
+## 2. Honest Pre-Registered Null Result (Hypothesis H4) & Deviation #1
+
+In the pre-registered QRNG study locked in root commit `1dac632`, Arm H4 tested whether the non-symmetric staggered-field complex ESE chain $J_{1,4}$ maintains a deeper eclipse floor under $\varepsilon = 0.05$ static diagonal disorder than the $5\times 5$ Krawtchouk control. Following the `v1.1.0` optimizer fix documented in `DEVIATIONS.md` (which eliminated boundary trapping at $\varepsilon = 0$ so all four arms evaluate to exact $0.000$ in the clean limit), **H4 remains a clean null result** (`treat_median = 0.01626` vs. `ctrl_median = 0.01377`, `mean_diff = +0.00007`, 95% bootstrap CI `[-0.00619, +0.00689]`, Cohen's $d_z = 0.00$, Cliff's $\delta = -0.078$, $p_{\mathrm{Holm}} = 0.9855$). This reflects genuine topological physics: a complex zero in $\mathbb{C}$ is codimension-2 and lifts linearly as $O(\varepsilon)$ ($\beta \approx 0.83$), whereas real sign changes in symmetric chains (H1–H3, all $p_{\mathrm{Holm}} = 0.0004$) are topologically protected codimension-1 crossings on $\mathbb{R}$.
+
+## 3. Review, Authorship, Conflict of Interest, and Export Control
+
+- **Preprint Status:** This work is an **unrefereed research preprint** (`v1.1.0`). It has not been externally peer-reviewed or submitted to a journal, arXiv, Zenodo, or the Palomar Registry.
+- **AI Transparency:** Analytical derivation, Lean 4.35.0 proof engineering, polyglot verification scripts, and manuscript drafting were AI-assisted (Google Gemini / Antigravity) under sole human direction and audit oversight (Alexander S. Donahue, Independent Researcher, ORCID `0009-0006-8168-9648`).
+- **Open Human Verification:** Independent human line-by-line review of all 12 Lean files and external independent operator replication (`B44`) remain **OPEN**.
+- **Mega-Atlas Boundary:** `0 / 2,000` Mega-Atlas grand problems are retired or claimed (`docs/MEGA_ATLAS_CROSSCHECK.md`). The resolved published conjecture is Conjecture 4.1 of Escobar, Garcia, and Minenkova (`arXiv:2507.18767v1`).
+- **Conflict of Interest & Funding:** The author declares no competing financial or non-financial interests; this is self-funded independent research.
+- **Export-Control Self-Screen:** This repository contains fundamental mathematical research in spectral theory and linear algebra intended for open scientific dissemination and falls within the fundamental research exclusion of 15 CFR 734.8. It contains no cryptographic primitives, weapons/munitions models, or export-controlled hardware designs.
+
+## 4. Real vs. Metaphor
+
+- **"Spectral Eclipse"** is a descriptive metaphor for the strictly defined mathematical predicate **Early State Exclusion (ESE)**: $\exists \tau \in (0, T_0)$ such that $\langle e_0, e^{-iJt} e_0 \rangle = 0$.
+- **"Rupture"** and **"Phase Transition"** denote exact mathematical transitions in the sign of $A_N(t)$ and the asymptotic scaling exponent of the cluster-to-core Hochstadt weight ratio $\Phi(R, r, M) \propto M^{r-R}$ at $r = R+1$; no thermodynamic limit in physical particle number is claimed.
+- **Quantum-RNG (`third_party/quantum_rng`)** is a deterministic software CSPRNG/quantum-inspired entropy engine tested against NIST statistical suites, not a live physical optical beam-splitter hardware device.
+
+---
+
+## Pre-Registration Protocol (PREREGISTRATION.md)
+
+# Pre-Registration: Seeded QRNG Diagonal-Disorder Robustness of Early State Exclusion
+
+- **Document status:** Locked prior to running the disorder Monte Carlo experiment (Build Standard v1.2.0 item B32).
+- **Author:** Alexander S. Donahue (ORCID `0009-0006-8168-9648`, Independent Researcher, Spokane, WA, USA)
+- **Date locked:** 2026-11-26 (committed to `main` before any `engines/qgtl_qrng` experiment code is compiled or executed).
+- **Epistemic tag:** `[NUM-APPROX]` (experimental statistical robustness study; completely separate from our exact `[LEAN-6K]` theorems).
+
+## 1. Research Question
+
+Exact Early State Exclusion (ESE) is an exact zero $\mathcal{A}(\tau) = \langle e^{-i J \tau} \mathbf{e}_0, \mathbf{e}_0 \rangle = 0$ at an interior time $\tau \in (0, T_0)$ for an ideal persymmetric Jacobi spin chain $J$. Under realistic fabrication noise (zero-mean random static on-site diagonal disorder $J_\varepsilon = J + \varepsilon \operatorname{diag}(\xi_0, \dots, \xi_{N-1})$ with $\xi_k \sim \mathrm{Uniform}(-1, 1)$ drawn from the vendored Tsotchke Quantum-RNG stream `third_party/quantum_rng/`), exact zeros lift into nonzero return-probability minima
+$$m(J_\varepsilon) := \min_{t \in [0.05 T_0, 0.95 T_0]} \left| \langle e^{-i J_\varepsilon t} \mathbf{e}_0, \mathbf{e}_0 \rangle \right|.$$
+We test whether genuine **rupture / staggered ESE chains** retain strictly deeper interior amplitude eclipses under diagonal disorder than **no-ESE control chains** of identical or matched dimension and identical spectral bandwidth normalization.
+
+## 2. Primary Endpoints & Arms (Fixed Before Execution)
+
+Every chain is normalized by its Frobenius spectral radius scale so the perturbation ratio $\varepsilon \in \{0.00, 0.01, 0.02, 0.05, 0.10\}$ is dimensionless relative to the chain's average hopping strength $\bar{b} = \frac{1}{N-1}\sum_{k=0}^{N-2} b_k$.
+
+Four pre-specified comparisons (paired on identical QRNG seed $s \in \{1, 2, \dots, 30\}$, with $N_{\mathrm{seeds}} = 30$ independent paired replicates per disorder level $\varepsilon$, using 500-point interior grid refined by golden-section search):
+
+1. **H1 (7x7 Conjecture 4.1 Dichotomy — Rupture vs. Control, $N = 7$):**
+   - *Treatment (ESE):* $7\times 7$ coprime chain $\{0, \pm 3, \pm 4, \pm 5\}$ (minimal odd coprime ESE witness, $\lambda_1 = 3 \nmid 4, 5$).
+   - *Control (No ESE):* $7\times 7$ divisibility chain $\{0, \pm 1, \pm 2, \pm 5\}$ ($\lambda_1 = 1$, proven no ESE by Theorem 4).
+   - *Directional hypothesis:* At $\varepsilon = 0.05$, median $m_{\mathrm{treat}} < m_{\mathrm{ctrl}}$ (strictly deeper return-amplitude minimum).
+2. **H2 (8x8 Sharp Even Rupture vs. 6x6 Even Critical Control):**
+   - *Treatment (ESE):* $8\times 8$ minimal even rupture chain $\{\pm\frac{1}{2}, \pm\frac{7}{2}, \pm\frac{9}{2}, \pm\frac{11}{2}\}$ ($p_1 = 1$, Theorem 5).
+   - *Control (No ESE):* $6\times 6$ even critical chain $\{\pm\frac{1}{2}, \pm\frac{5}{2}, \pm\frac{7}{2}\}$ ($p_1 = 1$, Theorem 3).
+   - *Directional hypothesis:* At $\varepsilon = 0.05$, median $m_{\mathrm{treat}} < m_{\mathrm{ctrl}}$.
+3. **H3 (11x11 Exact Threshold $M^* = 12$ — Supercritical $m=6$ vs. Subcritical $m=5$):**
+   - *Treatment (ESE):* $11\times 11$ supercritical chain $\{0, \pm 1, \pm 12, \pm 13, \pm 14, \pm 15\}$ ($m = 6$, Theorem 7).
+   - *Control (No ESE):* $11\times 11$ subcritical chain $\{0, \pm 1, \pm 10, \pm 11, \pm 12, \pm 13\}$ ($m = 5$, Theorem 7).
+   - *Directional hypothesis:* At $\varepsilon = 0.05$, median $m_{\mathrm{treat}} < m_{\mathrm{ctrl}}$.
+4. **H4 (5x5 Staggered Non-Symmetric Complex ESE $J_{1,4}$ vs. 5x5 Krawtchouk Control):**
+   - *Treatment (Complex ESE):* $5\times 5$ staggered non-symmetric chain $J_{1,4}$ with spectrum $\{0, 1, 4, 9, 10\}$ (Theorem 9, exact complex eclipse at $\tau = \pi/3$).
+   - *Control (No ESE):* $5\times 5$ symmetric equidistant Krawtchouk chain $\{0, \pm 1, \pm 2\}$ (Theorem 2, proven no ESE).
+   - *Directional hypothesis:* At $\varepsilon = 0.05$, median $m_{\mathrm{treat}} < m_{\mathrm{ctrl}}$.
+
+## 3. Fixed Statistical Analysis Plan
+
+- **Sample size:** $K = 30$ paired QRNG seeds (`seed = 1..30`) per comparison (each seed draws fresh independent disorder vectors via `quantum_rng` SHA-256/ChaCha-mixed deterministic entropy stream).
+- **Primary test:** Two-sided exact / $10{,}000$-sign-flip paired permutation test on $d_s = m_{\mathrm{ctrl}}(s) - m_{\mathrm{treat}}(s)$ at $\varepsilon = 0.05$.
+- **Multiple-comparison correction:** Holm-Bonferroni across the family of $4$ primary hypotheses ($\alpha_{\mathrm{FWER}} = 0.05$).
+- **Effect sizes & uncertainty:** Report median difference, Hodges-Lehmann / mean difference, Cohen's $d_z$ (paired), Cliff's $\delta$, and 10,000-resample percentile bootstrap 95% confidence intervals.
+- **No p-hacking / stopping rules:** All 4 comparisons and all 5 disorder levels $\varepsilon \in \{0.00, 0.01, 0.02, 0.05, 0.10\}$ will be reported in full regardless of outcome, including any null or reversed effects.
+- **Secondary exploratory metric (labeled exploratory):** Return-probability scaling $m(\varepsilon) \propto \varepsilon^\beta$ and QGTL speed-limit ratio $\eta(\varepsilon) = \frac{\pi}{2 b_0 \tau_{\min}(\varepsilon)}$.
+
+---
+
+## Pre-Registration Deviations Log (DEVIATIONS.md)
+
+# Pre-Registration Deviations Log (Append-Only — Playbook v1.3 #18)
+
+- **Locked Pre-Registration File:** [`PREREGISTRATION.md`](PREREGISTRATION.md)
+- **Root Lock Commit:** `1dac632` (2026-11-26, committed before any `engines/qgtl_qrng` experiment code was compiled or executed)
+- **Policy:** `PREREGISTRATION.md` is NEVER edited retroactively. Every deviation, numerical bug fix, or post-registration clarification is appended chronologically below with full before-and-after disclosure.
+
+---
+
+## Deviation #1 (`v1.1.0`, 2026-11-27): Numerical Optimizer Bug Fix in `compute_interior_min` (Endpoint Unchanged)
+
+- **Category:** Numerical implementation bug fix (ZERO change to hypotheses H1–H4, chains, disorder levels $\varepsilon \in \{0.00, 0.01, 0.02, 0.05, 0.10\}$, $K = 30$ paired QRNG seeds, primary window $[0.05\,T_0, 0.95\,T_0]$, permutation test, or Holm–Bonferroni $\alpha = 0.05$ FWER control).
+- **Bug Discovered During Cycle 2 Hardening:** In `v1.0.0`, `compute_interior_min` (`engines/qgtl_qrng/se_qgtl_qrng.c`) evaluated $|A(t)|$ on a 500-point uniform grid over $[0.05\,T_0, 0.95\,T_0]$ and ran 50-step golden-section refinement **only around the single lowest grid sample**. Because PST chains satisfy $|A(t)| = O((\pi - t)^{N-1})$ near $t = \pi$, the right-boundary sample $t = 0.95\,\pi$ was occasionally smaller than the discrete 500-point grid sample nearest a sharp interior zero $\tau_{\mathrm{ESE}}$ (spacing $\Delta t = 0.90\pi/500 \approx 5.65 \times 10^{-3}$). Consequently, at $\varepsilon = 0$ (ideal zero-disorder baseline), the `v1.0.0` optimizer trapped on the right boundary $t = 0.95\pi$ and reported $m(J_{1,4}, \varepsilon = 0) = 1.655 \times 10^{-3}$ instead of the exact mathematical value $m(J_{1,4}, 0) = |A(\pi/3)| = 0$.
+- **Fix Applied (`v1.1.0`):** `compute_interior_min` still evaluates the exact same 500-point grid on $[0.05\,T_0, 0.95\,T_0]$, but now runs 50-step golden-section refinement on **every local-minimum bracket** ($v_i \le v_{i-1}$ and $v_i \le v_{i+1}$, plus endpoints) and takes the true global minimum over $[0.05\,T_0, 0.95\,T_0]$.
+- **Impact Comparison (`v1.0.0` Single-Bracket vs. `v1.1.0` All-Local-Minima-Refined):**
+
+| Arm | Metric | `v1.0.0` (Single-Bracket) | `v1.1.0` (All-Local-Minima Fixed) | Qualitative Verdict Changed? |
+| :--- | :--- | :---: | :---: | :---: |
+| **H1** ($7\times 7$) | $\varepsilon = 0$ treat min | $8.036 \times 10^{-6}$ | **$0.000 \times 10^{0}$** | Fixed artifact |
+| **H1** ($7\times 7$) | $\varepsilon = 0.05$ treat / ctrl med, $d_z$, $\delta$, $p_{\mathrm{Holm}}$ | $0.00233$ / $0.01539$, $+0.91$, $+0.542$, $0.0004$ | $0.00233$ / $0.01539$, $+0.91$, $+0.542$, **$0.0004$** | **No** (SIG) |
+| **H2** ($8\times 8$ vs $6\times 6$) | $\varepsilon = 0$ treat min | $7.442 \times 10^{-7}$ | **$0.000 \times 10^{0}$** | Fixed artifact |
+| **H2** ($8\times 8$ vs $6\times 6$) | $\varepsilon = 0.05$ treat / ctrl med, $d_z$, $\delta$, $p_{\mathrm{Holm}}$ | $0.00347$ / $0.10373$, $+14.99$, $+1.000$, $0.0004$ | $0.00347$ / $0.10373$, $+14.68$, $+1.000$, **$0.0004$** | **No** (SIG) |
+| **H3** ($11\times 11$ $m=6$ vs $5$) | $\varepsilon = 0$ treat min | $5.391 \times 10^{-7}$ | **$0.000 \times 10^{0}$** | Fixed artifact |
+| **H3** ($11\times 11$ $m=6$ vs $5$) | $\varepsilon = 0.05$ treat / ctrl med, $d_z$, $\delta$, $p_{\mathrm{Holm}}$ | $0.00752$ / $0.00995$, $+0.75$, $+0.238$, $0.0008$ | $0.00685$ / $0.00995$, $+0.83$, $+0.247$, **$0.0004$** | **No** (SIG, stronger) |
+| **H4** ($5\times 5$ $J_{1,4}$ vs Kraw.) | $\varepsilon = 0$ treat min | $1.655 \times 10^{-3}$ | **$0.000 \times 10^{0}$** | Fixed artifact |
+| **H4** ($5\times 5$ $J_{1,4}$ vs Kraw.) | $\varepsilon = 0.05$ treat / ctrl med, $d_z$, $\delta$, $p_{\mathrm{Holm}}$ | $0.01626$ / $0.01377$, $+0.00$, $-0.078$, $0.9880$ | $0.01626$ / $0.01377$, $+0.00$, $-0.078$, **$0.9855$** | **No** (Honest NULL) |
+
+- **Conclusion:** Fixing the optimizer bug eliminates all four $\varepsilon = 0$ discretization artifacts cleanly without altering a single pre-registered hypothesis decision (H1–H3 remain strongly significant at $p_{\mathrm{Holm}} = 0.0004$; H4 remains a clean pre-registered null at $p_{\mathrm{Holm}} = 0.9855$).
+
+---
+
+## Statement-Fidelity Audit (docs/statement-fidelity.md)
+
+# Statement-Fidelity Audit
+
+This document maps every mathematical theorem stated in `paper/main.tex` to its exact Lean 4.35.0 definition and theorem in `lean/SpectralEclipse/`, its isolated Mathlib-only target in `lean/Challenge.lean`, its concrete witness in `lean/SpectralEclipse/NonVacuity.lean`, and its machine-checked refutation of false variants in `lean/SpectralEclipse/AdversarialTests.lean`.
+
+| Paper Theorem | Library Theorem (`SpectralEclipse.*`) | Isolated `Challenge.lean` Target | Non-Vacuity Witness (`NonVacuity.lean`) | Adversarial Refutation | Fidelity Notes |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Schrödinger Fidelity (§2)** | `schrodinger_solution_fidelity` | Direct definition of `spectralState` | `witness_J14_staggered_complex_ESE` | — | Literal ODE $d\psi_j/dt = -i(J\psi)_j$ on `jacobiMatrix` |
+| **Universal Even Converse (Thm. 3.2(1))** | `even_hasESE_of_min_ge_three` | Used inside `target_theorem_{1,3}` | `witness_{4x4,6x6}_ESE_*` | — | Holds for arbitrary even dimension $2n \ge 2$ |
+| **Theorem 1 ($4\times 4$)** | `dichotomy_4x4` | `target_theorem_1_4x4` | `witness_4x4_{noESE_1_3,ESE_3_5}` | `mutated_4x4_false_p3` (neg test) | Exact `↔` on reduced `amp4` |
+| **Theorem 2 ($5\times 5$)** | `dichotomy_5x5` | `target_theorem_2_5x5` | `witness_5x5_{noESE_1_2,ESE_3_4}` | — | Exact `↔` on reduced `amp5` |
+| **Theorem 3 ($6\times 6$)** | `dichotomy_6x6` | `target_theorem_3_6x6` | `witness_6x6_{noESE_1_3_5,ESE_3_5_7}` | — | Exact `↔` on reduced `amp6` |
+| **Theorem 4 (Conjecture 4.1, Reduced)** | `conjecture_4_1_7x7` | `target_theorem_4_conjecture_4_1` | `witness_7x7_{noESE_1_2_3,ESE_3_4_5}` | — | Literal match to `arXiv:2507.18767v1` Conj. 4.1 |
+| **Theorem 4 (Conjecture 4.1, Unreduced)** | `conjecture_4_1_7x7_unreduced` | `target_theorem_4_conjecture_4_1_unreduced` | `witness_7x7_unreduced_c2_3_6_9` | — | Arbitrary real scale $c>0$ & unreduced $(x,y,z)$ (witness $c=2, g=3$) |
+| **Theorem 5 ($8\times 8$ Rupture)** | `even_rupture_8x8` | `target_theorem_5_even_rupture_8x8` | `witness_8x8_rupture_m1` | `refute_even_8x8_naive_divisibility` | $\forall m\ge 1$, explicit witness $t_0=2\pi/(4m+5)$ |
+| **Theorem 6 (Critical $9\times 9$)** | `odd_critical_9x9_no_ESE` | `target_theorem_6_critical_9x9` | `witness_9x9_noESE_1_{2_3_4,20_21_22}` | — | Universal $\forall 1<b<c<d$ alternating parity |
+| **Theorem 7 ($11\times 11$, $M^*=12$)** | `odd_rupture_11x11_threshold` | `target_theorem_7_odd_rupture_11x11` | `witness_11x11_{subcrit_m5,supercrit_m6}` | `refute_odd_11x11_naive_divisibility`, `refute_11x11_threshold_m5` | Exact `↔ (6 ≤ m)` via SOS ($m\le 5$) + deg-8 poly ($m\ge 6$) |
+| **Theorem 8 (Universal $3R+2$)** | `universal_phase_transition_3R_plus_2`, `cluster_self_gap_sum` | `target_theorem_8_universal_3R_plus_2` | `witness_universal_3R_plus_2_R3` | — | Exact asymptotic `Tendsto` + critical bound $\le 1/2$ + exact $R=3 \implies 12$ |
+| **Theorem 9 (Non-Symmetric $J_{a,b}$)** | `theorem_9_nonsymmetric_family` | `target_theorem_9_nonsymmetric_family` | `witness_J14_staggered_complex_ESE` | `refute_5x5_nonsym_no_ESE_assumption` | Literal $5\times 5$ matrix `stagJacobi`, ODE, PST $\psi_4(\pi)=1$, complex ESE $\psi_0(\pi/3)=0$ |
+| **Theorem 10A (QGTL Metric & QSL)** | `jacobi_energy_variance_eq_b0_sq`, `spectral_variance_eq_b0_sq`, `mandelstam_tamm_ese_bound` | `target_theorem_10a_qsl_and_variance` | `witness_J14_qsl_variance` | `refute_qsl_saturation_for_J14` | Arbitrary dimension $n\ge 2$ & arbitrary discrete spectrum |
+| **Theorem 10B (ESE–ETE Duality)** | `ese_ete_duality` | `target_theorem_10b_ese_ete_duality` | `witness_J14_ese_ete_duality` | — | Exact $\forall t\in\mathbb{R}$ modulus identity (witness at $t=\pi/3$ on $J_{1,4}$) |
+
+## Axiom Verification Summary
+
+All **52** explicit `#print axioms` declarations (17 primary theorems + 18 non-vacuity witnesses + 5 adversarial refutations + 12 comparator targets) and all **572** theorem constants discovered by the `Lean.collectAxioms` metaprogram in `lean/VerifyAxioms.lean` depend strictly on `[propext, Classical.choice, Quot.sound]` with **0 disallowed axioms**, **0 `sorry`**, and **0 Batteries `runLinter` errors**.
+
+---
+
+## Mega-Atlas Boundary Cross-Check (docs/MEGA_ATLAS_CROSSCHECK.md)
+
+# Unsolved Problems Mega-Atlas Cross-Check
+
+- **Atlas Reference:** `0thernes/unsolved-problems-mega-atlas` (`v2.9.0`, **2,000 catalogued open problems**, of which `1,712` appear as structured `P(id=...)` entries across `src/v2_data/m01..m10*.py` alongside the remaining catalogued records)
+- **Grand Mega-Atlas Open Problems Retired by This Repository:** **`0 / 2,000`**
+- **Archive Resolution Class:** `SOLVED_SUB_CONJECTURE` (plus a linked 9-theorem new mathematical-physics frontier suite)
+
+## 1. Exact Scope & Epistemic Boundary
+
+This repository (**`spectral-eclipse-frontier`**, `v1.1.0`) completely resolves an explicit published open conjecture from the arXiv mathematical-physics literature — **Conjecture 4.1 of Escobar, Garcia, and Minenkova (`arXiv:2507.18767v1`, *"Early State Exclusion in 7-Qubit Spin Chains"*)** — in both reduced integer-spectrum and arbitrary real-scaled unreduced forms, and establishes nine linked theorems on exact Early State Exclusion (ESE) phase transitions, critical dimensions ($N = 8, 9, 11$), the universal $N_{\mathrm{crit}}(R) = 3R + 2$ spectral-cluster law, the infinite non-symmetric staggered-field complex-amplitude family $J_{a,b}$, and exact QGTL / Mandelstam–Tamm quantum speed limits and ESE–ETE duality.
+
+**Zero (`0 / 2,000`) overarching grand problems in the Unsolved Problems Mega-Atlas are retired by this work.**
+
+## 2. Adjacent Mega-Atlas Problem Entries (Thematic Context Only)
+
+A programmatic scan of `src/v2_data/m*.py` in `unsolved-problems-mega-atlas` identified the following thematically adjacent entries; every one of them remains **100% OPEN**:
+
+| Mega-Atlas ID | Problem Title | Relationship to `spectral-eclipse-frontier` | Status |
+|---|---|---|---|
+| `FLD-057` | *Thermodynamic Uncertainty Relations (TURs) & Quantum Speed Limits in Driven Open Systems* | Our Theorem 10 proves an exact closed-system unitary Fubini–Study / Mandelstam–Tamm speed limit ($\tau_{\mathrm{ESE}} \ge \pi/(2b_0)$) for time-independent Jacobi Hamiltonians; driven open-system TURs/QSLs remain untouched. | **OPEN** |
+| `QC-038` | *Quantum Thermodynamics of Finite-Size Information Engines & Coherent Work Extraction Bounds* | Thematic overlap via finite-size quantum state-transfer Hamiltonians and quantum geometric tensor metrics only. | **OPEN** |
+
+## 3. Open Questions Remaining Within the ESE Domain Itself
+
+1. Complete analytic converse classification of $9\times 9$ symmetric PST chains when $\lambda_1 \ge 3$ and $\gcd(\lambda_1,\lambda_2,\lambda_3,\lambda_4) = 1$ (verified computationally with zero counterexamples; analytic proof of all divisibility subcases remains open).
+2. Analytic proof or counterexample for non-symmetric $4\times 4$ PST chains (exhaustive scan up to gap 31 found zero ESE instances).
+3. Extension of the staggered-field complex-amplitude family $J_{a,b}$ to higher odd lengths $N \ge 7$ and non-persymmetric spin networks.
+
+---
+
+## Adversarial Hardening Log (HARDENING_LOG.md)
+
+# Adversarial Hardening Log (`B45`)
+
+Master audit trail documenting **two complete 3-cycle adversarial hardening passes** across every directory, Lean proof module, polyglot engine, statistical script, figure, manuscript section, web portal asset, and CI workflow of **`spectral-eclipse-frontier`** (`v1.0.0` initial build + `v1.1.0` full-repository deep hardening). Every single finding is classified under exactly one of the **10 Build Standard v1.2.0 R7 finding classes** (`.github/labels.tsv`: `bug`, `error`, `issue`, `problem`, `concern`, `dilemma`, `conflict`, `gap`, `hole`, `blindspot`).
+
+See [`HARDENING_INDEX.md`](HARDENING_INDEX.md) for the complete file-by-file, folder-by-folder index & table of contents of every tracked file audited, and [`docs/reviews/ten-pass-audit.md`](docs/reviews/ten-pass-audit.md) for the Playbook v1.3 §9 ten-pass pre-submission checklist.
+
+---
+
+## Summary Across All 10 R7 Finding Classes (`v1.1.0` Deep Hardening — 3 Cycles)
+
+| R7 Finding Class | Cycle 1 (Lean/CI) | Cycle 2 (Engines/QA/Sec) | Cycle 3 (Paper/Docs/Web) | Total Found (`v1.1.0`) | Total Fixed | Remaining Open |
+|---|---:|---:|---:|---:|---:|---:|
+| `bug` | 0 | 2 | 0 | **2** | **2** | 0 |
+| `error` | 1 | 3 | 4 | **8** | **8** | 0 |
+| `issue` | 2 | 1 | 0 | **3** | **3** | 0 |
+| `problem` | 0 | 0 | 1 | **1** | **1** | 0 |
+| `concern` | 0 | 1 | 1 | **2** | **2** | 0 |
+| `dilemma` | 0 | 0 | 1 | **1** | **1** | 0 |
+| `conflict` | 0 | 0 | 1 | **1** | **1** | 0 |
+| `gap` | 1 | 1 | 1 | **3** | **3** | 0 |
+| `hole` | 1 | 1 | 0 | **2** | **2** | 0 |
+| `blindspot` | 0 | 1 | 0 | **1** | **1** | 0 |
+| **Total (`v1.1.0`)** | **5** | **10** | **9** | **24** | **24** | **0** |
+
+### Cumulative Summary (`v1.0.0` + `v1.1.0` = 6 Hardening Cycles Total)
+
+| Release | Cycles | Findings Logged & Classified | Fixed & Verified | Remaining Open |
+|---|---:|---:|---:|---:|
+| `v1.0.0` (2026-11-26) | 3 | 23 (`docs/reviews/cycle{1,2,3}.md`) | 23 | 0 |
+| `v1.1.0` (2026-11-27) | 3 | 24 (`docs/reviews/cycle{1,2,3}-v1.1.md`) | 24 | 0 |
+| **Combined Total** | **6** | **47** | **47** | **0** |
+
+---
+
+## Detailed Cycle Reports
+
+### Release `v1.1.0` (Full-Repository Deep Hardening)
+- **[Cycle 1 (`docs/reviews/cycle1-v1.1.md`)](docs/reviews/cycle1-v1.1.md):** Lean 4.35.0 & Palomar comparator hardening — `hochstadtWeightOdd` Batteries `docBlame` `issue` fixed and promoted to a **hard zero-error CI gate**; `Conjecture41.lean` docstring `issue`; 3 missing `NonVacuity` witnesses `gap` (**572** audited theorems, **18** witnesses, **52** explicit `#print axioms`); live `sorry`-tamper negative comparator CI gate `hole`; and hallucinated Lean witness identifiers `error` in `docs/verification.md`.
+- **[Cycle 2 (`docs/reviews/cycle2-v1.1.md`)](docs/reviews/cycle2-v1.1.md):** Engines, security & QA hardening — `compute_interior_min` single-bracket boundary-trapping `bug` in `se_qgtl_qrng.c` fixed (Deviation #1, all 4 arms exact `0.000` at $\varepsilon=0$); C11 `bessel_j_array` OOM & `se_qgtl_qrng.c` `fclose`/QL status `bug`; **62 Dependabot alerts / 65 `osv-scanner` CVEs** `concern` resolved to **0 CVEs**; 13 Linux CI `ruff EXE001` shebang permission `error`s + separate CI `ruff`/`mypy` steps; `build_blueprint.py` `mypy --strict` `error`; exported `FLOAT64_CANCELLATION_MARGIN` + fixed `UPGRADING.md` API `error`; dynamic Figure 5 JSON labels `blindspot`; Crossref retraction + title-overlap audit `gap`; scratch comments/dead code `issue`; and 7 new automated integrity/schema/link/tamper tests `hole` (**22/22** pytest PASS).
+- **[Cycle 3 (`docs/reviews/cycle3-v1.1.md`)](docs/reviews/cycle3-v1.1.md):** Manuscript, web portal, Playbook v1.3 & Build Standard v1.2.0 — `paper/main.tex` Bernstein domain (`4.5^2 -> 5.5^2`) & missing $\bar{b}$ / $\delta = 0.05 T_0$ `error`s; `docs/run-log.md` swapped H2/H3, Cliff's $\delta$, and `--study` CLI `error`; stale counts/IDs/badge URLs `error` (`0/2,000`, `0TH-2026-024`, `290` lines, `std::thread`, `.cjs`, Quickstart `-e .`, Usage `ValueError`); `web/observatory.js` strict CSP `script-src 'self'` + WCAG skip-link `concern`; Playbook v1.3 artifacts `gap` (`DEVIATIONS.md`, `docs/literature-search.md`, `scripts/generate_llms_full.py`, `CITATION.cff` SWHID, Export-Control/COI/Withdrawal policy, `ten-pass-audit.md`, `HARDENING_INDEX.md`); ADR-0003 `conflict`; Python 3.9 vs 3.12 CVE-free `problem`; and transparent Deviation #1 reporting `dilemma`.
+
+### Release `v1.0.0` (Initial Build Baseline — Preserved for Audit Continuity)
+- **[Cycle 1 (`docs/reviews/cycle1.md`)](docs/reviews/cycle1.md):** Initial formal proof kernel soundness (`Critical9x9.lean` tail coeff, unreduced Conjecture 4.1, initial 15 `NonVacuity` witnesses & 5 `AdversarialTests`, exhaustive 568-theorem `Lean.collectAxioms`, Case 3 $s = 2/z$).
+- **[Cycle 2 (`docs/reviews/cycle2.md`)](docs/reviews/cycle2.md):** B20 IEEE-754 float64 cancellation near $t = \pi$, B13 mutation testing (`6/10 -> 10/10`), initial `ruff`/`mypy`, honest H4 null `dilemma`, sanitizer checks, and 32-dim Moonlab WASM parity.
+- **[Cycle 3 (`docs/reviews/cycle3.md`)](docs/reviews/cycle3.md):** Initial live citation verification, Figs 1–4 label polish, Tectonic 0-overfull-hbox typography, `.github/ISSUE_TEMPLATE/` structure, `repo.yaml` enum alignment, `UPGRADING.md`/`libFuzzer`/`CBMC` harnesses, and LF-only SHA-256 manifest + dual timestamps.
+
+---
+
+## Post-`v1.1.0` Final Verification Snapshot
+
+- **Lean 4.35.0 Build, Linter & Axioms:** 0 errors, 0 warnings, 0 `sorry`, 52 explicit `#print axioms` + **572 exhaustively audited theorems** strictly within `[propext, Classical.choice, Quot.sound]`; hard zero-error Batteries `runLinter`; `3/3` negative kernel rejections; live `sorry`-tamper comparator CI gate.
+- **Six-Kernel Palomar Comparator:** 12 isolated Mathlib-only targets (`lean/Challenge.lean`, `lean/Solution.lean`, `lean/comparator.json`) executed via `lake comparator --config comparator.json --paranoid` inside `bubblewrap` on Ubuntu 24.04 CI.
+- **Polyglot, Security & Python QA:** `0` parity mismatches across 8 engines / 13 chains; `22/22` pytest PASSED (including 1,000-case Hypothesis, version parity, schema validation, link check, stale-ID check, and manifest tamper rejection); `10/10` mutation kills (`100.0%`); `0` `ruff` errors on Linux CI; `0` `mypy --strict` errors; `0` Rust clippy warnings; **0 Dependabot alerts / 0 `osv-scanner` CVEs**.
+- **Manuscript, Figures & Web:** `15/15` live Crossref/arXiv-verified citations (`0` retractions); 15-page Tectonic PDF with 0 errors, 0 overfull hboxes, 0 warnings; standalone clean-room `arxiv_submission.tar.gz`; strict-CSP (`script-src 'self'`) WCAG 2.2 AA GitHub Pages observatory.
+- **Integrity & Standard Compliance:** LF-normalized `data/MANIFEST.sha256` cryptographically stamped with DigiCert RFC 3161 `.tsr` + 3-calendar Bitcoin OpenTimestamps `.ots`; `repo.yaml` schema-valid; `scripts/audit-repo.sh .` = **100.0% (0 FAIL, 0 warnings)**.
+
+---
+
+## Replication Protocol (REPLICATION.md)
+
+# Replication Guide
+
+This document provides exact, clean-room, step-by-step instructions to independently reproduce every Lean 4.35.0 proof, all eight polyglot and quantum engines, the pre-registered QRNG study, all five publication figures, the frozen AMS-LaTeX PDF, the standalone arXiv tarball, and cryptographic integrity checks (`v1.1.0`).
+
+## Prerequisites
+
+- **Lean 4.35.0:** Installed via `elan` (`lean/lean-toolchain` pins `leanprover/lean4:v4.35.0`; `lean/lake-manifest.json` pins Mathlib `v4.35.0`).
+- **Python 3.9–3.12:** (`requirements.txt` pins CVE-free Python 3.12 wheels used on CI; editable install via `pip install --no-deps -e .`).
+- **Polyglot Toolchains (for full 8-engine parity):** `gcc` / `g++` (C11 & C++20), `nasm` (optional x86-64 AVX2 assembly; automatic scalar C11 fallback if absent), `rustc` / `cargo`, `zig` (0.17.0+), `node` (v18+ for Moonlab WASM), `eshkol-run` (optional; automatic Python dual-number fallback if absent).
+- **LaTeX:** `tectonic` (v0.15+) for reproducible PDF and arXiv tarball compilation.
+- **Timestamp verification:** `openssl` (for DigiCert RFC 3161 `.tsr` verification).
+
+## Step 1: Machine-Checked Lean 4.35.0 Verification & 6-Checker Palomar Replay
+
+```bash
+cd lean
+lake exe cache get
+lake build SpectralEclipse Challenge Solution VerifyAxioms
+lake env lean VerifyAxioms.lean
+lake exe runLinter SpectralEclipse Solution
+# On Linux with bubblewrap installed (exact CI command):
+lake comparator --config comparator.json --paranoid
+cd ..
+python scripts/test_lean_negative.py
+python scripts/check_readme_axioms.py --require-exhaustive
+```
+
+Expected sentinel:
+`ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 572 theorems across SpectralEclipse — 0 disallowed axioms.`
+
+## Step 2: Python Verification Ladder & B13 Mutation Audit
+
+```bash
+python -m pip install -r requirements.txt
+python -m pip install --no-deps -e .
+python -m pytest -v tests/
+python reference/exact_oracle.py
+python scripts/mutation_audit.py
+ruff check python reference scripts tests
+mypy --strict --explicit-package-bases --ignore-missing-imports python reference scripts tests
+```
+
+Expected: `22 passed` (including 1,000-case Hypothesis metamorphic suite, single-version consistency, `repo.yaml` schema validation, link integrity, and manifest tamper rejection), `10/10` mutants killed (`100.0%`), `0` ruff errors, `0` mypy errors.
+
+## Step 3: Build & Cross-Verify All 8 Polyglot & Quantum Engines
+
+```bash
+# 1. NASM AVX2+FMA Assembly + ISO C11
+make -C engines/c clean all && ./engines/c/test_c_core
+
+# 2. ISO C++20 direct matrix-exponential propagator
+make -C engines/cpp clean all && ./engines/cpp/se_propagator
+
+# 3. Safe Rust multi-core scanner
+cd engines/rust && cargo clippy --all-targets -- -D warnings && cargo test --release && cargo run --release && cd ../..
+
+# 4. Zig 0.17.0 exact arbitrary-precision rational Hochstadt engine
+cd engines/zig && zig run -OReleaseSafe src/main.zig && cd ../..
+
+# 5. Eshkol v1.3.6 native AD (or pure-Python dual fallback)
+python engines/eshkol/run_eshkol.py
+
+# 6. Moonlab WASM 5-qubit (32-dim) many-body XY+Z simulator
+node engines/moonlab/moonlab_xy_sim.cjs
+
+# 7. Vendored QGTL + Quantum-RNG study & statistical analysis
+make -C engines/qgtl_qrng clean all && ./engines/qgtl_qrng/se_qgtl_qrng
+python scripts/analyze_qrng_study.py
+
+# 8. Automated 8-engine cross-parity report (0 mismatches)
+python scripts/run_polyglot_parity.py
+```
+
+## Step 4: Figures, Paper, Standalone arXiv Tarball, Web Portal & Integrity Checks
+
+```bash
+python scripts/check_citations.py
+python scripts/generate_figures.py
+python scripts/package_arxiv.py
+python scripts/generate_llms_full.py
+python scripts/build_blueprint.py
+python scripts/build_site.py
+python scripts/generate_manifest.py --verify
+python scripts/stamp_timestamps.py --verify
+```
+
+## Clean-Room Replication Log (`B44`)
+
+| Date | Operator / Environment | Scope | Outcome |
+|---|---|---|---|
+| 2026-11-27 | Author (A. S. Donahue) — Local Windows 11 x86-64 clean-room run (`v1.0.0` baseline) | Lean 4.35.0 (568 audited theorems, 0 sorry), 8/8 polyglot engines (0 mismatches), 15/15 pytest, 10/10 mutation kill, clean-room arXiv tarball | PASS (internal) |
+| 2026-11-27 | Hosted GitHub Actions CI (`v1.0.0`, `ubuntu-latest`, `windows-latest`, `macos-latest`, `ubuntu-24.04`) | 3-OS Python/Hypothesis/manifest/timestamp matrix + Ubuntu native C11/ASan/C++20/Rust/Moonlab/QGTL + 6-checker `lake comparator --paranoid` | PASS (hosted CI) |
+| 2026-11-27 | Author (A. S. Donahue) — Local Windows 11 x86-64 + Hosted GitHub Actions CI (`v1.1.0` hardened) | Lean 4.35.0 (572 audited theorems, 18 witnesses, hard zero-error Batteries linter, live `sorry`-tamper comparator gate), 8/8 polyglot engines (0 mismatches, Deviation #1 fixed), 22/22 pytest, 10/10 mutation kill, 0 ruff, 0 mypy, 0 CVEs, strict CSP | PASS (internal + hosted CI) |
+
+- **Independent Outside Human Operator Replication (`B44`):** **OPEN** (`0` independent external human operators have filed a replication report yet; issue reports or replication confirmations are welcomed via GitHub Issues; `repo.yaml` retains `B44: partial` until an external human operator logs an independent run).
+
+---
+
+## Formalization Metadata (formalization.yaml)
+
+# Palomar-compatible formalization metadata & epistemic disclosure
+# Honest AI/human provenance record (NOT a claim of Palomar registration or peer review)
+title: "The Spectral Eclipse Frontier: Complete Resolution of Conjecture 4.1, Sharp Even/Odd Rupture Thresholds, Universal 3R+2 Phase Transition, Non-Symmetric Complex Eclipses, and Quantum Geometric Speed Limits"
+repository: "https://github.com/0thernes/spectral-eclipse-frontier"
+archive_id: "0TH-2026-024"
+software_heritage_swhid_v1_0_0: "swh:1:snp:37fd5b55ad30a2e1cedc2949415bfacf4d5d1efc"
+version: "1.1.0"
+date: "2026-11-27"
+license:
+  code: "Apache-2.0"
+  documentation_and_papers: "CC-BY-4.0"
+authors:
+  - name: "Alexander S. Donahue"
+    orcid: "0009-0006-8168-9648"
+    affiliation: "Independent Researcher, Spokane, WA, USA"
+    credit_roles:
+      - "Conceptualization"
+      - "Methodology"
+      - "Project administration"
+      - "Resources"
+      - "Supervision"
+      - "Validation (direction & audit oversight)"
+lean_toolchain: "leanprover/lean4:v4.35.0"
+mathlib_rev: "v4.35.0"
+lake_package_dir: "lean"
+libraries:
+  - name: "SpectralEclipse"
+    summary: "Complete Lean 4.35.0 (module-header Palomar spec across all project modules, weak.linter.mathlibStandardSet = true, zero Batteries runLinter errors) proof of Theorems 1–10 on Early State Exclusion (ESE) in 1D quantum spin chains with Perfect State Transfer (PST): complete dichotomies for 4×4, 5×5, 6×6, and 7×7 (resolving Conjecture 4.1 of Escobar-Garcia-Minenkova, arXiv:2507.18767v1, in both reduced and arbitrary real-scaled unreduced forms); sharp even rupture dimension N_crit^even = 8 (Theorem 5); complete Critical 9×9 No-ESE Theorem for all 1 < b < c < d via exact divided differences and 19 bivariate Bernstein certificates (Theorem 6); sharp odd rupture dimension N_crit^odd = 11 with exact integer threshold M* = 12 (m >= 6, Theorem 7); universal (R, r) Krawtchouk-core vs. spectral-cluster phase transition at N_crit(R) = 3R + 2 (Theorem 8); first infinite non-symmetric staggered-field 5×5 Jacobi family J_{a,b} with exact Schrödinger fidelity, PST at pi, and complex ESE at pi/3 (Theorem 9); exact Jacobi energy variance g_{tt} = b_0^2, universal Mandelstam-Tamm QSL tau >= pi / (2 sigma), and exact ESE-ETE time-reversal duality (Theorem 10); 18 NonVacuity witnesses; 5 machine-checked AdversarialTests refutations; 572 audited theorems (52 explicit #print axioms); and 12 isolated Mathlib-only comparator targets replayed in six independent checker runs plus a live sorry-tamper negative comparator CI gate."
+challenge_module: "Challenge"
+solution_module: "Solution"
+comparator_config: "lean/comparator.json"
+axiom_audit_file: "lean/VerifyAxioms.lean"
+audited_theorem_count: 572
+non_vacuity_witness_count: 18
+adversarial_refutation_count: 5
+permitted_axioms:
+  - "propext"
+  - "Classical.choice"
+  - "Quot.sound"
+kernels_configured:
+  - "Lean 4.35.0 official C++ kernel"
+  - "leanchecker-paranoid (v4.35.0)"
+  - "lean4lean (v4.35.0)"
+  - "nanoda (0.4.19)"
+  - "con-leche (v4.35.0)"
+  - "con-ron (v4.35.0)"
+automation:
+  origin: "AI-assisted mathematical derivation, Lean 4 formalization, 8-engine polyglot/quantum verification, pre-registered QRNG disorder experiment, and manuscript drafting under human direction"
+  models_used:
+    - "Google Gemini / Antigravity: analytical proof discovery, Lean 4.35.0 formalization, bivariate Bernstein certificate generation, polyglot engine cross-parity, and Build Standard v1.2.0 / Playbook v1.3 hardening"
+  human_line_by_line_review_recorded: false
+  statement_fidelity_table: "docs/statement-fidelity.md"
+  deviations_log: "DEVIATIONS.md"
+  literature_search_log: "docs/literature-search.md"
+conflict_of_interest: "None declared. Self-funded independent research with no external grant, commercial sponsor, or competing financial interest."
+export_control_self_screen: "Fundamental mathematical research in spectral theory and linear algebra intended for public open-access dissemination; exempt under 15 CFR 734.8. No dual-use cryptographic primitives, munitions, or restricted hardware designs."
+review_status: "Research preprint (v1.1.0); NOT externally peer reviewed; NOT yet submitted to arXiv, Zenodo, or the Palomar Registry."
+limitations: "See LIMITATIONS.md, DEVIATIONS.md, and CLAIMS.md. In particular, while Theorems 1–10 and all 12 isolated comparator targets are 100% kernel-checked in Lean 4.35.0 (strictly within [propext, Classical.choice, Quot.sound]), the finite-M phase boundary M*(R) for R >= 4 (N >= 14) is computed numerically/exactly in Rust/C++/SymPy and labeled [EXACT-COMP], and the 4-arm QRNG static-disorder robustness study is empirical (including an honest pre-registered null on H4 and Deviation #1 documented in DEVIATIONS.md)."

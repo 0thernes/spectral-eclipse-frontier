@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "spectral-eclipse-frontier"
-version = "1.0.0"
+version = "1.1.0"
 description = "Sharp Dimension Thresholds, Non-Symmetric Complex Eclipses, and Quantum Speed Limits for Early State Exclusion in Persymmetric PST Spin Chains"
 readme = "README.md"
 license = {text = "Apache-2.0"}

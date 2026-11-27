@@ -6,7 +6,7 @@
 
 ## 1. Exact Scope & Epistemic Boundary
 
-This repository (**`spectral-eclipse-frontier`**, `v1.0.0`) completely resolves an explicit published open conjecture from the arXiv mathematical-physics literature — **Conjecture 4.1 of Escobar, Garcia, and Minenkova (`arXiv:2507.18767v1`, *"Early State Exclusion in 7-Qubit Spin Chains"*)** — in both reduced integer-spectrum and arbitrary real-scaled unreduced forms, and establishes nine linked theorems on exact Early State Exclusion (ESE) phase transitions, critical dimensions ($N = 8, 9, 11$), the universal $N_{\mathrm{crit}}(R) = 3R + 2$ spectral-cluster law, the infinite non-symmetric staggered-field complex-amplitude family $J_{a,b}$, and exact QGTL / Mandelstam–Tamm quantum speed limits and ESE–ETE duality.
+This repository (**`spectral-eclipse-frontier`**, `v1.1.0`) completely resolves an explicit published open conjecture from the arXiv mathematical-physics literature — **Conjecture 4.1 of Escobar, Garcia, and Minenkova (`arXiv:2507.18767v1`, *"Early State Exclusion in 7-Qubit Spin Chains"*)** — in both reduced integer-spectrum and arbitrary real-scaled unreduced forms, and establishes nine linked theorems on exact Early State Exclusion (ESE) phase transitions, critical dimensions ($N = 8, 9, 11$), the universal $N_{\mathrm{crit}}(R) = 3R + 2$ spectral-cluster law, the infinite non-symmetric staggered-field complex-amplitude family $J_{a,b}$, and exact QGTL / Mandelstam–Tamm quantum speed limits and ESE–ETE duality.
 
 **Zero (`0 / 2,000`) overarching grand problems in the Unsolved Problems Mega-Atlas are retired by this work.**
 

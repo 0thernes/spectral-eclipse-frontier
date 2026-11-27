@@ -94,11 +94,12 @@ jobs:
         run: |
           python -m pip install -r requirements.txt
           python -m pip install --no-deps -e .
-      - name: Report-only linters (ruff & mypy --strict)
+      - name: Report-only linter (ruff)
         continue-on-error: true
-        run: |
-          python -m ruff check python reference scripts tests
-          python -m mypy --strict --explicit-package-bases --ignore-missing-imports python reference scripts tests
+        run: python -m ruff check python reference scripts tests
+      - name: Report-only strict type checker (mypy --strict)
+        continue-on-error: true
+        run: python -m mypy --strict --explicit-package-bases --ignore-missing-imports python reference scripts tests
       - name: Run isolated source mutation audit (B13)
         run: python scripts/mutation_audit.py
       - name: Validate repo.yaml against repo-standard.schema.json

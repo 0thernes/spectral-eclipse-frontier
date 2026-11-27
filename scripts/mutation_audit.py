@@ -77,8 +77,8 @@ MUTANTS: list[Mutant] = [
     Mutant(
         "M07_ese_guard",
         "python/spectral_eclipse/core.py",
-        "if prev > 1e-11 and re < -1e-11:",
-        "if prev > 1e-11 and re < -1.5:",
+        "if prev > FLOAT64_CANCELLATION_MARGIN and re < -FLOAT64_CANCELLATION_MARGIN:",
+        "if prev > FLOAT64_CANCELLATION_MARGIN and re < -1.5:",
         "Break ESE zero-crossing detector threshold",
     ),
     Mutant(

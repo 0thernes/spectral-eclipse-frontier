@@ -26,8 +26,8 @@ import all Solution
 # Exhaustive Axiom Audit for Spectral Eclipse Frontier (Theorems 1–10)
 
 Prints `#print axioms` for:
-  - All 16 primary theorems in `SpectralEclipse` (Theorems 1–10 + Schrödinger fidelity & core lemmas)
-  - All 15 non-vacuity witnesses in `SpectralEclipse.NonVacuity`
+  - All 17 primary theorems in `SpectralEclipse` (Theorems 1–10 + Schrödinger fidelity & core lemmas)
+  - All 18 non-vacuity witnesses in `SpectralEclipse.NonVacuity`
   - All 5 adversarial refutations in `SpectralEclipse.AdversarialTests`
   - All 12 isolated Mathlib-only comparator target theorems in `SpectralEclipse.ComparatorTarget`
 PLUS runs an exhaustive `Lean.collectAxioms` metaprogram auditing EVERY single `theorem`
@@ -56,7 +56,7 @@ Every theorem must depend strictly on `[propext, Classical.choice, Quot.sound]` 
 #print axioms SpectralEclipse.mandelstam_tamm_ese_bound
 #print axioms SpectralEclipse.ese_ete_duality
 
--- Non-vacuity witnesses (15 declarations)
+-- Non-vacuity witnesses (18 declarations)
 #print axioms SpectralEclipse.NonVacuity.witness_4x4_noESE_1_3
 #print axioms SpectralEclipse.NonVacuity.witness_4x4_ESE_3_5
 #print axioms SpectralEclipse.NonVacuity.witness_5x5_noESE_1_2
@@ -65,13 +65,16 @@ Every theorem must depend strictly on `[propext, Classical.choice, Quot.sound]` 
 #print axioms SpectralEclipse.NonVacuity.witness_6x6_ESE_3_5_7
 #print axioms SpectralEclipse.NonVacuity.witness_7x7_noESE_1_2_3
 #print axioms SpectralEclipse.NonVacuity.witness_7x7_ESE_3_4_5
+#print axioms SpectralEclipse.NonVacuity.witness_7x7_unreduced_c2_3_6_9
 #print axioms SpectralEclipse.NonVacuity.witness_8x8_rupture_m1
 #print axioms SpectralEclipse.NonVacuity.witness_9x9_noESE_1_2_3_4
 #print axioms SpectralEclipse.NonVacuity.witness_9x9_noESE_1_20_21_22
 #print axioms SpectralEclipse.NonVacuity.witness_11x11_subcrit_m5
 #print axioms SpectralEclipse.NonVacuity.witness_11x11_supercrit_m6
+#print axioms SpectralEclipse.NonVacuity.witness_universal_3R_plus_2_R3
 #print axioms SpectralEclipse.NonVacuity.witness_J14_staggered_complex_ESE
 #print axioms SpectralEclipse.NonVacuity.witness_J14_qsl_variance
+#print axioms SpectralEclipse.NonVacuity.witness_J14_ese_ete_duality
 
 -- Machine-checked adversarial refutations (5 declarations)
 #print axioms SpectralEclipse.AdversarialTests.refute_even_8x8_naive_divisibility

@@ -15,8 +15,10 @@ MANIFEST = ROOT / "data" / "MANIFEST.sha256"
 TRACKED_ARTIFACTS = [
     "VERSION",
     "PREREGISTRATION.md",
+    "DEVIATIONS.md",
     "formalization.yaml",
     "CITATION.cff",
+    "web/observatory.js",
     "lean/lean-toolchain",
     "lean/lakefile.toml",
     "lean/lake-manifest.json",

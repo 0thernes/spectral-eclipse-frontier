@@ -1,15 +1,15 @@
 # SPDX-License-Identifier: Apache-2.0
-# Pinned Python dependencies for reproducible verification & figure generation
+# Pinned Python 3.12 dependencies for reproducible CI verification & figure generation (0 known CVEs)
 numpy==2.0.2
 scipy==1.13.1
 sympy==1.14.0
 mpmath==1.3.0
 matplotlib==3.9.4
-pytest==8.4.2
+pillow==13.0.0
+pytest==9.2.0
+pygments==2.21.0
 hypothesis==6.141.1
 jsonschema==4.25.1
 PyYAML==6.0.2
-PyMuPDF==1.26.5
-pillow==11.3.0
 ruff==0.17.6
 mypy==1.19.1

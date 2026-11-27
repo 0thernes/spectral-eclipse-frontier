@@ -103,10 +103,9 @@ jobs:
         run: |
           python3 scripts/check_readme_axioms.py --log results/lean-axioms-ci.log --require-exhaustive
           python3 scripts/check_readme_axioms.py --log results/lean-axioms-all.log --require-exhaustive
-      - name: Run Batteries linter (report-only)
+      - name: Run Batteries linter (strict zero-error gate on SpectralEclipse & Solution)
         working-directory: lean
-        continue-on-error: true
-        run: lake exe runLinter SpectralEclipse
+        run: lake exe runLinter SpectralEclipse Solution
       - name: Run live negative kernel elaboration gate (3 mutated false theorems must fail)
         run: python3 scripts/test_lean_negative.py
       - name: Run sandboxed lake comparator --paranoid (six independent checker runs)
@@ -116,6 +115,25 @@ jobs:
           set -o pipefail
           sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
           lake comparator --config comparator.json --paranoid | tee ../results/comparator-paranoid-ci.log
+      - name: Live tamper-injecting negative comparator gate (forged Solution.lean must be rejected)
+        working-directory: lean
+        shell: bash
+        run: |
+          cp Solution.lean /tmp/Solution.lean.bak
+          trap 'mv -f /tmp/Solution.lean.bak Solution.lean && lake build Solution' EXIT
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("Solution.lean")
+          src = p.read_text(encoding="utf-8")
+          old = "  SpectralEclipse.dichotomy_4x4 hp_odd hq_odd hpq hgap"
+          assert old in src, "Expected target body not found in Solution.lean"
+          p.write_text(src.replace(old, "  sorry", 1), encoding="utf-8")
+          PY
+          if lake comparator --config comparator.json; then
+            echo "ERROR: lake comparator unexpectedly accepted a sorry-tampered Solution.lean!" >&2
+            exit 1
+          fi
+          echo "PASS: lake comparator rejected sorry-tampered Solution.lean as expected."
       - name: Upload Lean CI verification logs
         uses: actions/upload-artifact@v4
         with:

@@ -2,8 +2,10 @@
 # Honest AI/human provenance record (NOT a claim of Palomar registration or peer review)
 title: "The Spectral Eclipse Frontier: Complete Resolution of Conjecture 4.1, Sharp Even/Odd Rupture Thresholds, Universal 3R+2 Phase Transition, Non-Symmetric Complex Eclipses, and Quantum Geometric Speed Limits"
 repository: "https://github.com/0thernes/spectral-eclipse-frontier"
-version: "1.0.0"
-date: "2026-11-26"
+archive_id: "0TH-2026-024"
+software_heritage_swhid_v1_0_0: "swh:1:snp:37fd5b55ad30a2e1cedc2949415bfacf4d5d1efc"
+version: "1.1.0"
+date: "2026-11-27"
 license:
   code: "Apache-2.0"
   documentation_and_papers: "CC-BY-4.0"
@@ -23,11 +25,14 @@ mathlib_rev: "v4.35.0"
 lake_package_dir: "lean"
 libraries:
   - name: "SpectralEclipse"
-    summary: "Complete Lean 4.35.0 (module-header Palomar spec across all project modules, weak.linter.mathlibStandardSet = true) proof of Theorems 1–10 on Early State Exclusion (ESE) in 1D quantum spin chains with Perfect State Transfer (PST): complete dichotomies for 4×4, 5×5, 6×6, and 7×7 (resolving Conjecture 4.1 of Escobar-Garcia-Minenkova, arXiv:2507.18767v1, in both reduced and arbitrary real-scaled unreduced forms); sharp even rupture dimension N_crit^even = 8 (Theorem 5); complete Critical 9×9 No-ESE Theorem for all 1 < b < c < d via exact divided differences and 19 bivariate Bernstein certificates (Theorem 6); sharp odd rupture dimension N_crit^odd = 11 with exact integer threshold M* = 12 (m >= 6, Theorem 7); universal (R, r) Krawtchouk-core vs. spectral-cluster phase transition at N_crit(R) = 3R + 2 (Theorem 8); first infinite non-symmetric staggered-field 5×5 Jacobi family J_{a,b} with exact Schrödinger fidelity, PST at pi, and complex ESE at pi/3 (Theorem 9); exact Jacobi energy variance g_{tt} = b_0^2, universal Mandelstam-Tamm QSL tau >= pi / (2 sigma), and exact ESE-ETE time-reversal duality (Theorem 10); 15 NonVacuity witnesses; 5 machine-checked AdversarialTests refutations; and 12 isolated Mathlib-only comparator targets replayed in six independent checker runs."
+    summary: "Complete Lean 4.35.0 (module-header Palomar spec across all project modules, weak.linter.mathlibStandardSet = true, zero Batteries runLinter errors) proof of Theorems 1–10 on Early State Exclusion (ESE) in 1D quantum spin chains with Perfect State Transfer (PST): complete dichotomies for 4×4, 5×5, 6×6, and 7×7 (resolving Conjecture 4.1 of Escobar-Garcia-Minenkova, arXiv:2507.18767v1, in both reduced and arbitrary real-scaled unreduced forms); sharp even rupture dimension N_crit^even = 8 (Theorem 5); complete Critical 9×9 No-ESE Theorem for all 1 < b < c < d via exact divided differences and 19 bivariate Bernstein certificates (Theorem 6); sharp odd rupture dimension N_crit^odd = 11 with exact integer threshold M* = 12 (m >= 6, Theorem 7); universal (R, r) Krawtchouk-core vs. spectral-cluster phase transition at N_crit(R) = 3R + 2 (Theorem 8); first infinite non-symmetric staggered-field 5×5 Jacobi family J_{a,b} with exact Schrödinger fidelity, PST at pi, and complex ESE at pi/3 (Theorem 9); exact Jacobi energy variance g_{tt} = b_0^2, universal Mandelstam-Tamm QSL tau >= pi / (2 sigma), and exact ESE-ETE time-reversal duality (Theorem 10); 18 NonVacuity witnesses; 5 machine-checked AdversarialTests refutations; 572 audited theorems (52 explicit #print axioms); and 12 isolated Mathlib-only comparator targets replayed in six independent checker runs plus a live sorry-tamper negative comparator CI gate."
 challenge_module: "Challenge"
 solution_module: "Solution"
 comparator_config: "lean/comparator.json"
 axiom_audit_file: "lean/VerifyAxioms.lean"
+audited_theorem_count: 572
+non_vacuity_witness_count: 18
+adversarial_refutation_count: 5
 permitted_axioms:
   - "propext"
   - "Classical.choice"
@@ -45,5 +50,9 @@ automation:
     - "Google Gemini / Antigravity: analytical proof discovery, Lean 4.35.0 formalization, bivariate Bernstein certificate generation, polyglot engine cross-parity, and Build Standard v1.2.0 / Playbook v1.3 hardening"
   human_line_by_line_review_recorded: false
   statement_fidelity_table: "docs/statement-fidelity.md"
-review_status: "Research preprint; NOT externally peer reviewed; NOT yet submitted to arXiv, Zenodo, or the Palomar Registry."
-limitations: "See LIMITATIONS.md and CLAIMS.md. In particular, while Theorems 1–10 and all 12 isolated comparator targets are 100% kernel-checked in Lean 4.35.0 (strictly within [propext, Classical.choice, Quot.sound]), the finite-M phase boundary M*(R) for R >= 4 (N >= 14) is computed numerically/exactly in Rust/C++/SymPy and labeled [EXACT-COMP] / [NUM-APPROX], and the 4-arm QRNG static-disorder robustness study is empirical (including an honest pre-registered null on H4)."
+  deviations_log: "DEVIATIONS.md"
+  literature_search_log: "docs/literature-search.md"
+conflict_of_interest: "None declared. Self-funded independent research with no external grant, commercial sponsor, or competing financial interest."
+export_control_self_screen: "Fundamental mathematical research in spectral theory and linear algebra intended for public open-access dissemination; exempt under 15 CFR 734.8. No dual-use cryptographic primitives, munitions, or restricted hardware designs."
+review_status: "Research preprint (v1.1.0); NOT externally peer reviewed; NOT yet submitted to arXiv, Zenodo, or the Palomar Registry."
+limitations: "See LIMITATIONS.md, DEVIATIONS.md, and CLAIMS.md. In particular, while Theorems 1–10 and all 12 isolated comparator targets are 100% kernel-checked in Lean 4.35.0 (strictly within [propext, Classical.choice, Quot.sound]), the finite-M phase boundary M*(R) for R >= 4 (N >= 14) is computed numerically/exactly in Rust/C++/SymPy and labeled [EXACT-COMP], and the 4-arm QRNG static-disorder robustness study is empirical (including an honest pre-registered null on H4 and Deviation #1 documented in DEVIATIONS.md)."

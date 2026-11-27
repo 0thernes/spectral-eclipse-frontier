@@ -82,16 +82,14 @@ def exact_sturm_ese_root_count(spectrum: Sequence[Fraction], scale_factor: int =
     poly = sp.Poly(sp.expand(poly_expr), u, domain="QQ")
     lo = sp.Integer(-1) if scale_factor == 1 else sp.Integer(0)
     hi = sp.Integer(1)
-    # Count strictly interior roots in (lo, hi): count_roots on [lo, hi] minus endpoint roots
-    total_closed = int(sp.count_roots(poly, lo, hi))
-    at_lo = 1 if poly.eval(lo) == 0 else 0
-    at_hi = 1 if poly.eval(hi) == 0 else 0
-    # Note: sp.count_roots counts with multiplicity? In SymPy, count_roots counts WITH multiplicity.
-    # Use square-free part so every distinct root is counted exactly once!
+    # Use the square-free part so every distinct real root is counted with multiplicity 1.
     sqf_poly = sp.Poly(sp.sqf_part(poly.as_expr()), u, domain="QQ")
     distinct_closed = int(sp.count_roots(sqf_poly, lo, hi))
-    distinct_open = distinct_closed - (1 if sqf_poly.eval(lo) == 0 else 0) - (1 if sqf_poly.eval(hi) == 0 else 0)
-    _ = (total_closed, at_lo, at_hi)
+    distinct_open = (
+        distinct_closed
+        - (1 if sqf_poly.eval(lo) == 0 else 0)
+        - (1 if sqf_poly.eval(hi) == 0 else 0)
+    )
     return distinct_open, poly
 
 

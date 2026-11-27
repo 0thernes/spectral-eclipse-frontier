@@ -110,7 +110,7 @@
     "id": "NonVacuity",
     "module": "SpectralEclipse.NonVacuity",
     "file": "lean/SpectralEclipse/NonVacuity.lean",
-    "description": "15 Concrete Non-Vacuity Witnesses (Theorems 1\u201310)",
+    "description": "18 Concrete Non-Vacuity Witnesses (Theorems 1\u201310)",
     "deps": [
       "Chains456",
       "Conjecture41",
@@ -120,7 +120,7 @@
       "SpeedLimitAndDuality"
     ],
     "pillar": "Audit",
-    "theorems": 15,
+    "theorems": 18,
     "status": "PROVED_LEAN_4_35"
   },
   {

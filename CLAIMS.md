@@ -1,12 +1,12 @@
 # Claims Registry & Explicit Falsification Protocol
 
-Every scientific, mathematical, and empirical claim in **The Spectral Eclipse Frontier** is enumerated below with its exact verification tag, executable verification command, and concrete falsification criterion (**What Would Prove Us Wrong**).
+Every scientific, mathematical, and empirical claim in **The Spectral Eclipse Frontier** (`v1.1.0`) is enumerated below with its exact verification tag, executable verification command, and concrete falsification criterion (**What Would Prove Us Wrong**).
 
 ## Verification Tag Taxonomy
 
-- **`[LEAN-6K]`**: Machine-checked inside the Lean 4.35.0 kernel (`autoImplicit = false`, zero `sorry`, zero custom axioms, strictly `[propext, Classical.choice, Quot.sound]`), backed by isolated Mathlib-only `Challenge.lean` / `Solution.lean` targets replayed across six independent checker runs (`lake comparator --config comparator.json --paranoid`).
+- **`[LEAN-6K]`**: Machine-checked inside the Lean 4.35.0 kernel (`autoImplicit = false`, zero `sorry`, zero custom axioms, strictly `[propext, Classical.choice, Quot.sound]`, zero Batteries `runLinter` errors), backed by isolated Mathlib-only `Challenge.lean` / `Solution.lean` targets replayed across six independent checker runs (`lake comparator --config comparator.json --paranoid`) plus a live `sorry`-tamper negative comparator CI gate.
 - **`[EXACT-COMP]`**: Verified by exact rational arithmetic over $\mathbb{Q}$ (`reference/exact_oracle.py` SymPy square-free Sturm root isolation, `engines/zig` arbitrary-precision rational Hochstadt engine) or exhaustive deterministic integer scans (`engines/rust`, `engines/cpp`).
-- **`[EMPIRICAL]`**: Pre-registered computational experiment locked in `PREREGISTRATION.md` (commit `1dac632`) before data generation, analyzed via paired permutation tests and Holm–Bonferroni FWER control.
+- **`[EMPIRICAL]`**: Pre-registered computational experiment locked in `PREREGISTRATION.md` (commit `1dac632`) before data generation (with post-hoc optimizer bug-fix Deviation #1 logged in `DEVIATIONS.md`), analyzed via paired exact permutation tests and Holm–Bonferroni FWER control.
 
 ## Master Claims Table (C1–C12)
 
@@ -23,11 +23,11 @@ Every scientific, mathematical, and empirical claim in **The Spectral Eclipse Fr
 | **C9** | Infinite non-symmetric staggered-field $5\times 5$ complex ESE family $J_{a,b}$ | `[LEAN-6K]` | `theorem_9_nonsymmetric_family` | Any odd $a$ ($3\nmid a$) and $b=a+6k+3$ where $J_{a,b}$ fails persymmetry, PST $\psi_4(\pi)=1$, or complex ESE $\psi_0(\pi/3)=0\in\mathbb{C}$. |
 | **C10** | Exact QGTL metric $g_{tt}=b_0^2$, Mandelstam–Tamm QSL $\tau\ge\pi/(2|b_0|)$, & ESE–ETE duality | `[LEAN-6K]` | `jacobi_energy_variance_eq_b0_sq`, `mandelstam_tamm_ese_bound`, `ese_ete_duality` | Any real Jacobi chain with $\mathrm{Var}_{e_0}(J)\ne b_0^2$, any ESE time $\tau < \pi/(2|b_0|)$, or any PST chain breaking $|\psi_{N-1}(T_0-t)|=|\psi_0(t)|$. |
 | **C11** | Finite-$M$ critical thresholds $M^*(4)=30$ ($N=14$), $M^*(5)=78$ ($N=17$) | `[EXACT-COMP]` | `engines/rust/src/main.rs`, `engines/cpp/se_propagator.cpp` | Exact Sturm root count disagreeing with $m=15$ ($N=14$) or $m=39$ ($N=17$). |
-| **C12** | Pre-registered QRNG static-disorder study: H1–H3 significant ($p_{\mathrm{Holm}}\le 0.0008$), H4 null ($p_{\mathrm{Holm}}=0.988$) | `[EMPIRICAL]` | `PREREGISTRATION.md`, `results/qgtl_qrng_analysis.json` | Independent re-execution of `engines/qgtl_qrng/se_qgtl_qrng` + `scripts/analyze_qrng_study.py` yielding contradictory statistics or contradicting Holm FWER verdicts. |
+| **C12** | Pre-registered QRNG static-disorder study: H1–H3 significant ($p_{\mathrm{Holm}}=0.0004$), H4 clean null ($p_{\mathrm{Holm}}=0.9855$) | `[EMPIRICAL]` | `PREREGISTRATION.md`, `DEVIATIONS.md`, `results/qgtl_qrng_analysis.json` | Independent re-execution of `engines/qgtl_qrng/se_qgtl_qrng` + `scripts/analyze_qrng_study.py` yielding contradictory statistics or contradicting Holm FWER verdicts. |
 
 ## Explicit Falsification Protocol (How to Attack This Repo)
 
-1. **Formal Proof Attack:** Inspect `lean/Challenge.lean` (280 lines, Mathlib-only) line by line to confirm definitions match textbook Jacobi matrices, Schrödinger evolution, and Hochstadt amplitudes; then run `cd lean && lake comparator --config comparator.json --paranoid` and `lake env lean VerifyAxioms.lean`.
-2. **Definition-Fidelity Attack:** Inspect `lean/SpectralEclipse/NonVacuity.lean` and `lean/SpectralEclipse/AdversarialTests.lean`, and run `python scripts/test_lean_negative.py`.
+1. **Formal Proof Attack:** Inspect `lean/Challenge.lean` (290 lines, Mathlib-only) line by line to confirm definitions match textbook Jacobi matrices, Schrödinger evolution, and Hochstadt amplitudes; then run `cd lean && lake comparator --config comparator.json --paranoid`, `lake env lean VerifyAxioms.lean`, and `lake exe runLinter SpectralEclipse Solution`.
+2. **Definition-Fidelity & Tamper Attack:** Inspect `lean/SpectralEclipse/NonVacuity.lean` (18 witnesses) and `lean/SpectralEclipse/AdversarialTests.lean` (5 refutations), and run `python scripts/test_lean_negative.py`.
 3. **Numerical / Physical Attack:** Run `python scripts/run_polyglot_parity.py` to independently compare all 8 engines (including full 32-dim 5-qubit Moonlab WASM and zero-float Zig $\mathbb{Q}$) against the 80-digit Sturm oracle.
 4. **Mutation Attack:** Run `python scripts/mutation_audit.py` to verify 10/10 semantic mutants are killed by `tests/test_all.py`.

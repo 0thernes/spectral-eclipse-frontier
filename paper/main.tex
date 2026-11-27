@@ -45,7 +45,7 @@
 \email{0\_0@0thernes.art}
 \urladdr{https://orcid.org/0009-0006-8168-9648}
 
-\date{November 26, 2026 (Version 1.0.0 --- Unrefereed Research Preprint)}
+\date{November 27, 2026 (Version 1.1.0 --- Unrefereed Research Preprint)}
 
 \keywords{Perfect state transfer, early state exclusion, persymmetric Jacobi matrices, Hochstadt inverse spectral theorem, divided differences, Bernstein polynomials, Mandelstam--Tamm quantum speed limit, Fubini--Study metric, Lean 4 formal verification}
 \subjclass[2020]{81P45, 15A29, 33C45, 42A05, 68V20}
@@ -64,14 +64,14 @@ We resolve Conjecture~4.1 completely and establish a unified ten-theorem archite
 \item \textbf{Quantum geometric speed limit and ESE--ETE duality (Theorem~10):} For every $N\times N$ Jacobi chain, the Quantum Geometric Tensor Fubini--Study metric at $|0\rangle$ equals $g_{tt}=b_0^2$, every ESE time obeys the Mandelstam--Tamm bound $\tau\ge\pi/(2|b_0|)$, and every persymmetric PST chain satisfies exact time-reversal duality $|\psi_{N-1}(T_0-t)|=|\psi_0(t)|$.
 \end{enumerate}
 
-All ten theorems (plus $15$ non-vacuity witnesses, $5$ adversarial refutations, and $12$ isolated Mathlib-only comparator targets) are formally machine-checked in Lean~4.35.0 ($568$ audited theorem constants; strictly standard axioms \texttt{[propext, Classical.choice, Quot.sound]}; zero \texttt{sorry}) and independently cross-validated across eight polyglot and quantum engines with zero mismatches. Finally, we report a pre-registered $4$-arm QRNG static-disorder study ($n=30$ paired seeds), confirming significant eclipse persistence in real codimension-$1$ symmetric chains ($p_{\mathrm{Holm}}\le 0.0008$) and documenting an honest pre-registered null result for complex codimension-$2$ eclipses in $J_{1,4}$ ($p_{\mathrm{Holm}}=0.988$).
+All ten theorems (plus $18$ non-vacuity witnesses, $5$ adversarial refutations, and $12$ isolated Mathlib-only comparator targets) are formally machine-checked in Lean~4.35.0 ($572$ audited theorem constants; strictly standard axioms \texttt{[propext, Classical.choice, Quot.sound]}; zero \texttt{sorry}; zero Batteries linter errors) and independently cross-validated across eight polyglot and quantum engines with zero mismatches. Finally, we report a pre-registered $4$-arm QRNG static-disorder study ($K=30$ paired seeds), confirming significant eclipse persistence in real codimension-$1$ symmetric chains ($p_{\mathrm{Holm}}=0.0004$) and documenting an honest pre-registered null result for complex codimension-$2$ eclipses in $J_{1,4}$ ($p_{\mathrm{Holm}}=0.9855$).
 \end{abstract}
 
 \maketitle
 
 \begin{center}
 \fbox{\parbox{0.94\linewidth}{\footnotesize
-\textbf{Epistemic Status \& AI-Assistance Disclosure.} This document is an \textbf{unrefereed research preprint} (v1.0.0) and has not undergone external peer review or journal submission. Analytical proof discovery, Lean~4.35.0 formalization, polyglot verification engineering, and manuscript drafting were conducted with AI assistance (Google Gemini / Antigravity) under the direction and audit oversight of the sole human author (Alexander S.~Donahue, ORCID \href{https://orcid.org/0009-0006-8168-9648}{0009-0006-8168-9648}). Every mathematical theorem tagged \taglean{} is verified end-to-end by the Lean~4.35.0 kernel without \texttt{sorry} or custom axioms and replayed across six independent checker runs via \texttt{lake comparator --paranoid}. Code and Lean proofs are licensed \texttt{Apache-2.0}; this manuscript and figures are licensed \texttt{CC-BY-4.0}. Repository: \url{https://github.com/0thernes/spectral-eclipse-frontier}.
+\textbf{Epistemic Status \& AI-Assistance Disclosure.} This document is an \textbf{unrefereed research preprint} (v1.1.0; Master Archive ID \texttt{0TH-2026-024}) and has not undergone external peer review or journal submission. Analytical proof discovery, Lean~4.35.0 formalization, polyglot verification engineering, and manuscript drafting were conducted with AI assistance (Google Gemini / Antigravity) under the direction and audit oversight of the sole human author (Alexander S.~Donahue, ORCID \href{https://orcid.org/0009-0006-8168-9648}{0009-0006-8168-9648}). Every mathematical theorem tagged \taglean{} is verified end-to-end by the Lean~4.35.0 kernel without \texttt{sorry} or custom axioms and replayed across six independent checker runs via \texttt{lake comparator --paranoid}. Code and Lean proofs are licensed \texttt{Apache-2.0}; this manuscript and figures are licensed \texttt{CC-BY-4.0}. Repository: \url{https://github.com/0thernes/spectral-eclipse-frontier}.
 }}
 \end{center}
 
@@ -175,7 +175,7 @@ Both generating kernels satisfy strict secant-slope anti-monotonicity from every
 \end{lemma}
 
 \begin{proof}[Proof sketch (Lean: \id{He\_slope\_strictAnti}, \id{H\_slope\_strictAnti})]
-For $H_e$, we certify $H_e''(w)>0$ on $(0,4.5^2]$ via alternating Taylor polynomial bounds and handle $w>(4.5)^2$ using the explicit Jordan lower bound $H_e(u^2)>2/\pi$ versus $|H_e(w)|<1/\sqrt{w}$ and $|H_e'(w)|<1/(2w)$. For $H$, we certify $H''(w)>0$ on $(0,3.3^2]$ via exact rational Taylor bounds (\id{HDeriv2\_pos}) and handle $w>(3.3)^2$ using $H(u^2)>4/\pi^2>0.4052$, $H(w)\le 1/w$, and $H'(w)\le 1/(2w^{3/2})$. In both regimes, $\frac{d}{dw}\big[(K(w_0)-K(w))/(w-w_0)\big]<0$ follows globally.
+For $H_e$, we certify $H_e''(w)>0$ on $(0,5.5^2]$ via cosine-transform alternating Taylor bounds and a degree-$5$ Bernstein certificate (\id{HeDeriv2\_pos}), and handle $w>(5.5)^2$ using the explicit Jordan lower bound $H_e(u^2)>2/\pi$ versus $|H_e(w)|<1/\sqrt{w}$ and $|H_e'(w)|<1/(2w)$. For $H$, we certify $H''(w)>0$ on $(0,3.3^2]$ via exact rational Taylor and Bernstein bounds (\id{HDeriv2\_pos}) and handle $w>(3.3)^2$ using $H(u^2)>4/\pi^2>0.4052$, $H(w)\le 1/w$, and $H'(w)\le 1/(2w^{3/2})$. In both regimes, $\frac{d}{dw}\big[(K(w_0)-K(w))/(w-w_0)\big]<0$ follows globally.
 \end{proof}
 
 \subsection{Universal Even Orthogonality and Complete \texorpdfstring{$4\times 4, 5\times 5, 6\times 6$}{4x4, 5x5, 6x6} Dichotomies}
@@ -434,7 +434,7 @@ Part~(1) is exact because $Je_0 = a_0 e_0 + b_0 e_1$, so $\|(J-a_0I)e_0\|^2 = b_
 
 \subsection{Lean~4.35.0 Formalization, Statement Fidelity, and Six-Checker Palomar Isolation}
 
-The proof library comprises $12$ Lean~4.35.0 \texttt{module}-header files in \id{lean/SpectralEclipse/} compiled with \idb{weak.\allowbreak linter.\allowbreak mathlibStandardSet = true}. It formalizes Theorems~1--10 with \textbf{zero \texttt{sorry}}, zero \texttt{admit}, zero \idb{native\ub decide}, and zero custom axioms~\cite{demoura2021}. Running \idb{lake env lean VerifyAxioms.lean} audits \textbf{568 theorem constants} across the entire \id{SpectralEclipse} and \id{Solution} module trees via \idb{Lean.collectAxioms} with \textbf{0 disallowed axioms} (only \idb{[propext, Classical.choice, Quot.sound]}). \id{Challenge.lean} states all $12$ headline targets importing \emph{only} Mathlib ($280$ lines), and \id{Solution.lean} proves them sorry-free for six-checker replay (\idb{leanchecker-paranoid}, default Lean kernel, \idb{lean4lean}, \idb{nanoda}, \idb{con-leche}, \idb{con-ron}) via \idb{lake comparator --config comparator.json --paranoid}. Three live negative elaboration tests (\idb{scripts/test\ub lean\ub negative.py}) confirm that mutating any threshold or constant is rejected by the Lean kernel. \Cref{tab:fidelity} maps each headline theorem to its isolated target, non-vacuity witness, and adversarial refutation.
+The proof library comprises $12$ Lean~4.35.0 \texttt{module}-header files in \id{lean/SpectralEclipse/} compiled with \idb{weak.\allowbreak linter.\allowbreak mathlibStandardSet = true} and enforced by a hard zero-error Batteries \idb{runLinter} CI gate. It formalizes Theorems~1--10 with \textbf{zero \texttt{sorry}}, zero \texttt{admit}, zero \idb{native\ub decide}, and zero custom axioms~\cite{demoura2021}. Running \idb{lake env lean VerifyAxioms.lean} audits \textbf{572 theorem constants} ($52$ explicit \idb{\#print axioms} checks plus exhaustive \idb{Lean.collectAxioms} across the entire \id{SpectralEclipse} and \id{Solution} module trees) with \textbf{0 disallowed axioms} (only \idb{[propext, Classical.choice, Quot.sound]}). \id{Challenge.lean} states all $12$ headline targets importing \emph{only} Mathlib ($290$ lines), and \id{Solution.lean} proves them sorry-free for six-checker replay (\idb{leanchecker-paranoid}, default Lean kernel, \idb{lean4lean}, \idb{nanoda}, \idb{con-leche}, \idb{con-ron}) via \idb{lake comparator --config comparator.json --paranoid}, reinforced by a live \texttt{sorry}-tamper negative comparator CI gate. Three live negative elaboration tests (\idb{scripts/test\ub lean\ub negative.py}) confirm that mutating any threshold or constant is rejected by the Lean kernel. \Cref{tab:fidelity} maps each headline theorem to its isolated target, non-vacuity witness, and adversarial refutation.
 
 \begin{table}[t]
 \centering
@@ -447,20 +447,20 @@ The proof library comprises $12$ Lean~4.35.0 \texttt{module}-header files in \id
 \textbf{Thm.} & \textbf{\normalfont\textbf{Isolated \texttt{Challenge.lean} Target}} & \textbf{\normalfont\textbf{Non-Vacuity Witness}} & \textbf{\normalfont\textbf{Adversarial Refutation}} \\
 \midrule
 1--3 & target\ub theorem\ub \{1,2,3\}\ub \{4x4,5x5,6x6\} & witness\ub \{4x4,5x5,6x6\}\ub * (6) & --- (exact iff) \\
-4 & target\ub theorem\ub 4\ub conjecture\ub 4\ub 1(\ub unreduced) & witness\ub 7x7\ub \{noESE,ESE\}\ub * & --- (exact iff) \\
+4 & target\ub theorem\ub 4\ub conjecture\ub 4\ub 1(\ub unreduced) & witness\ub 7x7\ub \{noESE,ESE,unreduced\}\ub * & --- (exact iff) \\
 5 & target\ub theorem\ub 5\ub even\ub rupture\ub 8x8 & witness\ub 8x8\ub rupture\ub m1 & refute\ub even\ub 8x8\ub naive\ub divisibility \\
 6 & target\ub theorem\ub 6\ub critical\ub 9x9 & witness\ub 9x9\ub noESE\ub 1\ub 20\ub 21\ub 22 & --- (universal positivity) \\
 7 & target\ub theorem\ub 7\ub odd\ub rupture\ub 11x11 & witness\ub 11x11\ub \{sub,super\}crit & refute\ub odd\ub 11x11\ub naive\ub divisibility, refute\ub 11x11\ub threshold\ub m5 \\
-8 & target\ub theorem\ub 8\ub universal\ub 3R\ub plus\ub 2 & exact $R=3\implies 12$ witness & --- (sharp $3R+2$ boundary) \\
+8 & target\ub theorem\ub 8\ub universal\ub 3R\ub plus\ub 2 & witness\ub universal\ub 3R\ub plus\ub 2\ub R3 & --- (sharp $3R+2$ boundary) \\
 9 & target\ub theorem\ub 9\ub nonsymmetric\ub family & witness\ub J14\ub staggered\ub complex\ub ESE & refute\ub 5x5\ub nonsym\ub no\ub ESE\ub assumption \\
-10 & target\ub theorem\ub 10\{a,b\}\ub * & witness\ub J14\ub qsl\ub variance & refute\ub qsl\ub saturation\ub for\ub J14 \\
+10 & target\ub theorem\ub 10\{a,b\}\ub * & witness\ub J14\ub \{qsl\ub variance,ese\ub ete\ub duality\} & refute\ub qsl\ub saturation\ub for\ub J14 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \subsection{Eight-Engine Polyglot \& Quantum Cross-Parity}
 
-Every mathematical and physical claim is independently cross-checked across eight heterogeneous engines (\Cref{tab:engines}) executed live by \id{scripts/run\_polyglot\_parity.py} (\textbf{0 mismatches} across $13$ canonical chains), complemented by a $15$-test pytest verification ladder (including a $1{,}000$-case Hypothesis metamorphic test) and a Build Standard B13 mutation audit achieving a \textbf{100\% kill rate} ($10/10$ mutants killed).
+Every mathematical and physical claim is independently cross-checked across eight heterogeneous engines (\Cref{tab:engines}) executed live by \id{scripts/run\_polyglot\_parity.py} (\textbf{0 mismatches} across $13$ canonical chains), complemented by a $22$-test pytest verification ladder (including a $1{,}000$-case Hypothesis metamorphic test, single-version manifest checks, schema validation, link integrity, and manifest tamper rejection) and a Build Standard B13 mutation audit achieving a \textbf{100\% kill rate} ($10/10$ mutants killed).
 
 \begin{table}[t]
 \centering
@@ -492,11 +492,11 @@ During cross-engine testing of the C++20 matrix-exponential propagator, naive fl
 \section{Pre-Registered Four-Arm QRNG Static-Disorder Robustness Study}
 \label{sec:qrng}
 
-Ideal PST Hamiltonians suffer static diagonal fabrication disorder $J_\varepsilon = J + \varepsilon\,\mathrm{diag}(\xi_0,\dots,\xi_{N-1})$ with independent $\xi_j\sim\mathrm{Unif}[-1,1]$. Prior to executing any disorder simulation, we committed a locked pre-registration (\id{PREREGISTRATION.md}, root commit \id{1dac632}) specifying four paired treatment-versus-control arms (H1--H4), five disorder levels $\varepsilon\in\{0,0.01,0.02,0.05,0.10\}$, $K=30$ paired seeds generated via the vendored NIST-tested \id{quantum\_rng} library, primary endpoint $\varepsilon=0.05$, two-sided $10{,}000$-sign-flip paired permutation tests on $d_s = m_{\mathrm{ctrl}}(s)-m_{\mathrm{treat}}(s)$ (where $m=\min_{t\in[\delta,\pi-\delta]}|A_\varepsilon(t)|$ is the eclipse survival floor), and step-down Holm--Bonferroni FWER control at $\alpha=0.05$.
+Ideal PST Hamiltonians suffer static diagonal fabrication disorder $J_\varepsilon = J + \varepsilon\,\bar{b}\,\mathrm{diag}(\xi_0,\dots,\xi_{N-1})$ with mean coupling $\bar{b}=\frac{1}{N-1}\sum_{j=0}^{N-2} b_j$ and independent $\xi_j\sim\mathrm{Unif}[-1,1]$. Prior to executing any disorder simulation, we committed a locked pre-registration (\id{PREREGISTRATION.md}, root commit \id{1dac632}) specifying four paired treatment-versus-control arms (H1--H4), five disorder levels $\varepsilon\in\{0,0.01,0.02,0.05,0.10\}$, $K=30$ paired seeds generated via the vendored NIST-tested \id{quantum\_rng} library, primary endpoint $\varepsilon=0.05$, two-sided $10{,}000$-sign-flip paired permutation tests on $d_s = m_{\mathrm{ctrl}}(s)-m_{\mathrm{treat}}(s)$ (where $m=\min_{t\in[\delta,\pi-\delta]}|A_\varepsilon(t)|$ with $\delta=0.05\,\pi$ is the interior eclipse survival floor), and step-down Holm--Bonferroni FWER control at $\alpha=0.05$. In Version~1.1.0, a numerical boundary-trapping bug in single-bracket golden-section minimization was corrected by refining every local-minimum bracket on the same $500$-point grid so all four treatment arms evaluate to exact $0.000$ at $\varepsilon=0$; this sole post-registration fix is logged transparently with side-by-side comparison in \id{DEVIATIONS.md} while keeping \id{PREREGISTRATION.md} untouched.
 
 \begin{table}[t]
 \centering
-\caption{Pre-registered four-arm QRNG static-disorder study at primary endpoint $\varepsilon=0.05$ ($K=30$ paired seeds, $10{,}000$ permutations, Holm--Bonferroni FWER $\alpha=0.05$, Cliff's $\delta$~\cite{cliff1993}). \textbf{H4 is an honest pre-registered null result.}}
+\caption{Pre-registered four-arm QRNG static-disorder study at primary endpoint $\varepsilon=0.05$ ($K=30$ paired seeds, $10{,}000$ permutations, Holm--Bonferroni FWER $\alpha=0.05$, Cliff's $\delta$~\cite{cliff1993}; post-Deviation~\#1 multi-bracket optimizer). \textbf{H4 is an honest pre-registered null result.}}
 \label{tab:qrng}
 \scriptsize
 \setlength{\tabcolsep}{3.5pt}
@@ -504,10 +504,10 @@ Ideal PST Hamiltonians suffer static diagonal fabrication disorder $J_\varepsilo
 \toprule
 \textbf{Arm} & \textbf{Treatment (ESE)} & \textbf{Control (No ESE)} & \textbf{Treat} & \textbf{Ctrl} & \textbf{$d_z$} & \textbf{$\delta$} & \textbf{$p_{\mathrm{Holm}}$} & \textbf{Verdict} \\
 \midrule
-H1 & $7\times 7$ $\{0,\pm 3,\pm 4,\pm 5\}$ & $7\times 7$ $\{0,\pm 1,\pm 2,\pm 5\}$ & $0.00233$ & $0.01539$ & $+0.91$ & $+0.542$ & $0.0004$ & \textbf{SIG} ($\beta=0.80$) \\
-H2 & $8\times 8$ $m=1$ rupture & $6\times 6$ $\{\pm\tfrac{1}{2},\pm\tfrac{5}{2},\pm\tfrac{7}{2}\}$ & $0.00347$ & $0.10373$ & $+14.99$ & $+1.000$ & $0.0004$ & \textbf{SIG} ($\beta=1.08$) \\
-H3 & $11\times 11$ $m=6$ super. & $11\times 11$ $m=5$ sub. & $0.00752$ & $0.00995$ & $+0.75$ & $+0.238$ & $0.0008$ & \textbf{SIG} ($\beta=0.93$) \\
-H4 & $5\times 5$ $J_{1,4}$ complex & $5\times 5$ Krawtchouk & $0.01626$ & $0.01377$ & $+0.00$ & $-0.078$ & $0.9880$ & \textbf{NULL} ($\beta=0.72$) \\
+H1 & $7\times 7$ $\{0,\pm 3,\pm 4,\pm 5\}$ & $7\times 7$ $\{0,\pm 1,\pm 2,\pm 5\}$ & $0.00233$ & $0.01539$ & $+0.91$ & $+0.542$ & $0.0004$ & \textbf{SIG} ($\beta=0.90$) \\
+H2 & $8\times 8$ $m=1$ rupture & $6\times 6$ $\{\pm\tfrac{1}{2},\pm\tfrac{5}{2},\pm\tfrac{7}{2}\}$ & $0.00347$ & $0.10373$ & $+14.68$ & $+1.000$ & $0.0004$ & \textbf{SIG} ($\beta=1.14$) \\
+H3 & $11\times 11$ $m=6$ super. & $11\times 11$ $m=5$ sub. & $0.00685$ & $0.00995$ & $+0.83$ & $+0.247$ & $0.0004$ & \textbf{SIG} ($\beta=1.49$) \\
+H4 & $5\times 5$ $J_{1,4}$ complex & $5\times 5$ Krawtchouk & $0.01626$ & $0.01377$ & $+0.00$ & $-0.078$ & $0.9855$ & \textbf{NULL} ($\beta=0.83$) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -521,7 +521,7 @@ H4 & $5\times 5$ $J_{1,4}$ complex & $5\times 5$ Krawtchouk & $0.01626$ & $0.013
 
 \subsection{Physical Mechanism Behind the Honest H4 Null Result}
 
-Arms H1, H2, and H3 all survive Holm--Bonferroni correction strongly ($p_{\mathrm{Holm}}\le 0.0008$, positive $95\%$ bootstrap CIs), whereas H4 produces a clean null ($p_{\mathrm{Holm}}=0.988$, mean difference $+0.00006$, $95\%$ CI $[-0.00621,+0.00689]$). This outcome reflects genuine topological physics rather than a defect:
+Arms H1, H2, and H3 all survive Holm--Bonferroni correction strongly ($p_{\mathrm{Holm}}=0.0004$, positive $95\%$ bootstrap CIs), whereas H4 produces a clean null ($p_{\mathrm{Holm}}=0.9855$, mean difference $+0.00007$, $95\%$ CI $[-0.00619,+0.00689]$). This outcome reflects genuine topological physics rather than a defect:
 \begin{itemize}
 \item In symmetric chains (H1--H3), $A_0(t)\in\R$ crosses $0$ transversely (codimension-$1$ sign change). Small static diagonal perturbations induce $\mathrm{Im}\,A_\varepsilon(t)=O(\varepsilon)$ while $\mathrm{Re}\,A_\varepsilon(t)$ still crosses zero near $\tau$, maintaining a significantly deeper eclipse floor than the bounded-away-from-zero control.
 \item In the non-symmetric staggered chain $J_{1,4}$ (H4), $A_0(\pi/3)=0\in\C$ is a \emph{codimension-$2$} point intersection in $\C$. Any generic diagonal perturbation shifts the complex curve off the origin by $O(\varepsilon)$, lifting $|A_\varepsilon(\tau)|$ linearly and erasing its eclipse advantage over the $5\times 5$ Krawtchouk control at $\varepsilon=0.05$.
@@ -535,17 +535,21 @@ Arms H1, H2, and H3 all survive Holm--Bonferroni correction strongly ($p_{\mathr
 \item \textbf{Formal proof boundary:} Theorems~1--10 are machine-checked in Lean~4.35.0 (\taglean{}). The finite-$M$ onset integers $M^*(4)=30$ ($N=14$) and $M^*(5)=78$ ($N=17$) are established by exact rational / multi-core computational scans (\tagexact{}) rather than Lean certificates, and the QRNG robustness experiment is empirical (\tagemp{}).
 \item \textbf{Human line-by-line review status:} Although the Lean~4.35.0 kernel and six independent checkers verify logical validity without trusting the human or AI author, an independent human line-by-line audit of the $12$ Lean files and manuscript prose has not yet been recorded.
 \item \textbf{Open Problem (General $N\ge 10$ classification):} While \Cref{thm:3r2} locates the exact Krawtchouk-core vs.\ cluster phase boundary at $N_{\mathrm{crit}}(R)=3R+2$, classifying \emph{all} multi-cluster minimal-gap-$1$ spectra for $N\ge 8$ even and $N\ge 11$ odd---and characterizing exact codimension-$2$ complex ESE loci across general non-symmetric $N\times N$ persymmetric chains---remains an inviting open frontier.
-\item \textbf{No Mega-Atlas grand problem claimed:} Cross-check against the master archive (\id{0thernes-research-archive}) confirms $0/1{,}900$ Mega-Atlas grand problems are retired by this work; our primary resolved published conjecture is Conjecture~4.1 of Escobar--Garcia--Minenkova (\texttt{arXiv:2507.18767v1})~\cite{escobar2025}.
+\item \textbf{No Mega-Atlas grand problem claimed:} Cross-check against the master archive (\id{0thernes-research-archive}, record \id{0TH-2026-024}) confirms $0/2{,}000$ Mega-Atlas grand problems are retired by this work; our primary resolved published conjecture is Conjecture~4.1 of Escobar--Garcia--Minenkova (\texttt{arXiv:2507.18767v1})~\cite{escobar2025}.
 \end{enumerate}
 
 % ============================================================================
-\section*{Author Contributions, Competing Interests, and Data Availability}
+\section*{Author Contributions, Competing Interests, Compliance, and Data Availability}
 
 \textbf{CRediT Statement.} Alexander S.~Donahue: Conceptualization, Methodology, Project Administration, Resources, Supervision, Validation (direction and audit oversight). AI systems (Google Gemini / Antigravity) assisted with analytical derivation, Lean~4 formalization, polyglot engineering, and manuscript drafting under sole human direction.
 
-\textbf{Competing Interests.} The author declares no competing financial or non-financial interests.
+\textbf{Competing Interests \& Funding.} The author declares no competing financial or non-financial interests; this work is self-funded independent research.
 
-\textbf{Code, Proofs, and Data Availability.} All Lean~4.35.0 proofs, Palomar comparator specifications, eight polyglot/quantum engines, pre-registered QRNG datasets, figure generators, SHA-256 manifests, and RFC~3161 timestamps are openly archived at \url{https://github.com/0thernes/spectral-eclipse-frontier} (code \texttt{Apache-2.0}; manuscript/data \texttt{CC-BY-4.0}).
+\textbf{Export-Control Self-Screen.} This work constitutes fundamental mathematical research in spectral theory and linear algebra intended for open-access publication and falls within the fundamental research exclusion (15~CFR~734.8).
+
+\textbf{Errata \& Withdrawal Policy.} Any verified future error is documented transparently in \id{ERRATA.md} and released under an incremented SemVer tag without altering prior tags or git history.
+
+\textbf{Code, Proofs, and Data Availability.} All Lean~4.35.0 proofs, Palomar comparator specifications, eight polyglot/quantum engines, pre-registered QRNG datasets (\id{PREREGISTRATION.md}, \id{DEVIATIONS.md}), figure generators, SHA-256 manifests, and RFC~3161 / OpenTimestamps proofs are openly archived at \url{https://github.com/0thernes/spectral-eclipse-frontier} (code \texttt{Apache-2.0}; manuscript/data \texttt{CC-BY-4.0}; Master Archive ID \id{0TH-2026-024}; Software Heritage baseline \nolinkurl{swh:1:snp:37fd5b55ad30a2e1cedc2949415bfacf4d5d1efc}).
 
 \bibliographystyle{amsplain}
 \bibliography{refs}

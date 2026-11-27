@@ -6,7 +6,7 @@ All third-party libraries, vendored toolkits, and upstream formalization depende
 
 | Component | Upstream Repository | License | Usage in This Repository |
 |---|---|---|---|
-| **Moonlab** (`third_party/moonlab/`) | `tsotchke/moonlab` | MIT | Full $2^N$-dimensional multi-qubit XY spin-chain Hamiltonian statevector verification (`engines/moonlab/moonlab_xy_sim.mjs`) confirming exact agreement between single-excitation Jacobi dynamics $e^{-iJt}\mathbf{e}_0$ and the full $2^5=32$ Hilbert space of the staggered-field 5-qubit chain $J_{1,4}$. |
+| **Moonlab** (`third_party/moonlab/`) | `tsotchke/moonlab` | MIT | Full $2^N$-dimensional multi-qubit XY spin-chain Hamiltonian statevector verification (`engines/moonlab/moonlab_xy_sim.cjs`) confirming exact agreement between single-excitation Jacobi dynamics $e^{-iJt}\mathbf{e}_0$ and the full $2^5=32$ Hilbert space of the staggered-field 5-qubit chain $J_{1,4}$. |
 | **QGTL** (`third_party/qgtl/`) | `tsotchke/qgtl` | Apache-2.0 / MIT | Quantum Geometric Tensor & Fubini-Study metric computation (`engines/qgtl_qrng/`) verifying $g_{tt}(\mathbf{e}_0) = b_0^2$ and the Mandelstam-Tamm Early State Exclusion speed limit $\tau_{\mathrm{ESE}} \ge \pi / (2 b_0)$. |
 | **Quantum-RNG (QRNG)** (`third_party/quantum_rng/`) | `tsotchke/quantum_rng` | MIT | Seeded deterministic quantum-inspired entropy stream (`engines/qgtl_qrng/`) driving the pre-registered 30-seed diagonal-disorder robustness Monte Carlo study (Build Standard B28-B32). |
 

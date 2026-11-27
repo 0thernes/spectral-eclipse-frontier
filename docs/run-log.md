@@ -1,50 +1,50 @@
 # Execution & Verification Run Log (`B40`)
 
-Chronological log of verified local and CI execution runs for `spectral-eclipse-frontier` (`v1.0.0`), recorded directly from live tool outputs (never fabricated or backfilled).
+Chronological log of verified local and CI execution runs for `spectral-eclipse-frontier` (`v1.0.0` baseline and `v1.1.0` deep-hardened release), recorded directly from live tool outputs (never fabricated or backfilled).
 
-## Local Clean-Room Verification Runs (Windows 11 x86_64, ReFS Dev Drive)
+---
 
-### 1. Pre-Registration Lock (Root Commit `1dac632`)
-- **Event:** Locked `PREREGISTRATION.md` (4 primary hypotheses H1–H4, 30 QRNG seeds, Holm–Bonferroni $\alpha = 0.05$, effect-size definitions, and codimension-2 risk note) in the repository's very first git commit (`1dac632`) **before** any QRNG disorder experiment was compiled or executed.
-- **Result:** Verified via `git log --reverse --stat`.
+## Release `v1.1.0` Deep-Hardening Verification Runs (2026-11-27)
 
-### 2. Lean 4.35.0 Full Library, Palomar Isolation & Axiom Audit
-- **Command:** `cd lean && lake build SpectralEclipse Challenge Solution VerifyAxioms && lake env lean VerifyAxioms.lean`
-- **Output (`results/lean-axioms-all.log`):**
+### 1. Lean 4.35.0 Full Library, Palomar Isolation, Zero-Error Linter & 572-Theorem Axiom Audit
+- **Commands:**
+  ```bash
+  cd lean && lake build SpectralEclipse Challenge Solution VerifyAxioms
+  lake env lean VerifyAxioms.lean
+  lake exe runLinter SpectralEclipse Solution
+  ```
+- **Live Output (`results/lean-axioms-all.log`):**
   - **0 errors, 0 warnings, 0 `sorry`, 0 `admit`, 0 custom `axiom`, 0 `native_decide`**.
-  - **49 explicit `#print axioms` declarations** strictly within `[propext, Classical.choice, Quot.sound]`.
-  - **Exhaustive `Lean.collectAxioms` sentinel:** `ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 568 theorems across SpectralEclipse — 0 disallowed axioms.`
-- **Negative Kernel Elaboration Gate (`python scripts/test_lean_negative.py`):**
-  - `mutated_11x11_threshold_m5` -> REJECTED by kernel (`PASS`)
-  - `mutated_4x4_false_p3` -> REJECTED by kernel (`PASS`)
-  - `mutated_J14_wrong_variance` -> REJECTED by kernel (`PASS`)
-  - Total: **3/3 PASSED**.
+  - **52 explicit `#print axioms` declarations** (17 primary theorems + 18 `NonVacuity` witnesses + 5 `AdversarialTests` refutations + 12 `ComparatorTarget` bridges) strictly within `[propext, Classical.choice, Quot.sound]`.
+  - **Exhaustive `Lean.collectAxioms` sentinel:** `ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 572 theorems across SpectralEclipse — 0 disallowed axioms.`
+  - **Batteries Linter (`runLinter`):** `-- Linting passed for SpectralEclipse.` (0 `docBlame` or lint errors after documenting `hochstadtWeightOdd`; promoted to a hard CI gate in `.github/workflows/lean-verify.yml`).
+  - **Live `sorry`-Tamper Comparator CI Gate:** Added to `.github/workflows/lean-verify.yml` (temporarily injects `sorry` into `Solution.lean` via `trap` restore and asserts `lake comparator` exits nonzero).
+- **Negative Kernel Elaboration Gate (`python scripts/test_lean_negative.py`):** **3/3 PASSED** (`mutated_11x11_threshold_m5`, `mutated_4x4_false_p3`, `mutated_J14_wrong_variance` all rejected by Lean 4.35.0).
 
-### 3. Eight-Engine Polyglot & Quantum Cross-Parity
-- **Command:** `python scripts/run_polyglot_parity.py`
-- **Output (`results/polyglot_parity.json`):** `"all_passed": true`, `"mismatches": []` across all 13 canonical spin-chain test cases spanning NASM AVX2+FMA, ISO C11 (including 100,000-iteration Hochstadt persymmetry fuzz), C++20, Safe Rust (`#![forbid(unsafe_code)]`, `cargo clippy -- -D warnings` = 0 warnings), Zig 0.17.0 exact $\mathbb{Q}$, Eshkol v1.3.6 native AD (`max_diff = 1.332e-15`), Moonlab WASM 32-dim 5-qubit Trotter (`P_0(\pi/3) = 1.29 \times 10^{-10}`, `P_4(\pi) = 0.9999999857`), QGTL + Quantum-RNG, and SymPy Sturm + 80-digit `mpmath`.
+### 2. C11 / NASM AVX2+FMA & QGTL/QRNG Study Re-Run After Deviation #1 Optimizer Fix
+- **C11 + NASM AVX2+FMA (`engines/c/se_core.c` with `bessel_j_array` OOM/zero-norm propagation):**
+  - `[C/ASM] ALL TESTS PASSED (0 errors)` (`max|SpMV| = 8.882e-16`, `max|Cheb| = 1.776e-15`, `100,000`-iter Hochstadt fuzz `1.688e-14`).
+- **Pre-Registered 4-Arm QRNG Disorder Study (`engines/qgtl_qrng/se_qgtl_qrng` after Deviation #1 multi-bracket refinement fix, see [`DEVIATIONS.md`](../DEVIATIONS.md)):**
+  - **Commands:** `engines/qgtl_qrng/se_qgtl_qrng.exe results/qgtl_qrng_study.json` followed by `python scripts/analyze_qrng_study.py`
+  - **Clean-Limit Verification ($\varepsilon = 0$):** All 4 treatment arms now return exact `0.000000e+00` (fixing the `v1.0.0` single-bracket trapping on $J_{1,4}$).
+  - **Primary Endpoint ($\varepsilon = 0.05$, $K = 30$ paired seeds, `results/qgtl_qrng_analysis.json`):**
+    - **H1** ($7\times 7$ Conjecture 4.1 ESE vs. no-ESE, $\varepsilon = 0.05$): `treat_med = 0.00233`, `ctrl_med = 0.01539`, `mean_diff = +0.01525` (`95% CI [+0.00945, +0.02125]`), Cohen's $d_z = +0.91$, Cliff's $\delta = +0.542$, $p_{\mathrm{Holm}} = 0.0004$ ($\beta = 0.90$) -> **SIGNIFICANT**.
+    - **H2** ($8\times 8$ even rupture $m=1$ vs. $6\times 6$ no-ESE, $\varepsilon = 0.05$): `treat_med = 0.00347`, `ctrl_med = 0.10373`, `mean_diff = +0.10110` (`95% CI [+0.09878, +0.10363]`), $d_z = +14.68$, $\delta = +1.000$, $p_{\mathrm{Holm}} = 0.0004$ ($\beta = 1.14$) -> **SIGNIFICANT**.
+    - **H3** ($11\times 11$ supercritical $m=6$ vs. subcritical $m=5$, $\varepsilon = 0.05$): `treat_med = 0.00685`, `ctrl_med = 0.00995`, `mean_diff = +0.00321` (`95% CI [+0.00185, +0.00459]`), $d_z = +0.83$, $\delta = +0.247$, $p_{\mathrm{Holm}} = 0.0004$ ($\beta = 1.49$) -> **SIGNIFICANT**.
+    - **H4** ($5\times 5$ staggered complex $J_{1,4}$ vs. $5\times 5$ Krawtchouk no-ESE, $\varepsilon = 0.05$): `treat_med = 0.01626`, `ctrl_med = 0.01377`, `mean_diff = +0.00007` (`95% CI [-0.00619, +0.00689]`), $d_z = +0.00$, $\delta = -0.078$, $p_{\mathrm{Holm}} = 0.9855$ ($\beta = 0.83$) -> **PRE-REGISTERED NULL** (honestly reported; codimension-2 complex zero lifting vs. codimension-1 real crossing protection).
 
-### 4. Pre-Registered 4-Arm QRNG Disorder Study
-- **Commands:** `engines/qgtl_qrng/se_qgtl_qrng.exe --study results/qgtl_qrng_study.json` followed by `python scripts/analyze_qrng_study.py`
-- **Output (`results/qgtl_qrng_analysis.json`):**
-  - **H1** ($7\times 7$ ESE vs. no-ESE, $\varepsilon = 0.05$): $p_{\text{Holm}} = 0.0004$, Cohen's $d_z = 0.91$, Cliff's $\delta = 0.453$ -> **SIGNIFICANT**.
-  - **H2** ($11\times 11$ supercritical $m=6$ vs. subcritical $m=5$, $\varepsilon = 0.05$): $p_{\text{Holm}} = 0.0004$, $d_z = 14.99$, $\delta = 1.000$ -> **SIGNIFICANT**.
-  - **H3** ($8\times 8$ even rupture vs. $6\times 6$ no-ESE, $\varepsilon = 0.05$): $p_{\text{Holm}} = 0.0008$, $d_z = 0.75$, $\delta = 0.493$ -> **SIGNIFICANT**.
-  - **H4** ($5\times 5$ complex $J_{1,4}$ vs. $5\times 5$ real no-ESE, $\varepsilon = 0.02$): $p_{\text{Holm}} = 0.988$, $d_z = 0.00$, $\delta = -0.107$ -> **PRE-REGISTERED NULL** (honestly reported; physically explained by codimension-2 complex zero lifting vs. codimension-1 real crossing topological protection).
+### 3. Polyglot Parity, Python QA, Mutation Audit, Live Retraction-Checked Citations & Publication Pipeline
+- **8-Engine Parity (`python scripts/run_polyglot_parity.py`):** `"all_passed": true`, `"mismatches": []` across all 13 canonical spin-chain test cases.
+- **Pytest + Hypothesis (`python -m pytest -v tests/`):** **22/22 PASSED** (including 1,000-case Hypothesis metamorphic shift/scale invariance, single-version manifest check, `repo.yaml` JSON Schema validation, zero broken relative markdown links, zero stale identifiers, exact $\varepsilon=0$ regression, and manifest tamper rejection).
+- **Linters & Static Typing:** `ruff check python reference scripts tests` = **0 errors** (including POSIX `+x` mode `100755` on all shebang scripts for Linux CI); `mypy --strict --explicit-package-bases --ignore-missing-imports python reference scripts tests` = **0 errors** across every module; `cargo clippy --all-targets -- -D warnings` = **0 warnings**.
+- **Mutation Audit (`python scripts/mutation_audit.py`):** **10/10 mutants KILLED (`kill_rate = 1.0`, `survived = 0`)**.
+- **Live Citation & Retraction Audit (`python scripts/check_citations.py`):** **15/15 citations HTTP 200 verified, title-overlap validated, 0 retracted** (`results/citation-audit.json`).
+- **Security Dependencies:** `requirements.txt` upgraded (`pillow==13.0.0`, `pytest==9.2.0`, `pygments==2.21.0`, unused `PyMuPDF` removed) -> **0 Dependabot alerts, 0 `osv-scanner` CVEs**.
+- **Manuscript, Figures, Blueprint, Site, Manifest & Timestamps:** Dynamically regenerated Figure 5 + Tectonic 0-error/0-warning/0-overfull-hbox PDF + clean-room `arxiv_submission.tar.gz` + strict-CSP GitHub Pages (`web/observatory.js`) + LF-normalized `data/MANIFEST.sha256` with DigiCert RFC 3161 `.tsr` and Bitcoin OpenTimestamps `.ots`.
 
-### 5. Python QA, Hypothesis, Mutation Testing & Live Citations
-- **Pytest + Hypothesis (`pytest -v tests/`):** **15/15 PASSED** in `2.92s` (includes 1,000-case Hypothesis metamorphic shift/scale invariance test).
-- **Linters & Static Typing:** `ruff check python reference scripts tests` = **0 errors**; `mypy --strict --explicit-package-bases --ignore-missing-imports ...` = **0 errors** across 9 source files.
-- **Mutation Audit (`python scripts/mutation_audit.py`):** **10/10 mutants KILLED (`kill_rate = 1.0`, `survived = 0`)** in `results/mutation_audit.json`.
-- **Live Citation Audit (`python scripts/check_citations.py --live`):** **15/15 citations HTTP 200 verified, 0 retracted** in `results/citation-audit.json`.
+---
 
-### 6. Manuscript, Figures, Blueprint, Site, Manifest & Timestamps
-- **Figures (`python scripts/generate_figures.py`):** Generated 5 Okabe–Ito vector PDF figures + 1280×640 social preview; all 14 manuscript pages visually inspected as rendered PNGs.
-- **Tectonic AMS-LaTeX (`cd paper && tectonic -X compile main.tex --print`):** **14 pages, 0 errors, 0 Overfull `\hbox`, 0 warnings**; frozen to `dist/Donahue_2026_spectral_eclipse_frontier.pdf`.
-- **arXiv Package (`python scripts/package_arxiv.py`):** Clean-room unpacked & compile-verified `dist/arxiv_submission.tar.gz` (8 files).
-- **Axiom Sync (`python scripts/check_readme_axioms.py --require-exhaustive`):** **PASS** (49 declarations + 568 exhaustive audit + 29 README verbatim matches).
-- **Blueprint & Pages (`python scripts/build_blueprint.py && python scripts/build_site.py`):** **PASS** (`build/site/`).
-- **SHA-256 Manifest & Dual Timestamps (`generate_manifest.py` + `stamp_timestamps.py`):** Verified LF-only manifest cryptographically bound by DigiCert RFC 3161 `.tsr` and multi-calendar Bitcoin OpenTimestamps `.ots`.
+## Historical `v1.0.0` Baseline Verification Runs (2026-11-26 / 2026-11-27)
 
-## Hosted GitHub Actions CI Runs
-- Hosted 3-OS CI (`ubuntu-latest`, `windows-latest`, `macos-latest`), Ubuntu 24.04 6-checker `lake comparator --paranoid`, GitHub Pages deployment, and Release `v1.0.0` SLSA provenance runs are recorded on GitHub Actions upon publication and archived in `0thernes-research-archive`.
+- **Root Pre-Registration Lock (`1dac632`):** Locked `PREREGISTRATION.md` before executing any QRNG disorder experiment.
+- **Baseline `v1.0.0` Tag (`8d6cf7c`):** 568 audited Lean theorems, 6-checker Palomar comparator PASS on Ubuntu 24.04 CI, 3-OS Python/native CI PASS, GitHub Pages deployed, Software Heritage snapshot `swh:1:snp:37fd5b55ad30a2e1cedc2949415bfacf4d5d1efc`, and registered as `0TH-2026-024` in `0thernes/0thernes-research-archive`. Note: `v1.0.0` had typographical errors in this run-log (transposed H2/H3 arm labels, incorrect Cliff's $\delta$ transcription, and `--study` CLI flag typo) and the `compute_interior_min` single-bracket optimizer bug; all were corrected transparently in `v1.1.0` (see [`ERRATA.md`](../ERRATA.md) and [`DEVIATIONS.md`](../DEVIATIONS.md)).

@@ -1,14 +1,17 @@
 # The Spectral Eclipse Frontier
 
-[![Lean 4.35.0](https://img.shields.io/badge/Lean-4.35.0%20(568%20theorems%2C%200%20sorry)-2563EB?style=flat-square)](lean/VerifyAxioms.lean)
-[![6-Checker Palomar](https://img.shields.io/badge/Palomar%20Comparator-6%20Checkers%20(12%20Targets)-059669?style=flat-square)](lean/comparator.json)
-[![8 Polyglot Engines](https://img.shields.io/badge/Polyglot%20%26%20Quantum-8%20Engines%20(0%20Mismatches)-7C3AED?style=flat-square)](results/polyglot_parity.json)
+[![CI](https://github.com/0thernes/spectral-eclipse-frontier/actions/workflows/ci.yml/badge.svg)](https://github.com/0thernes/spectral-eclipse-frontier/actions/workflows/ci.yml)
+[![Lean 4 & Palomar 6-Checker](https://github.com/0thernes/spectral-eclipse-frontier/actions/workflows/lean-verify.yml/badge.svg)](https://github.com/0thernes/spectral-eclipse-frontier/actions/workflows/lean-verify.yml)
+[![GitHub Pages](https://github.com/0thernes/spectral-eclipse-frontier/actions/workflows/pages.yml/badge.svg)](https://0thernes.github.io/spectral-eclipse-frontier/)
+[![Lean 4.35.0](https://img.shields.io/badge/Lean-4.35.0%20%28572%20theorems%2C%200%20sorry%29-2563EB?style=flat-square)](lean/VerifyAxioms.lean)
+[![6-Checker Palomar](https://img.shields.io/badge/Palomar%20Comparator-6%20Checkers%20%2812%20Targets%29-059669?style=flat-square)](lean/comparator.json)
+[![8 Polyglot Engines](https://img.shields.io/badge/Polyglot%20%26%20Quantum-8%20Engines%20%280%20Mismatches%29-7C3AED?style=flat-square)](results/polyglot_parity.json)
 [![Code License: Apache-2.0](https://img.shields.io/badge/Code-Apache--2.0-blue?style=flat-square)](LICENSE)
 [![Docs License: CC-BY-4.0](https://img.shields.io/badge/Docs%20%26%20Paper-CC--BY--4.0-orange?style=flat-square)](LICENSE-DOCS)
-[![Status: Active](https://img.shields.io/badge/RepoStatus-Active%20v1.0.0-10B981?style=flat-square)](VERSION)
+[![Status: Active](https://img.shields.io/badge/RepoStatus-Active%20v1.1.0-10B981?style=flat-square)](VERSION)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0006--8168--9648-A6CE39?style=flat-square)](https://orcid.org/0009-0006-8168-9648)
 
-> **Unrefereed Research Preprint & Machine-Checked Formal Proof Repository (v1.0.0)**  
+> **Unrefereed Research Preprint & Machine-Checked Formal Proof Repository (v1.1.0)**  
 > **Author:** Alexander S. Donahue (`Independent Researcher, Spokane, WA, USA` · ORCID [0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648))  
 > **AI Disclosure:** Analytical proof discovery, Lean 4.35.0 formalization, polyglot engineering, and manuscript drafting were AI-assisted (Google Gemini / Antigravity) under sole human direction and audit oversight. No external peer review or journal submission has occurred yet.
 
@@ -28,34 +31,36 @@ This repository establishes a complete, machine-checked ten-theorem theory of **
 | **III (Thm. 6)** | **Critical $9\times 9$ No-ESE Theorem**: $A_9(1,b,c,d;t)>0$ on $[0,\pi)$ for ALL $1<b<c<d$ | `[LEAN-6K]` | `odd_critical_9x9_no_ESE` (+ 19 Bernstein certs) |
 | **III (Thm. 7)** | Sharp odd rupture at $N_{\mathrm{crit}}^{\mathrm{odd}} = 11$: exact threshold $m \ge 6 \iff M^* = 12$ | `[LEAN-6K]` | `odd_rupture_11x11_threshold` |
 | **IV (Thm. 8)** | Universal $(R,r)$ Krawtchouk-core vs. spectral-cluster phase transition at $N_{\mathrm{crit}}(R) = 3R + 2$ | `[LEAN-6K]` | `universal_phase_transition_3R_plus_2` |
-| **V (Thm. 9)** | First infinite non-symmetric staggered-field $5\times 5$ complex ESE family $J_{a,b}$ ($A(\pi/3)=0\in\mathbb{C}$) | `[LEAN-6K]` | `theorem_9_nonsymmetric_family` |
+| **V (Thm. 9)** | First infinite non-symmetric staggered-field $5\times 5$ complex ESE family $J_{a,b}$ ($A(\pi/3)=0\in\C$) | `[LEAN-6K]` | `theorem_9_nonsymmetric_family` |
 | **VI (Thm. 10)** | Exact QGTL metric $g_{tt}=b_0^2$, Mandelstam–Tamm QSL $\tau\ge\pi/(2|b_0|)$, & ESE–ETE duality | `[LEAN-6K]` | `mandelstam_tamm_ese_bound`, `ese_ete_duality` |
-| **Empirical** | Pre-registered 4-arm QRNG static-disorder study ($K=30$ seeds, Holm FWER): H1–H3 SIG, **H4 honest null** | `[EMPIRICAL]` | `PREREGISTRATION.md`, `results/qgtl_qrng_analysis.json` |
+| **Empirical** | Pre-registered 4-arm QRNG static-disorder study ($K=30$ seeds, Holm FWER): H1–H3 SIG, **H4 honest null** | `[EMPIRICAL]` | `PREREGISTRATION.md`, `DEVIATIONS.md`, `results/qgtl_qrng_analysis.json` |
 
 - **Preprint PDF:** [dist/Donahue_2026_spectral_eclipse_frontier.pdf](dist/Donahue_2026_spectral_eclipse_frontier.pdf)
 - **Standalone arXiv Source Tarball:** [dist/arxiv_submission.tar.gz](dist/arxiv_submission.tar.gz)
 - **Interactive Observatory & Lean Blueprint:** [https://0thernes.github.io/spectral-eclipse-frontier/](https://0thernes.github.io/spectral-eclipse-frontier/)
-- **Mega-Atlas Cross-Check:** `0 / 1,900` Mega-Atlas grand problems claimed ([docs/MEGA_ATLAS_CROSSCHECK.md](docs/MEGA_ATLAS_CROSSCHECK.md)).
+- **Mega-Atlas Cross-Check:** `0 / 2,000` Mega-Atlas grand problems claimed ([docs/MEGA_ATLAS_CROSSCHECK.md](docs/MEGA_ATLAS_CROSSCHECK.md)).
 
 ---
 
 ## Quickstart
 
 ```bash
-# 1. Verify all 10 Lean 4.35.0 theorems, Palomar Challenge/Solution bridge, and 568-theorem axiom audit
+# 1. Verify all 10 Lean 4.35.0 theorems, Palomar Challenge/Solution bridge, Batteries linter & 572-theorem axiom audit
 cd lean && lake exe cache get && lake build SpectralEclipse Challenge Solution VerifyAxioms
 lake env lean VerifyAxioms.lean
+lake exe runLinter SpectralEclipse Solution
 cd ..
 
-# 2. Install pinned Python environment and run the full verification ladder (15 tests + 1,000-case Hypothesis)
+# 2. Install pinned Python environment + editable package and run the full verification ladder (22 tests + 1,000-case Hypothesis)
 python -m pip install -r requirements.txt
+python -m pip install --no-deps -e .
 python -m pytest -v tests/
 
 # 3. Run the independent exact rational Sturm + 80-digit mpmath oracle & example quickstart
 python reference/exact_oracle.py
 python examples/quickstart.py
 
-# 4. Run 100% B13 mutation audit, citation audit, axiom-sync, manifest & timestamp checks
+# 4. Run 100% B13 mutation audit, live citation/retraction audit, axiom-sync, manifest & timestamp checks
 python scripts/mutation_audit.py
 python scripts/check_citations.py
 python scripts/check_readme_axioms.py --require-exhaustive
@@ -70,13 +75,15 @@ See [justfile](justfile) and [REPLICATION.md](REPLICATION.md) for single-command
 ## Usage
 
 ```python
+import math
 from spectral_eclipse import (
+    FLOAT64_CANCELLATION_MARGIN,
     detect_real_ese,
+    persymmetric_weights,
     reconstruct_persymmetric_jacobi,
     return_amplitude,
     target_amplitude,
 )
-import math
 
 # Example 1: Conjecture 4.1 ESE witness {0, +-3, +-4, +-5}
 chain7 = reconstruct_persymmetric_jacobi([-5, -4, -3, 0, 3, 4, 5])
@@ -87,6 +94,13 @@ print(f"7x7 ESE={has_ese}, tau={tau:.6f}, QSL={chain7.qsl_bound:.6f}, b0^2={chai
 j14 = reconstruct_persymmetric_jacobi([0, 1, 4, 9, 10])
 print(f"J14 |A(pi/3)| = {abs(return_amplitude(j14, math.pi / 3)):.3e}")
 print(f"J14 |T(pi)|   = {abs(target_amplitude(j14, math.pi)):.12f}")
+print(f"B20 guard     = {FLOAT64_CANCELLATION_MARGIN:.1e}")
+
+# Example 3: Boundary validation (non-strictly-increasing spectra raise ValueError)
+try:
+    persymmetric_weights([0.0, 1.0, 1.0, 2.0])
+except ValueError as exc:
+    print(f"Rejected invalid spectrum: {exc}")
 ```
 
 ---
@@ -125,7 +139,7 @@ Verified automatically against CI and committed logs by `python scripts/check_re
 'SpectralEclipse.ComparatorTarget.target_theorem_9_nonsymmetric_family' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SpectralEclipse.ComparatorTarget.target_theorem_10a_qsl_and_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SpectralEclipse.ComparatorTarget.target_theorem_10b_ese_ete_duality' depends on axioms: [propext, Classical.choice, Quot.sound]
-ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 568 theorems across SpectralEclipse — 0 disallowed axioms.
+ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 572 theorems across SpectralEclipse — 0 disallowed axioms.
 ```
 
 ---
@@ -136,7 +150,7 @@ ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 568 theorems across SpectralEclipse — 0
 | :-: | :--- | :--- | :--- |
 | 1 | **NASM x86-64 AVX2+FMA + ISO C11** | `engines/asm/`, `engines/c/` | Hardware SIMD tridiagonal SpMV & Chebyshev propagation; $10^5$-iter Hochstadt fuzz |
 | 2 | **ISO C++20** | `engines/cpp/` | Direct QL eigendecomposition & matrix exponential ($16$ chains, B20 cancellation guard) |
-| 3 | **Safe Rust** (`#![forbid(unsafe_code)]`) | `engines/rust/` | Multi-core $(R,r)$ phase-diagram scanner ($R=2\dots 5$) + $965$ random QSL chains |
+| 3 | **Safe Rust** (`#![forbid(unsafe_code)]`) | `engines/rust/` | Multi-core (`std::thread`) $(R,r)$ phase-diagram scanner ($R=2\dots 5$) + $965$ random QSL chains |
 | 4 | **Zig 0.17.0 Exact $\mathbb{Q}$** | `engines/zig/` | Zero-float arbitrary-precision rational Hochstadt reconstruction ($J_{1,4}$ exact) |
 | 5 | **Eshkol v1.3.6 Native AD** | `engines/eshkol/` | Compiler-native forward-mode AD Newton roots & triple-nested $H'''(16)$ |
 | 6 | **Moonlab WASM (32-dim)** | `engines/moonlab/` | Full 5-qubit many-body $XY+Z$ Trotter circuit on vendored `moonlab.wasm` |
@@ -147,11 +161,11 @@ ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 568 theorems across SpectralEclipse — 0
 
 ## Accessibility & i18n
 
-All publication figures use the Okabe–Ito colorblind-safe palette with direct curve annotations, and the GitHub Pages observatory (`web/index.html`, `web/blueprint/index.html`) implements WCAG 2.2 AA contrast, keyboard focus rings, ARIA labels, and strict Content Security Policy headers. Text and documentation are authored in UTF-8 English (`en-US`).
+All publication figures use the Okabe–Ito colorblind-safe palette with direct curve annotations, and the GitHub Pages observatory (`web/index.html`, `web/observatory.js`, `web/blueprint/index.html`) implements WCAG 2.2 AA contrast, skip-navigation links, keyboard focus rings, ARIA live regions, and strict Content Security Policy headers (`script-src 'self'`). Text and documentation are authored in UTF-8 English (`en-US`).
 
 ## Maintenance Status
 
-**Active (`v1.0.0`).** This repository is maintained by Alexander S. Donahue (`0_0@0thernes.art`) as part of the [0thernes-research-archive](https://github.com/0thernes/0thernes-research-archive) (`0TH-2026-020`). See [ROADMAP.md](ROADMAP.md), [ERRATA.md](ERRATA.md), [CLAIMS.md](CLAIMS.md), [LIMITATIONS.md](LIMITATIONS.md), and [HARDENING_LOG.md](HARDENING_LOG.md).
+**Active (`v1.1.0`).** This repository is maintained by Alexander S. Donahue (`0_0@0thernes.art`) as part of the [0thernes-research-archive](https://github.com/0thernes/0thernes-research-archive) (`0TH-2026-024`). See [ROADMAP.md](ROADMAP.md), [ERRATA.md](ERRATA.md), [DEVIATIONS.md](DEVIATIONS.md), [CLAIMS.md](CLAIMS.md), [LIMITATIONS.md](LIMITATIONS.md), [HARDENING_INDEX.md](HARDENING_INDEX.md), and [HARDENING_LOG.md](HARDENING_LOG.md).
 
 ## License
 

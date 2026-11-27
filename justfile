@@ -4,10 +4,11 @@
 
 set shell := ["bash", "-euo", "pipefail", "-c"]
 
-# Build and verify all 10 Lean 4.35.0 theorems + Palomar bridge + 568-theorem axiom audit
+# Build and verify all 10 Lean 4.35.0 theorems + Palomar bridge + 571-theorem axiom audit + Batteries linter
 lean-verify:
     cd lean && lake exe cache get && lake build SpectralEclipse Challenge Solution VerifyAxioms
     cd lean && lake env lean VerifyAxioms.lean
+    cd lean && lake exe runLinter SpectralEclipse Solution
     python3 scripts/test_lean_negative.py
     python3 scripts/check_readme_axioms.py --require-exhaustive
 
@@ -18,7 +19,7 @@ test:
     python3 examples/quickstart.py
     python3 scripts/mutation_audit.py
     ruff check python reference scripts tests
-    mypy --strict --explicit-package-bases --ignore-missing-imports python/spectral_eclipse reference/exact_oracle.py scripts/check_readme_axioms.py scripts/mutation_audit.py scripts/test_lean_negative.py scripts/analyze_qrng_study.py scripts/run_polyglot_parity.py scripts/check_citations.py
+    mypy --strict --explicit-package-bases --ignore-missing-imports python reference scripts tests
 
 # Build and cross-verify all 8 polyglot & quantum engines
 parity:

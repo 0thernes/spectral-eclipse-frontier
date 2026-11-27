@@ -25,15 +25,18 @@ warning: batteries: repository has local changes:
 'SpectralEclipse.NonVacuity.witness_6x6_ESE_3_5_7' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SpectralEclipse.NonVacuity.witness_7x7_noESE_1_2_3' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SpectralEclipse.NonVacuity.witness_7x7_ESE_3_4_5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_7x7_unreduced_c2_3_6_9' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SpectralEclipse.NonVacuity.witness_8x8_rupture_m1' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SpectralEclipse.NonVacuity.witness_9x9_noESE_1_2_3_4' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SpectralEclipse.NonVacuity.witness_9x9_noESE_1_20_21_22' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SpectralEclipse.NonVacuity.witness_11x11_subcrit_m5' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SpectralEclipse.NonVacuity.witness_11x11_supercrit_m6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_universal_3R_plus_2_R3' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SpectralEclipse.NonVacuity.witness_J14_staggered_complex_ESE' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
 'SpectralEclipse.NonVacuity.witness_J14_qsl_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_J14_ese_ete_duality' depends on axioms: [propext, Classical.choice, Quot.sound]
 'SpectralEclipse.AdversarialTests.refute_even_8x8_naive_divisibility' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
@@ -77,4 +80,4 @@ warning: batteries: repository has local changes:
 'SpectralEclipse.ComparatorTarget.target_theorem_10b_ese_ete_duality' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
-ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 568 theorems across SpectralEclipse — 0 disallowed axioms.
+ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 572 theorems across SpectralEclipse — 0 disallowed axioms.

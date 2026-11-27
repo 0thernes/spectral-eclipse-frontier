@@ -11,6 +11,11 @@ from dataclasses import dataclass
 import numpy as np
 from numpy.typing import NDArray
 
+#: B20 IEEE-754 float64 catastrophic cancellation guard near t = pi where |A(t)| = O((pi - t)^(N-1)).
+FLOAT64_CANCELLATION_MARGIN: float = 1e-11
+#: Fallback minimum real-amplitude threshold for non-crossing ESE detection.
+FLOAT64_MIN_RE_THRESHOLD: float = 1e-10
+
 
 @dataclass(frozen=True)
 class JacobiChain:
@@ -111,7 +116,7 @@ def detect_real_ese(chain: JacobiChain, pst_time: float = math.pi, grid: int = 4
     for t in ts:
         re = return_amplitude(chain, float(t)).real
         min_re = min(min_re, re)
-        if prev > 1e-11 and re < -1e-11:
+        if prev > FLOAT64_CANCELLATION_MARGIN and re < -FLOAT64_CANCELLATION_MARGIN:
             lo, hi = prev_t, float(t)
             for _ in range(60):
                 mid = 0.5 * (lo + hi)
@@ -121,4 +126,4 @@ def detect_real_ese(chain: JacobiChain, pst_time: float = math.pi, grid: int = 4
                     hi = mid
             return True, 0.5 * (lo + hi)
         prev, prev_t = re, float(t)
-    return (min_re < -1e-10), None
+    return (min_re < -FLOAT64_MIN_RE_THRESHOLD), None

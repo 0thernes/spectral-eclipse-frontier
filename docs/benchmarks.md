@@ -19,7 +19,7 @@ This project makes **no speed, latency, or SOTA runtime performance claims** (`r
 | B13 mutation audit (10 mutants) | `python scripts/mutation_audit.py` | ~42 s | Isolated sandbox copy; 10/10 mutants killed (100.0%) |
 | C11 + NASM AVX2 (`10^5` fuzz) | `engines/c/test_c_core` | <0.2 s | Hardware AVX2+FMA active; max error $1.78\times 10^{-15}$ |
 | C++20 direct matrix exp (16 chains) | `engines/cpp/se_propagator` | <0.2 s | Exact QL eigendecomposition + cancellation guard |
-| Safe Rust scan ($R=2..5$ + 965 QSL) | `cargo run --release` | <0.4 s | Multi-core Rayon scan, zero `unsafe` |
+| Safe Rust scan ($R=2..5$ + 965 QSL) | `cargo run --release` | <0.4 s | Multi-core `std::thread` scan, zero external crates, zero `unsafe` |
 | Zig 0.17.0 exact $\mathbb{Q}$ (10 chains) | `zig run -OReleaseSafe src/main.zig` | ~1.5 s | Arbitrary-precision `BigInt` rational Lanczos |
 | Eshkol v1.3.6 native AD | `python engines/eshkol/run_eshkol.py` | ~1.2 s | Native forward-mode AD vs dual-number parity ($1.33\times 10^{-15}$) |
 | Moonlab WASM 32-dim Trotter | `node engines/moonlab/moonlab_xy_sim.cjs` | ~0.6 s | 5-qubit 2nd-order Strang-Trotter on `moonlab.wasm` |

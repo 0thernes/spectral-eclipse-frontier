@@ -25,7 +25,7 @@ only if `λ₁` divides both `λ₂` and `λ₃` (equivalently `λ₁ = 1` in re
       * Case 1 (`λ₁ ∤ λ₂`, `λ₁ ∤ λ₃`): `Ā(0) = c₃ - c₂ < 0`.
       * Case 2 (`λ₁ ∤ λ₂`, `λ₁ ∣ λ₃`): `Ā(0) = -c₂ < 0`.
       * Case 3 (`λ₁ ∣ λ₂`, `λ₁ ∤ λ₃`): Universal shift `s = 2 / λ₃` yields `Ā(2/λ₃) < -(1/9) c₃ < 0`!
-  - **General Scaling Corollary (`conjecture_4_1_unreduced`)**: Restates Conjecture 4.1 verbatim
+  - **General Scaling Corollary (`conjecture_4_1_7x7_unreduced`)**: Restates Conjecture 4.1 verbatim
     for arbitrary unreduced positive eigenvalues `0 < α₁ < α₂ < α₃` with PST alternating parity,
     showing `¬HasESEReal_scaled ↔ α₁ ∣ α₂ ∧ α₁ ∣ α₃`.
 -/
