@@ -34,7 +34,6 @@ line-length = 110
 target-version = "py39"
 
 [tool.mypy]
-python_version = "3.9"
 strict = true
 ignore_missing_imports = true
 
