@@ -1,0 +1,48 @@
+name: Release Checksums & SLSA Provenance Attestation
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Collect release artifacts and generate SHA256SUMS
+        run: |
+          mkdir -p release-dist
+          cp dist/Donahue_2026_spectral_eclipse_frontier.pdf release-dist/
+          cp dist/arxiv_submission.tar.gz release-dist/
+          cp results/lean-axioms-all.log release-dist/
+          cp results/citation-audit.json release-dist/
+          cp results/polyglot_parity.json release-dist/
+          cp results/qgtl_qrng_analysis.json release-dist/
+          cp results/mutation_audit.json release-dist/
+          cp data/MANIFEST.sha256 release-dist/data-MANIFEST.sha256
+          if [ -f data/MANIFEST.sha256.tsr ]; then cp data/MANIFEST.sha256.tsr release-dist/data-MANIFEST.sha256.tsr; fi
+          if [ -f data/MANIFEST.sha256.ots ]; then cp data/MANIFEST.sha256.ots release-dist/data-MANIFEST.sha256.ots; fi
+          (cd release-dist && sha256sum * > SHA256SUMS)
+          cat release-dist/SHA256SUMS
+      - name: Generate Sigstore SLSA build provenance attestations
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: release-dist/*
+      - name: Publish GitHub Release with SHA256SUMS
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          gh release create "$TAG" release-dist/* \
+            --title "Spectral Eclipse Frontier $TAG" \
+            --notes "Complete Lean 4.35.0 formal proof (572 audited theorems, 12 Palomar comparator targets verified across 6 independent checkers, 0 sorry) resolving Conjecture 4.1 (arXiv:2507.18767v1) and proving sharp even/odd ESE rupture (N=8, N=11 at M*=12), Critical 9x9 No-ESE, universal 3R+2 phase boundary, infinite non-symmetric complex J_{a,b} family, and exact QGTL/Mandelstam-Tamm speed limits & ESE-ETE duality ($TAG), cross-verified across 8 polyglot/quantum engines, pre-registered QRNG study, frozen PDF, clean-room arXiv bundle, SHA256SUMS, RFC 3161 + OpenTimestamps, and Sigstore SLSA attestations. See CHANGELOG.md for details." \
+            || gh release upload "$TAG" release-dist/* --clobber

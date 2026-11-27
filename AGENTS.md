@@ -34,7 +34,7 @@ Use the task runner (`justfile`, A31). Every command works from a clean clone:
 - `just bench`: honest multi-engine benchmarks with medians and interquartile spread
 - `just paper`: regenerate figures, compile AMS-LaTeX PDF via Tectonic (0 overfull hboxes), and build standalone `arxiv_submission.tar.gz`
 - `just reproduce`: clean clone to headline verified results
-- `just audit`: run Build Standard v1.2.0 and Playbook v1.3 repo audit (`scripts/audit_repo.py`)
+- `just audit`: run Build Standard v1.2.0 repo audit (`bash scripts/audit-repo.sh .`)
 - `just release X.Y.Z`: bump `VERSION`, tag `vX.Y.Z`, and push
 
 ## Hard rules
@@ -64,7 +64,7 @@ Use the task runner (`justfile`, A31). Every command works from a clean clone:
 ## Known traps
 
 - **Windows ReFS bracket path:** Local path contains `[Vibe Coded (AI)]`. In PowerShell ALWAYS pass `-LiteralPath` to file cmdlets (`Test-Path -LiteralPath`, `Get-ChildItem -LiteralPath`, etc.).
-- **Author affiliation:** Always `Independent Researcher, Spokane, WA, USA` (never `0thernes LLC`).
+- **Author affiliation:** Always `Independent Researcher, Spokane, WA, USA` (never a corporate or LLC affiliation).
 - **Float64 cancellation near $t = \pi$:** Never judge ESE near the $2n$-th order root $t = \pi$ using naive $\sum c_k \cos(\lambda_k t)$ in IEEE-754 float64; always use the exact cancellation-free $\sin^2(\lambda_k u)$ representation ($t = \pi - 2u$) or exact integer Sturm sequences.
 - **Lean 4.35 module header:** Every `.lean` proof file MUST start with `module` (Palomar spec) and avoid `sorry`, `admit`, `native_decide`, `unsafe`, custom `axiom`, `partial def`, or `@[extern]`.
 - **Dual-ABI NASM assembly:** `engines/asm/jacobi_avx2.asm` must conditionally compile both Win64 (RCX, RDX, R8, R9) and SysV AMD64 (RDI, RSI, RDX, RCX) register conventions so Windows and Linux CI both assemble and link cleanly.

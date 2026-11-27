@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; script-src 'none';">
+<title>Spectral Eclipse Frontier — Lean 4.35.0 Proof Dependency Blueprint</title>
+<style>
+  :root { --bg:#0b1220; --card:#111b2e; --fg:#f1f5f9; --muted:#94a3b8; --accent:#38bdf8; --ok:#10b981; --border:#1e293b; }
+  body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--fg); line-height:1.55; }
+  main { max-width:1100px; margin:0 auto; padding:2rem 1.25rem 3rem; }
+  a { color:var(--accent); }
+  h1 { margin:0 0 .4rem; font-size:1.9rem; }
+  .sub { color:var(--muted); margin-bottom:1.5rem; }
+  table { width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+  th, td { padding:.7rem .85rem; border-bottom:1px solid var(--border); text-align:left; font-size:.92rem; }
+  th { background:#0f172a; color:#cbd5e1; font-weight:600; }
+  .num { text-align:right; font-variant-numeric:tabular-nums; }
+  .badge { display:inline-block; padding:.15rem .5rem; border-radius:999px; background:#1e3a5f; color:#7dd3fc; font-size:.78rem; font-weight:600; }
+  .ok { display:inline-block; padding:.15rem .55rem; border-radius:999px; background:#064e3b; color:#6ee7b7; font-size:.78rem; font-weight:600; }
+  code { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:.86rem; color:#e2e8f0; }
+</style>
+</head>
+<body>
+<main>
+  <p><a href="../index.html">&larr; Back to Spectral Eclipse Frontier Observatory</a></p>
+  <h1>Lean 4.35.0 Proof Dependency Blueprint</h1>
+  <p class="sub">12 formal modules &middot; 572 audited theorem constants &middot; Strictly standard axioms <code>[propext, Classical.choice, Quot.sound]</code> &middot; 0 <code>sorry</code></p>
+  <table>
+    <thead>
+      <tr><th>Pillar</th><th>Module</th><th>Verified Content</th><th>Direct Dependencies</th><th class="num">Decl.</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge">Pillar 0</span></td>
+        <td><code>SpectralEclipse.Defs</code></td>
+        <td>Schrödinger Fidelity, Jacobi Matrix, H, He, amp4..amp11</td>
+        <td>Mathlib v4.35.0</td>
+        <td class="num">8</td>
+        <td><span class="ok">Verified (0 sorry)</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge">Pillar 0</span></td>
+        <td><code>SpectralEclipse.TrigBounds</code></td>
+        <td>Taylor Bounds, HDeriv2_pos, HDeriv3_neg, Secant Slopes</td>
+        <td>Defs</td>
+        <td class="num">35</td>
+        <td><span class="ok">Verified (0 sorry)</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge">Pillar I</span></td>
+        <td><code>SpectralEclipse.Chains456</code></td>
+        <td>Thms. 1–3: 4×4, 5×5, 6×6 Dichotomies & Universal Even Converse</td>
+        <td>TrigBounds</td>
+        <td class="num">9</td>
+        <td><span class="ok">Verified (0 sorry)</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge">Pillar II</span></td>
+        <td><code>SpectralEclipse.Conjecture41</code></td>
+        <td>Thm. 4: Conjecture 4.1 (7×7, Reduced & Real-Scaled Unreduced)</td>
+        <td>Chains456</td>
+        <td class="num">10</td>
+        <td><span class="ok">Verified (0 sorry)</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge">Pillar III/IV</span></td>
+        <td><code>SpectralEclipse.RuptureAndPhase</code></td>
+        <td>Thm. 5 (8×8), Thm. 7 (11×11 M*=12), Thm. 8 (3R+2 Law)</td>
+        <td>Conjecture41</td>
+        <td class="num">13</td>
+        <td><span class="ok">Verified (0 sorry)</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge">Pillar III</span></td>
+        <td><code>SpectralEclipse.Critical9x9Certs</code></td>
+        <td>20 Exact Univariate & Bivariate Bernstein Positivity Certificates</td>
+        <td>Defs</td>
+        <td class="num">46</td>
+        <td><span class="ok">Verified (0 sorry)</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge">Pillar III</span></td>
+        <td><code>SpectralEclipse.Critical9x9</code></td>
+        <td>Thm. 6: Critical 9×9 No-ESE Theorem (All 1 < b < c < d)</td>
+        <td>TrigBounds, Critical9x9Certs</td>
+        <td class="num">79</td>
+        <td><span class="ok">Verified (0 sorry)</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge">Pillar V</span></td>
+        <td><code>SpectralEclipse.NonSymmetricFamily</code></td>
+        <td>Thm. 9: Infinite Staggered-Field Complex ESE Family J_{a,b}</td>
+        <td>Defs</td>
+        <td class="num">7</td>
+        <td><span class="ok">Verified (0 sorry)</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge">Pillar VI</span></td>
+        <td><code>SpectralEclipse.SpeedLimitAndDuality</code></td>
+        <td>Thm. 10: QGTL Metric g_tt = b_0^2, QSL & ESE-ETE Duality</td>
+        <td>Defs</td>
+        <td class="num">7</td>
+        <td><span class="ok">Verified (0 sorry)</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge">Audit</span></td>
+        <td><code>SpectralEclipse.NonVacuity</code></td>
+        <td>15 Concrete Non-Vacuity Witnesses (Theorems 1–10)</td>
+        <td>Chains456, Conjecture41, RuptureAndPhase, Critical9x9, NonSymmetricFamily, SpeedLimitAndDuality</td>
+        <td class="num">15</td>
+        <td><span class="ok">Verified (0 sorry)</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge">Audit</span></td>
+        <td><code>SpectralEclipse.AdversarialTests</code></td>
+        <td>5 Machine-Checked Refutations of False Conjecture Variants</td>
+        <td>NonVacuity</td>
+        <td class="num">5</td>
+        <td><span class="ok">Verified (0 sorry)</span></td>
+      </tr>
+      <tr>
+        <td><span class="badge">Palomar</span></td>
+        <td><code>Solution (Palomar Bridge)</code></td>
+        <td>12 Isolated Mathlib-Only Comparator Targets (6 Checkers)</td>
+        <td>AdversarialTests</td>
+        <td class="num">12</td>
+        <td><span class="ok">Verified (0 sorry)</span></td>
+      </tr>
+    </tbody>
+  </table>
+</main>
+</body>
+</html>

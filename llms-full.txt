@@ -1,0 +1,20 @@
+# Spectral Eclipse Frontier — Full LLM Index (v1.0.0)
+
+## 1. Scientific Summary (Theorems 1–10, All `[LEAN-6K]`)
+- **Theorem 1 (`dichotomy_4x4`):** Reduced $4\times 4$ symmetric PST chain avoids ESE on $(0,\pi) \iff p=1$.
+- **Theorem 2 (`dichotomy_5x5`):** Reduced $5\times 5$ symmetric PST chain avoids ESE on $(0,\pi) \iff y=1$.
+- **Theorem 3 (`dichotomy_6x6`, `even_hasESE_of_min_ge_three`):** Universal even orthogonality converse ($\forall 2n$) and complete $6\times 6$ dichotomy $\neg\mathrm{ESE}\iff p=1$.
+- **Theorem 4 (`conjecture_4_1_7x7`, `conjecture_4_1_7x7_unreduced`):** Complete resolution of Conjecture 4.1 of Escobar, Garcia, and Minenkova (`arXiv:2507.18767v1`) in both reduced and arbitrary real-scaled unreduced forms, via `H_slope_strictAnti` (forward) and discrete Fourier coset averaging with universal shift $s=2/z$ (converse).
+- **Theorem 5 (`even_rupture_8x8`):** Sharp even rupture at $N_{\mathrm{crit}}^{\mathrm{even}} = 8$: for every $m\ge 1$, $\{ \pm 1/2, \pm(4m+3)/2, \pm(4m+5)/2, \pm(4m+7)/2 \}$ has $A_8(2\pi/(4m+5))<0$ despite $p_1=1$.
+- **Theorem 6 (`odd_critical_9x9_no_ESE`):** Critical $9\times 9$ No-ESE Theorem: for EVERY alternating-parity triple $1<b<c<d$, $A_9(1,b,c,d;t)>0$ on $[0,\pi)$, certified via second divided difference `H2dd`, confluent derivative `Hww`, and 20 exact univariate/bivariate Bernstein positivity certificates (`Critical9x9Certs.lean`).
+- **Theorem 7 (`odd_rupture_11x11_threshold`):** Sharp odd rupture at $N_{\mathrm{crit}}^{\mathrm{odd}} = 11$: for $S(m)=\{0,\pm 1,\pm 2m,\pm(2m+1),\pm(2m+2),\pm(2m+3)\}$, $\mathrm{HasESEReal}\iff m\ge 6$ ($M^*=12$), with 5 exact global rational SOS certificates for $m=1..5$ and exact degree-8 positive polynomial for all $m\ge 6$.
+- **Theorem 8 (`universal_phase_transition_3R_plus_2`, `cluster_self_gap_sum`):** Universal $(R,r)$ Krawtchouk-core vs. spectral-cluster phase transition at $r_{\mathrm{crit}}(R)=R+1$, $N_{\mathrm{crit}}(R)=3R+2$, predicting $M^*(3)=3\cdot 2^2=12$ exactly.
+- **Theorem 9 (`theorem_9_nonsymmetric_family`):** First infinite non-symmetric staggered-field $5\times 5$ Jacobi family $J_{a,b}$ (`a` odd, $3\nmid a$, $b=a+6k+3$) with exact Schrödinger fidelity, exact PST $\psi_4(\pi)=1$, and exact complex ESE $\psi_0(\pi/3)=0\in\mathbb{C}$.
+- **Theorem 10 (`jacobi_energy_variance_eq_b0_sq`, `spectral_variance_eq_b0_sq`, `mandelstam_tamm_ese_bound`, `ese_ete_duality`):** Exact QGTL metric $g_{tt}=b_0^2$, universal Mandelstam–Tamm QSL $\tau\ge\pi/(2|b_0|)$, and exact ESE–ETE time-reversal duality.
+
+## 2. Verification & Architecture Inventory
+- **Lean 4.35.0 (`lean/`):** 12 `module`-header files, `Challenge.lean` (Mathlib-only, 12 targets), `Solution.lean` (sorry-free bridge), `NonVacuity.lean` (15 witnesses), `AdversarialTests.lean` (5 refutations), `VerifyAxioms.lean` (572 audited theorems, 0 disallowed axioms).
+- **8 Polyglot & Quantum Engines (`engines/`, `reference/`):** NASM AVX2+FMA + ISO C11, ISO C++20, Safe Rust (`#![forbid(unsafe_code)]`), Zig 0.17.0 exact $\mathbb{Q}$, Eshkol v1.3.6 native AD, Moonlab WASM 32-dim 5-qubit simulator, vendored QGTL + Quantum-RNG, SymPy Sturm + 80-digit `mpmath`. Cross-parity: 0 mismatches (`results/polyglot_parity.json`).
+- **Pre-Registered QRNG Study (`PREREGISTRATION.md`, `results/qgtl_qrng_analysis.json`):** 4 arms $\times$ 5 disorder levels $\times$ 30 paired seeds. Primary $\varepsilon=0.05$ Holm-Bonferroni verdicts: H1 SIG ($p=0.0004, d_z=0.91$), H2 SIG ($p=0.0004, d_z=14.99$), H3 SIG ($p=0.0008, d_z=0.75$), H4 HONEST NULL ($p=0.988, d_z=0.00$; codimension-2 complex zero lifting).
+- **Genuine Numerical Discovery (B20):** Naive float64 sign-change detection suffers false-positive ESE flips near $t=\pi$ due to $A_N(t)=O((\pi-t)^{N-1})$ underflow below unit roundoff; guarded in C++20/Python and regression-tested in `tests/test_all.py`.
+- **QA & Integrity:** 15/15 pytest (incl. 1,000-case Hypothesis), 10/10 B13 mutation kill rate, 15/15 live HTTP-200 citations (0 retracted), 0 ruff / 0 mypy-strict errors, LF-normalized `data/MANIFEST.sha256` + DigiCert RFC 3161 `.tsr` + Bitcoin OpenTimestamps `.ots`.

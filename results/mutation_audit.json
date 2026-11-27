@@ -1,0 +1,68 @@
+{
+  "total_mutants": 10,
+  "killed": 10,
+  "survived": 0,
+  "kill_rate": 1.0,
+  "mutants": [
+    {
+      "id": "M01_qsl_factor",
+      "file": "python/spectral_eclipse/core.py",
+      "description": "Halve QSL bound factor pi/(2 b0) -> pi/(4 b0)",
+      "status": "KILLED"
+    },
+    {
+      "id": "M02_weight_sign",
+      "file": "python/spectral_eclipse/core.py",
+      "description": "Flip sign of log Hochstadt weights",
+      "status": "KILLED"
+    },
+    {
+      "id": "M03_mono_check",
+      "file": "python/spectral_eclipse/core.py",
+      "description": "Disable strict-monotonicity input validation",
+      "status": "KILLED"
+    },
+    {
+      "id": "M04_mgs_pass",
+      "file": "python/spectral_eclipse/core.py",
+      "description": "Perturb Lanczos off-diagonal hopping by +1%",
+      "status": "KILLED"
+    },
+    {
+      "id": "M05_return_phase",
+      "file": "python/spectral_eclipse/core.py",
+      "description": "Reverse time evolution sign in return_amplitude",
+      "status": "KILLED"
+    },
+    {
+      "id": "M06_target_parity",
+      "file": "python/spectral_eclipse/core.py",
+      "description": "Drop alternating mirror-parity signs in target_amplitude",
+      "status": "KILLED"
+    },
+    {
+      "id": "M07_ese_guard",
+      "file": "python/spectral_eclipse/core.py",
+      "description": "Break ESE zero-crossing detector threshold",
+      "status": "KILLED"
+    },
+    {
+      "id": "M08_sturm_interval",
+      "file": "reference/exact_oracle.py",
+      "description": "Restrict odd-chain Sturm root interval to (0, 1) instead of (-1, 1)",
+      "status": "KILLED"
+    },
+    {
+      "id": "M09_variance_formula",
+      "file": "reference/exact_oracle.py",
+      "description": "Drop mean-centering in exact_energy_variance_q (breaks non-symmetric J14)",
+      "status": "KILLED"
+    },
+    {
+      "id": "M10_j14_assert",
+      "file": "reference/exact_oracle.py",
+      "description": "Mutate exact rational b0^2 assertion for J_{1,4}",
+      "status": "KILLED"
+    }
+  ]
+}

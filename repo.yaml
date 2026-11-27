@@ -1,0 +1,117 @@
+# yaml-language-server: $schema=./repo-standard.schema.json
+# Project manifest for Build Standard for LLMs v1.2.0.
+standard: "1.2.0"
+name: "spectral-eclipse-frontier"
+description: "Complete Lean 4.35.0 formal proof (572 audited theorems, 6-checker Palomar comparator, 0 sorry), 8-engine polyglot/quantum cross-verification (AVX2 ASM, C11, C++20, Rust, Zig Q, Eshkol AD, Moonlab 32-dim WASM, QGTL/QRNG), pre-registered QRNG disorder study, and AMS-LaTeX preprint resolving Conjecture 4.1 (arXiv:2507.18767v1) and establishing sharp even/odd rupture thresholds (N=8, N=11 at M*=12), Critical 9x9 No-ESE, universal 3R+2 phase transition, non-symmetric complex J_{a,b}, and QGTL/Mandelstam-Tamm speed limits."
+owner: "Alexander S. Donahue (0thernes)"
+year: "2026"
+project_type: research
+stack: [python, rust, zig, c-cpp, node, other]
+flags:
+  public: true
+  package: true
+  visual: true
+  ui: true
+  native: true
+  ai: false
+  personal_data: false
+  service: false
+  deployed: false
+  api: false
+  perf: false
+  concurrent: true
+  numeric: true
+  experimental: true
+  ml: false
+  formal: true
+items:
+  A01: {status: done, evidence: "README.md"}
+  A02: {status: done, evidence: "README.md badge ribbon"}
+  A03: {status: done, evidence: "README.md Quickstart"}
+  A04: {status: done, evidence: "README.md Usage"}
+  A05: {status: done, evidence: "docs/media/social-preview.png, 5 vector PDF figures in paper/figures/, interactive web observatory"}
+  A06: {status: done, evidence: "LICENSE (Apache-2.0) and LICENSE-DOCS (CC-BY-4.0) with SPDX headers across source and TeX files"}
+  A07: {status: done, evidence: "CHANGELOG.md"}
+  A08: {status: done, evidence: "VERSION (1.0.0) matched across CHANGELOG.md, CITATION.cff, formalization.yaml, pyproject.toml, lean/lakefile.toml, llms.txt"}
+  A09: {status: done, evidence: "tests/test_all.py (15 tests + 1,000-case Hypothesis) + C/C++/Rust/Zig/Eshkol/Moonlab/QGTL test suites"}
+  A10: {status: done, evidence: ".github/workflows/ci.yml and .github/workflows/lean-verify.yml"}
+  A11: {status: done, evidence: ".github/workflows/release.yml"}
+  A12: {status: done, evidence: ".gitignore"}
+  A13: {status: done, evidence: ".gitattributes and .editorconfig"}
+  A14: {status: done, evidence: "CONTRIBUTING.md"}
+  A15: {status: done, evidence: "CODE_OF_CONDUCT.md"}
+  A16: {status: done, evidence: "SECURITY.md"}
+  A17: {status: done, evidence: "SUPPORT.md"}
+  A18: {status: done, evidence: ".github/ISSUE_TEMPLATE/{bug,feature,question,config}.yml; zero PR template (R4)"}
+  A19: {status: done, evidence: "GitHub About description, homepage, and topics configured via gh repo edit"}
+  A20: {status: done, evidence: "docs/{architecture,benchmarks,configuration,faq,glossary,MEGA_ATLAS_CROSSCHECK,operations,run-log,statement-fidelity,threat-model,verification}.md"}
+  A21: {status: done, evidence: "docs/adr/0001..0004.md"}
+  A22: {status: done, evidence: "CITATION.cff"}
+  A23: {status: done, evidence: "main branch with verified Alexander S. Donahue identity"}
+  A24: {status: done, evidence: "Zero secrets, build binaries, or >5 MB files tracked"}
+  A25: {status: done, evidence: ".github/workflows/ci.yml matrix across ubuntu-latest, windows-latest, macos-latest"}
+  A26: {status: done, evidence: "docs/media/social-preview.png (1280x640)"}
+  A27: {status: done, evidence: ".github/workflows/pages.yml deploys interactive observatory and Lean Blueprint"}
+  A28: {status: done, evidence: "pyproject.toml installable Python package python/spectral_eclipse"}
+  A29: {status: done, evidence: "ROADMAP.md"}
+  A30: {status: done, evidence: ".github/labels.tsv with all 10 Build Standard finding classes"}
+  A31: {status: done, evidence: "justfile"}
+  A32: {status: done, evidence: "AGENTS.md, CLAUDE.md, GEMINI.md, .cursor/rules/build-standard.mdc, llms.txt, llms-full.txt"}
+  A33: {status: done, evidence: "docs/configuration.md and .env.example"}
+  A34: {status: n/a, note: "Not a long-running service or daemon"}
+  A35: {status: done, evidence: "docs/operations.md documents archival backup and Software Heritage preservation"}
+  A36: {status: n/a, note: "Static GitHub Pages only; no deployed application backend"}
+  A37: {status: done, evidence: "docs/benchmarks.md reports hardware, toolchain versions, and exact measurements"}
+  A38: {status: done, evidence: "README.md Accessibility & i18n; Okabe-Ito figures; WCAG 2.2 AA web portal with strict CSP"}
+  A39: {status: done, evidence: "NOTICE and THIRD_PARTY_NOTICES.md covering vendored moonlab, qgtl, quantum_rng"}
+  A40: {status: n/a, note: "Code neither calls nor ships an AI model; authoring AI disclosure is in formalization.yaml, README.md, and LIMITATIONS.md"}
+  A41: {status: done, evidence: "UPGRADING.md SemVer compatibility and deprecation policy"}
+  A42: {status: done, evidence: "README.md Maintenance Status section"}
+  A43: {status: done, evidence: "examples/quickstart.py"}
+  A44: {status: done, evidence: "docs/faq.md and docs/glossary.md"}
+  A45: {status: n/a, note: "Collects, stores, and processes zero personal data"}
+  B01: {status: done, evidence: "justfile reproduce recipe and REPLICATION.md"}
+  B02: {status: done, evidence: "lean/lean-toolchain, lean/lake-manifest.json, requirements.txt, engines/rust/Cargo.lock"}
+  B03: {status: done, evidence: "Deterministic exact Sturm/Zig Q/Lean proofs, fixed QRNG seeds, byte-reproducible arXiv tarball"}
+  B04: {status: done, evidence: "CLAIMS.md"}
+  B05: {status: done, evidence: "Every claim C1-C12 mapped to executable Lean/pytest/polyglot checks in CLAIMS.md"}
+  B06: {status: done, evidence: "lean/SpectralEclipse/AdversarialTests.lean + scripts/test_lean_negative.py + negative tests in tests/test_all.py"}
+  B07: {status: done, evidence: "Regression tests in tests/test_all.py for H''' coeff, 11x11 m=5 norm 736, and B20 float64 cancellation"}
+  B08: {status: done, evidence: "Golden snapshot tests in tests/test_all.py against reference/exact_oracle.py"}
+  B09: {status: done, evidence: "JSON contract tests for results/qgtl_qrng_{study,analysis}.json and results/polyglot_parity.json"}
+  B10: {status: done, evidence: "Hypothesis 1,000-case property-based metamorphic test in tests/test_all.py"}
+  B11: {status: done, evidence: "8-engine cross-parity differential oracle runner scripts/run_polyglot_parity.py (0 mismatches)"}
+  B12: {status: done, evidence: "Exact rational Sturm + Zig Q + 80-digit mpmath ground-truth oracle"}
+  B13: {status: done, evidence: "Isolated source mutation audit scripts/mutation_audit.py -> results/mutation_audit.json (10/10 killed, 100.0%)"}
+  B14: {status: done, evidence: "Metamorphic spectral shift & positive rescaling invariance tests in tests/test_all.py"}
+  B15: {status: done, evidence: "libFuzzer harness engines/c/fuzz_hochstadt.c + 100,000-iteration Hochstadt persymmetry fuzz in engines/c/test_c_core.c"}
+  B16: {status: done, evidence: "Safe Rust #![forbid(unsafe_code)], C11/C++20 -Wall -Wextra -Werror, ASan/UBSan CI job in ci.yml"}
+  B17: {status: done, evidence: "ruff check, cargo clippy -D warnings, Lean Batteries runLinter"}
+  B18: {status: done, evidence: "mypy --strict, Rust/Zig/C++20 compilers, Lean 4 dependent type checker (autoImplicit=false)"}
+  B19: {status: done, evidence: "Deterministic parallel Rayon scan in engines/rust with zero shared mutable state"}
+  B20: {status: done, evidence: "Genuine float64 cancellation hazard near t=pi discovered, guarded, regression-tested, and documented"}
+  B21: {status: done, evidence: "Vendored offline-reproducible third_party sources + Eshkol automatic Python dual-number fallback"}
+  B22: {status: done, evidence: "Lean 4.35.0 formalization (572 theorems, 12 isolated comparator targets, 6-checker lake comparator --paranoid)"}
+  B23: {status: n/a, note: "Deductive Lean 4 real-analysis theorem proving rather than finite-state model checking"}
+  B24: {status: done, evidence: "Proofs written directly in Lean 4.35.0 dependent type theory"}
+  B25: {status: done, evidence: "CBMC bounded model checking harness engines/c/cbmc_harness.c + AVX2 assembly parity against scalar C11/Zig/mpmath"}
+  B26: {status: done, evidence: "docs/benchmarks.md reports exact execution timings and hardware specifications"}
+  B27: {status: done, evidence: "docs/benchmarks.md reports distributional timings rather than single best runs"}
+  B28: {status: done, evidence: "4-arm paired treatment vs. no-ESE control experimental design in PREREGISTRATION.md"}
+  B29: {status: done, evidence: "Two-sided 10,000-sign-flip paired permutation tests in scripts/analyze_qrng_study.py"}
+  B30: {status: done, evidence: "Cohen's d_z, Cliff's delta, median/IQR, and 10,000-resample 95% bootstrap CIs in results/qgtl_qrng_analysis.json"}
+  B31: {status: done, evidence: "Step-down Holm-Bonferroni FWER control across the 4 primary hypotheses H1-H4 (alpha = 0.05)"}
+  B32: {status: done, evidence: "PREREGISTRATION.md committed in root commit 1dac632 BEFORE executing any QRNG disorder experiment; honest H4 null reported"}
+  B33: {status: n/a, note: "No ML models trained or evaluated"}
+  B34: {status: n/a, note: "Code neither calls nor ships generative AI"}
+  B35: {status: done, evidence: "gitleaks and SHA-256-verified osv-scanner report-only scans in .github/workflows/ci.yml"}
+  B36: {status: done, evidence: "docs/threat-model.md"}
+  B37: {status: done, evidence: ".github/workflows/release.yml generates SHA256SUMS"}
+  B38: {status: done, evidence: ".github/workflows/release.yml and lean-verify.yml run actions/attest-build-provenance"}
+  B39: {status: done, evidence: "data/MANIFEST.sha256 (LF-deterministic) + DigiCert RFC 3161 .tsr + Bitcoin OpenTimestamps .ots"}
+  B40: {status: done, evidence: "docs/run-log.md"}
+  B41: {status: done, evidence: "LIMITATIONS.md (including Real vs. Metaphor and honest H4 null analysis)"}
+  B42: {status: done, evidence: "CLAIMS.md Explicit Falsification Protocol (What Would Prove Us Wrong)"}
+  B43: {status: done, evidence: "REPLICATION.md"}
+  B44: {status: partial, note: "Author local + hosted 3-OS GitHub Actions CI clean-room runs completed; independent external human replication remains OPEN"}
+  B45: {status: done, evidence: "HARDENING_LOG.md and docs/reviews/cycle{1,2,3}.md"}

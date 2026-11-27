@@ -1,0 +1,150 @@
+[
+  {
+    "id": "Defs",
+    "module": "SpectralEclipse.Defs",
+    "file": "lean/SpectralEclipse/Defs.lean",
+    "description": "Schr\u00f6dinger Fidelity, Jacobi Matrix, H, He, amp4..amp11",
+    "deps": [],
+    "pillar": "Pillar 0",
+    "theorems": 8,
+    "status": "PROVED_LEAN_4_35"
+  },
+  {
+    "id": "TrigBounds",
+    "module": "SpectralEclipse.TrigBounds",
+    "file": "lean/SpectralEclipse/TrigBounds.lean",
+    "description": "Taylor Bounds, HDeriv2_pos, HDeriv3_neg, Secant Slopes",
+    "deps": [
+      "Defs"
+    ],
+    "pillar": "Pillar 0",
+    "theorems": 35,
+    "status": "PROVED_LEAN_4_35"
+  },
+  {
+    "id": "Chains456",
+    "module": "SpectralEclipse.Chains456",
+    "file": "lean/SpectralEclipse/Chains456.lean",
+    "description": "Thms. 1\u20133: 4\u00d74, 5\u00d75, 6\u00d76 Dichotomies & Universal Even Converse",
+    "deps": [
+      "TrigBounds"
+    ],
+    "pillar": "Pillar I",
+    "theorems": 9,
+    "status": "PROVED_LEAN_4_35"
+  },
+  {
+    "id": "Conjecture41",
+    "module": "SpectralEclipse.Conjecture41",
+    "file": "lean/SpectralEclipse/Conjecture41.lean",
+    "description": "Thm. 4: Conjecture 4.1 (7\u00d77, Reduced & Real-Scaled Unreduced)",
+    "deps": [
+      "Chains456"
+    ],
+    "pillar": "Pillar II",
+    "theorems": 10,
+    "status": "PROVED_LEAN_4_35"
+  },
+  {
+    "id": "RuptureAndPhase",
+    "module": "SpectralEclipse.RuptureAndPhase",
+    "file": "lean/SpectralEclipse/RuptureAndPhase.lean",
+    "description": "Thm. 5 (8\u00d78), Thm. 7 (11\u00d711 M*=12), Thm. 8 (3R+2 Law)",
+    "deps": [
+      "Conjecture41"
+    ],
+    "pillar": "Pillar III/IV",
+    "theorems": 13,
+    "status": "PROVED_LEAN_4_35"
+  },
+  {
+    "id": "Critical9x9Certs",
+    "module": "SpectralEclipse.Critical9x9Certs",
+    "file": "lean/SpectralEclipse/Critical9x9Certs.lean",
+    "description": "20 Exact Univariate & Bivariate Bernstein Positivity Certificates",
+    "deps": [
+      "Defs"
+    ],
+    "pillar": "Pillar III",
+    "theorems": 46,
+    "status": "PROVED_LEAN_4_35"
+  },
+  {
+    "id": "Critical9x9",
+    "module": "SpectralEclipse.Critical9x9",
+    "file": "lean/SpectralEclipse/Critical9x9.lean",
+    "description": "Thm. 6: Critical 9\u00d79 No-ESE Theorem (All 1 < b < c < d)",
+    "deps": [
+      "TrigBounds",
+      "Critical9x9Certs"
+    ],
+    "pillar": "Pillar III",
+    "theorems": 79,
+    "status": "PROVED_LEAN_4_35"
+  },
+  {
+    "id": "NonSymmetricFamily",
+    "module": "SpectralEclipse.NonSymmetricFamily",
+    "file": "lean/SpectralEclipse/NonSymmetricFamily.lean",
+    "description": "Thm. 9: Infinite Staggered-Field Complex ESE Family J_{a,b}",
+    "deps": [
+      "Defs"
+    ],
+    "pillar": "Pillar V",
+    "theorems": 7,
+    "status": "PROVED_LEAN_4_35"
+  },
+  {
+    "id": "SpeedLimitAndDuality",
+    "module": "SpectralEclipse.SpeedLimitAndDuality",
+    "file": "lean/SpectralEclipse/SpeedLimitAndDuality.lean",
+    "description": "Thm. 10: QGTL Metric g_tt = b_0^2, QSL & ESE-ETE Duality",
+    "deps": [
+      "Defs"
+    ],
+    "pillar": "Pillar VI",
+    "theorems": 7,
+    "status": "PROVED_LEAN_4_35"
+  },
+  {
+    "id": "NonVacuity",
+    "module": "SpectralEclipse.NonVacuity",
+    "file": "lean/SpectralEclipse/NonVacuity.lean",
+    "description": "15 Concrete Non-Vacuity Witnesses (Theorems 1\u201310)",
+    "deps": [
+      "Chains456",
+      "Conjecture41",
+      "RuptureAndPhase",
+      "Critical9x9",
+      "NonSymmetricFamily",
+      "SpeedLimitAndDuality"
+    ],
+    "pillar": "Audit",
+    "theorems": 15,
+    "status": "PROVED_LEAN_4_35"
+  },
+  {
+    "id": "AdversarialTests",
+    "module": "SpectralEclipse.AdversarialTests",
+    "file": "lean/SpectralEclipse/AdversarialTests.lean",
+    "description": "5 Machine-Checked Refutations of False Conjecture Variants",
+    "deps": [
+      "NonVacuity"
+    ],
+    "pillar": "Audit",
+    "theorems": 5,
+    "status": "PROVED_LEAN_4_35"
+  },
+  {
+    "id": "Solution",
+    "module": "Solution (Palomar Bridge)",
+    "file": "lean/Solution.lean",
+    "description": "12 Isolated Mathlib-Only Comparator Targets (6 Checkers)",
+    "deps": [
+      "AdversarialTests"
+    ],
+    "pillar": "Palomar",
+    "theorems": 12,
+    "status": "PROVED_LEAN_4_35"
+  }
+]

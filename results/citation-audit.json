@@ -1,0 +1,264 @@
+{
+  "bib_file": "paper/refs.bib",
+  "total_entries": 15,
+  "verified_count": 15,
+  "retracted_count": 0,
+  "all_verified": true,
+  "entries": [
+    {
+      "key": "escobar2025",
+      "bib_title": "Early State Exclusion in 7-Qubit Spin Chains",
+      "bib_author": "Escobar, Mia Gabriella and Garcia, Valentin and Minenkova, Anastasiia",
+      "bib_year": "2025",
+      "doi": null,
+      "eprint": "2507.18767",
+      "verified": true,
+      "retracted": false,
+      "api_source": "arxiv",
+      "http_status": 200,
+      "api_title": "Early State Exclusion in 7-Qubit Spin Chains",
+      "api_authors": [
+        "Mia Gabriella Escobar",
+        "Valentin Garcia",
+        "Anastasiia Minenkova"
+      ]
+    },
+    {
+      "key": "christandl2004",
+      "bib_title": "Perfect State Transfer in Quantum Spin Networks",
+      "bib_author": "Christandl, Matthias and Datta, Nilanjana and Ekert, Artur and Landahl, Andrew J.",
+      "bib_year": "2004",
+      "doi": "10.1103/PhysRevLett.92.187902",
+      "eprint": "quant-ph/0309131",
+      "verified": true,
+      "retracted": false,
+      "api_source": "crossref",
+      "http_status": 200,
+      "api_title": "Perfect State Transfer in Quantum Spin Networks",
+      "api_authors": [
+        "Christandl, Matthias",
+        "Datta, Nilanjana",
+        "Ekert, Artur",
+        "Landahl, Andrew J."
+      ]
+    },
+    {
+      "key": "christandl2005",
+      "bib_title": "Perfect transfer of arbitrary states in quantum spin networks",
+      "bib_author": "Christandl, Matthias and Datta, Nilanjana and Dorlas, Tony C. and Ekert, Artur and Kay, Alastair and Landahl, Andrew J.",
+      "bib_year": "2005",
+      "doi": "10.1103/PhysRevA.71.032312",
+      "eprint": "quant-ph/0411020",
+      "verified": true,
+      "retracted": false,
+      "api_source": "crossref",
+      "http_status": 200,
+      "api_title": "Perfect transfer of arbitrary states in quantum spin networks",
+      "api_authors": [
+        "Christandl, Matthias",
+        "Datta, Nilanjana",
+        "Dorlas, Tony C.",
+        "Ekert, Artur",
+        "Kay, Alastair",
+        "Landahl, Andrew J."
+      ]
+    },
+    {
+      "key": "kay2010",
+      "bib_title": "Perfect, efficient, state transfer and its application as a constructive tool",
+      "bib_author": "Kay, Alastair",
+      "bib_year": "2010",
+      "doi": "10.1142/S0219749910006514",
+      "eprint": "0903.4274",
+      "verified": true,
+      "retracted": false,
+      "api_source": "crossref",
+      "http_status": 200,
+      "api_title": "PERFECT, EFFICIENT, STATE TRANSFER AND ITS APPLICATION AS A CONSTRUCTIVE TOOL",
+      "api_authors": [
+        "KAY, ALASTAIR"
+      ]
+    },
+    {
+      "key": "vinet2012",
+      "bib_title": "How to construct spin chains with perfect state transfer",
+      "bib_author": "Vinet, Luc and Zhedanov, Alexei",
+      "bib_year": "2012",
+      "doi": "10.1103/PhysRevA.85.012323",
+      "eprint": "1110.6416",
+      "verified": true,
+      "retracted": false,
+      "api_source": "crossref",
+      "http_status": 200,
+      "api_title": "How to construct spin chains with perfect state transfer",
+      "api_authors": [
+        "Vinet, Luc",
+        "Zhedanov, Alexei"
+      ]
+    },
+    {
+      "key": "godsil2012",
+      "bib_title": "State transfer on graphs",
+      "bib_author": "Godsil, Chris",
+      "bib_year": "2012",
+      "doi": "10.1016/j.disc.2011.06.032",
+      "eprint": "1102.4898",
+      "verified": true,
+      "retracted": false,
+      "api_source": "crossref",
+      "http_status": 200,
+      "api_title": "State transfer on graphs",
+      "api_authors": [
+        "Godsil, Chris"
+      ]
+    },
+    {
+      "key": "hochstadt1967",
+      "bib_title": "On some inverse problems in matrix theory",
+      "bib_author": "Hochstadt, Harry",
+      "bib_year": "1967",
+      "doi": "10.1007/BF01899647",
+      "eprint": null,
+      "verified": true,
+      "retracted": false,
+      "api_source": "crossref",
+      "http_status": 200,
+      "api_title": "On some inverse problems in matrix theory",
+      "api_authors": [
+        "Hochstadt, Harry"
+      ]
+    },
+    {
+      "key": "hochstadt1974",
+      "bib_title": "On the construction of a {Jacobi} matrix from spectral data",
+      "bib_author": "Hochstadt, Harry",
+      "bib_year": "1974",
+      "doi": "10.1016/0024-3795(74)90077-9",
+      "eprint": null,
+      "verified": true,
+      "retracted": false,
+      "api_source": "crossref",
+      "http_status": 200,
+      "api_title": "On the construction of a Jacobi matrix from spectral data",
+      "api_authors": [
+        "Hochstadt, Harry"
+      ]
+    },
+    {
+      "key": "deboor1978",
+      "bib_title": "The numerically stable reconstruction of a {Jacobi} matrix from spectral data",
+      "bib_author": "de Boor, Carl and Golub, Gene H.",
+      "bib_year": "1978",
+      "doi": "10.1016/0024-3795(78)90086-1",
+      "eprint": null,
+      "verified": true,
+      "retracted": false,
+      "api_source": "crossref",
+      "http_status": 200,
+      "api_title": "The numerically stable reconstruction of a Jacobi matrix from spectral data",
+      "api_authors": [
+        "de Boor, C.",
+        "Golub, G.H."
+      ]
+    },
+    {
+      "key": "fleming1973",
+      "bib_title": "A unitarity bound on the evolution of nonstationary states",
+      "bib_author": "Fleming, Gordon N.",
+      "bib_year": "1973",
+      "doi": "10.1007/BF02819419",
+      "eprint": null,
+      "verified": true,
+      "retracted": false,
+      "api_source": "crossref",
+      "http_status": 200,
+      "api_title": "A unitarity bound on the evolution of nonstationary states",
+      "api_authors": [
+        "Fleming, G. N."
+      ]
+    },
+    {
+      "key": "bhattacharyya1983",
+      "bib_title": "Quantum decay and the {Mandelstam-Tamm}-energy inequality",
+      "bib_author": "Bhattacharyya, Kamal",
+      "bib_year": "1983",
+      "doi": "10.1088/0305-4470/16/13/021",
+      "eprint": null,
+      "verified": true,
+      "retracted": false,
+      "api_source": "crossref",
+      "http_status": 200,
+      "api_title": "Quantum decay and the Mandelstam-Tamm-energy inequality",
+      "api_authors": [
+        "Bhattacharyya, K"
+      ]
+    },
+    {
+      "key": "provost1980",
+      "bib_title": "Riemannian structure on manifolds of quantum states",
+      "bib_author": "Provost, J. P. and Vallee, G.",
+      "bib_year": "1980",
+      "doi": "10.1007/BF02193559",
+      "eprint": null,
+      "verified": true,
+      "retracted": false,
+      "api_source": "crossref",
+      "http_status": 200,
+      "api_title": "Riemannian structure on manifolds of quantum states",
+      "api_authors": [
+        "Provost, J. P.",
+        "Vallee, G."
+      ]
+    },
+    {
+      "key": "deffner2017",
+      "bib_title": "Quantum speed limits: from {Heisenberg}'s uncertainty principle to optimal quantum control",
+      "bib_author": "Deffner, Sebastian and Campbell, Steve",
+      "bib_year": "2017",
+      "doi": "10.1088/1751-8121/aa86c6",
+      "eprint": "1705.08023",
+      "verified": true,
+      "retracted": false,
+      "api_source": "crossref",
+      "http_status": 200,
+      "api_title": "Quantum speed limits: from Heisenberg\u2019s uncertainty principle to optimal quantum control",
+      "api_authors": [
+        "Deffner, Sebastian",
+        "Campbell, Steve"
+      ]
+    },
+    {
+      "key": "demoura2021",
+      "bib_title": "The {Lean} 4 Theorem Prover and Programming Language",
+      "bib_author": "de Moura, Leonardo and Ullrich, Sebastian",
+      "bib_year": "2021",
+      "doi": "10.1007/978-3-030-79876-5_37",
+      "eprint": null,
+      "verified": true,
+      "retracted": false,
+      "api_source": "crossref",
+      "http_status": 200,
+      "api_title": "The Lean 4 Theorem Prover and Programming Language",
+      "api_authors": [
+        "Moura, Leonardo de",
+        "Ullrich, Sebastian"
+      ]
+    },
+    {
+      "key": "cliff1993",
+      "bib_title": "Dominance statistics: Ordinal analyses to answer ordinal questions",
+      "bib_author": "Cliff, Norman",
+      "bib_year": "1993",
+      "doi": "10.1037/0033-2909.114.3.494",
+      "eprint": null,
+      "verified": true,
+      "retracted": false,
+      "api_source": "crossref",
+      "http_status": 200,
+      "api_title": "Dominance statistics: Ordinal analyses to answer ordinal questions.",
+      "api_authors": [
+        "Cliff, Norman"
+      ]
+    }
+  ]
+}

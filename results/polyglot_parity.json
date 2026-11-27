@@ -1,0 +1,40 @@
+{
+  "oracle_chains": 13,
+  "engines": {
+    "c_asm": {
+      "rc": 0,
+      "passed": true,
+      "summary": "[C/ASM] ALL TESTS PASSED (0 errors)."
+    },
+    "cpp20": {
+      "rc": 0,
+      "passed": true,
+      "taus_checked": 5
+    },
+    "rust": {
+      "rc": 0,
+      "passed": true,
+      "summary": "[Rust] ALL PHASE-DIAGRAM & QSL SCANS PASSED (0 errors, 0 unsafe)."
+    },
+    "zig_q": {
+      "rc": 0,
+      "passed": true
+    },
+    "eshkol_ad": {
+      "rc": 0,
+      "passed": true,
+      "summary": "[Eshkol AD] Native Eshkol v1.3.6 vs Dual parity max_diff = 1.332e-15 PASS"
+    },
+    "moonlab_wasm": {
+      "rc": 0,
+      "passed": true
+    },
+    "qgtl_qrng": {
+      "rc": 0,
+      "passed": true,
+      "arms_checked": 4
+    }
+  },
+  "mismatches": [],
+  "all_passed": true
+}

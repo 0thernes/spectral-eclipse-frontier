@@ -1,0 +1,12 @@
+# Glossary
+
+- **Early State Exclusion (ESE):** Existence of a strictly interior time $\tau \in (0, T_0)$ before Perfect State Transfer at which the initial-site return amplitude vanishes: $\langle e_0, e^{-iJt} e_0\rangle = 0$.
+- **Early Target Exclusion (ETE):** Existence of a strictly interior time $\tau' \in (0, T_0)$ at which the opposite-end transition amplitude vanishes: $\langle e_{N-1}, e^{-iJt} e_0\rangle = 0$. By Theorem 10B (`ese_ete_duality`), $\tau$ is an ESE time iff $T_0 - \tau$ is an ETE time.
+- **Perfect State Transfer (PST):** Exact unit-fidelity transport of a single excitation from site $|0\rangle$ to mirror site $|N-1\rangle$ at time $T_0 > 0$: $|\langle e_{N-1}, e^{-i J T_0} e_0\rangle| = 1$.
+- **Persymmetric Jacobi Matrix:** A real symmetric tridiagonal matrix $J$ symmetric about its anti-diagonal ($a_{N-1-j} = a_j$, $b_{N-2-j} = b_j$).
+- **Hochstadt Inverse Spectral Theorem:** Unique reconstruction of a persymmetric Jacobi matrix $J$ from its strictly increasing eigenvalues $\lambda_0 < \dots < \lambda_{N-1}$, with normalized boundary weights $w_k \propto \prod_{j\neq k}|\lambda_k - \lambda_j|^{-1}$.
+- **Krawtchouk Chain:** The canonical equidistant-spectrum PST spin chain with couplings $b_j = \frac{1}{2}\sqrt{(j+1)(N-1-j)}$ and $A(t) = \cos^{N-1}(t/2) > 0$ on $[0,\pi)$ (no ESE).
+- **Quantum Geometric Tensor (QGT) / Fubini–Study Metric $g_{tt}$:** Riemannian metric on projective Hilbert space along Schrödinger evolution, equal identically to $\mathrm{Var}_{e_0}(J) = b_0^2$ at the localized initial state $|0\rangle$ (Theorem 10A).
+- **Mandelstam–Tamm Speed Limit (QSL):** Universal orthogonalization lower bound $\tau \ge \pi / (2\sigma) = \pi / (2|b_0|)$, with efficiency $\eta = \pi / (2|b_0|\tau) \in (0, 1]$.
+- **Palomar Comparator (`lake comparator --paranoid`):** Isolated verification protocol checking a sorry-free `Solution.lean` against a Mathlib-only `Challenge.lean` across six independent Lean kernel / checker runs (`leanchecker-paranoid`, default Lean kernel, `lean4lean`, `nanoda`, `con-leche`, `con-ron`).
+- **Codimension-1 vs. Codimension-2 Zero:** A real-valued curve $A:\mathbb{R}\to\mathbb{R}$ crossing $0$ transversely is codimension-1 (robust to small perturbations by IVT); a complex-valued curve $A:\mathbb{R}\to\mathbb{C}$ hitting $0\in\mathbb{C}$ is codimension-2 (generically lifted off $0$ by $O(\varepsilon)$ perturbations).

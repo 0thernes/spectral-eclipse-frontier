@@ -24,6 +24,8 @@
 *.js text eol=lf
 *.tsv text eol=lf
 *.sha256 text eol=lf
+*.log text eol=lf
+*.cjs text eol=lf
 *.pdf binary
 *.png binary
 *.wasm binary

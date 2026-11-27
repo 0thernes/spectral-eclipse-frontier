@@ -1,0 +1,23 @@
+# Spectral Eclipse Frontier (v1.0.0)
+
+> Complete Lean 4.35.0 machine-checked resolution of Conjecture 4.1 (`arXiv:2507.18767v1`) and ten-theorem theory of Early State Exclusion (ESE) in 1D quantum spin chains with Perfect State Transfer (PST), cross-verified across 8 polyglot/quantum engines and a pre-registered 4-arm QRNG disorder study.
+
+- Author: Alexander S. Donahue (Independent Researcher, Spokane, WA, USA; ORCID 0009-0006-8168-9648)
+- Licenses: Apache-2.0 (code/Lean) · CC-BY-4.0 (manuscript/figures/docs)
+- Status: Unrefereed research preprint (v1.0.0); AI-assisted under human direction; 0 / 1,900 Mega-Atlas grand problems claimed.
+
+## Key Files
+- [README.md](README.md): Overview, Quickstart, Usage, verbatim `#print axioms` (572 theorems, 0 disallowed).
+- [CLAIMS.md](CLAIMS.md): Numbered claims C1–C12 tagged `[LEAN-6K]`, `[EXACT-COMP]`, `[EMPIRICAL]` + falsification protocol.
+- [LIMITATIONS.md](LIMITATIONS.md): Verification boundaries, honest H4 null result, Real vs. Metaphor.
+- [REPLICATION.md](REPLICATION.md): End-to-end clean-room replication guide.
+- [PREREGISTRATION.md](PREREGISTRATION.md): Pre-registered QRNG study protocol (locked in root commit `1dac632`).
+- [formalization.yaml](formalization.yaml): Palomar-compatible metadata & AI disclosure.
+- [lean/Challenge.lean](lean/Challenge.lean): Isolated Mathlib-only specification of all 12 headline comparator targets.
+- [lean/Solution.lean](lean/Solution.lean): Sorry-free bridge verified across 6 independent checkers via `lake comparator --paranoid`.
+- [lean/VerifyAxioms.lean](lean/VerifyAxioms.lean): Explicit + exhaustive `Lean.collectAxioms` audit (572 theorems).
+- [dist/Donahue_2026_spectral_eclipse_frontier.pdf](dist/Donahue_2026_spectral_eclipse_frontier.pdf): Frozen AMS-LaTeX preprint PDF.
+- [dist/arxiv_submission.tar.gz](dist/arxiv_submission.tar.gz): Byte-reproducible standalone arXiv source bundle.
+- [results/polyglot_parity.json](results/polyglot_parity.json): 8-engine parity report (0 mismatches).
+- [results/qgtl_qrng_analysis.json](results/qgtl_qrng_analysis.json): Pre-registered Holm-Bonferroni study results.
+- [HARDENING_LOG.md](HARDENING_LOG.md): All 3 adversarial hardening cycles classified across the 10 Build Standard classes.

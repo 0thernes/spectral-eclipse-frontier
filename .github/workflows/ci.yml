@@ -1,0 +1,128 @@
+name: CI (Cross-Platform Tests, Native Polyglot Engines & Audits)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test-matrix:
+    name: Python, Exact Oracle, Hypothesis & Provenance (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    env:
+      PYTHONUTF8: "1"
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Python dependencies & package
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install --no-deps -e .
+      - name: Run independent exact Sturm & 80-digit mpmath oracle
+        run: python reference/exact_oracle.py
+      - name: Run full pytest & 1,000-case Hypothesis verification ladder
+        run: python -m pytest -v tests/
+      - name: Run quickstart smoke test
+        run: python examples/quickstart.py
+      - name: Run citation, axiom-sync, Blueprint, site, manifest, and timestamp audits
+        run: |
+          python scripts/check_citations.py
+          python scripts/check_readme_axioms.py --require-exhaustive
+          python scripts/build_blueprint.py
+          python scripts/build_site.py
+          python scripts/generate_manifest.py --verify
+          python scripts/stamp_timestamps.py --verify
+
+  native-engines:
+    name: Native Polyglot & Quantum Engines (NASM AVX2, C11+ASan, C++20, Rust, Moonlab, QGTL/QRNG)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install NASM, Clang & build tools
+        run: sudo apt-get update && sudo apt-get install -y nasm clang build-essential
+      - name: Build & test ISO C11 + x86-64 NASM AVX2+FMA engine (100k fuzz + ASan/UBSan + libFuzzer 5s)
+        working-directory: engines/c
+        run: |
+          make test
+          make asan
+          make fuzz
+      - name: Build & test ISO C++20 complex propagator
+        working-directory: engines/cpp
+        run: make test
+      - name: Build & test Safe Rust scanner (clippy -D warnings + release test)
+        working-directory: engines/rust
+        run: |
+          cargo clippy --all-targets -- -D warnings
+          cargo test --release
+          cargo run --release
+      - name: Run Moonlab WASM 32-dim 5-qubit XY simulator cross-check
+        run: node engines/moonlab/moonlab_xy_sim.cjs
+      - name: Build & smoke-test vendored QGTL + Quantum-RNG C engine
+        working-directory: engines/qgtl_qrng
+        run: |
+          make all
+          ./se_qgtl_qrng /tmp/qgtl_qrng_ci.json
+
+  lint-and-audit:
+    name: Report-Only Linters, Mutation Audit, Security & Build Standard v1.2.0
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Python dependencies
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install --no-deps -e .
+      - name: Report-only linters (ruff & mypy --strict)
+        continue-on-error: true
+        run: |
+          python -m ruff check python reference scripts tests
+          python -m mypy --strict --explicit-package-bases --ignore-missing-imports python reference scripts tests
+      - name: Run isolated source mutation audit (B13)
+        run: python scripts/mutation_audit.py
+      - name: Validate repo.yaml against repo-standard.schema.json
+        run: |
+          python - <<'PY'
+          import json, yaml, jsonschema
+          schema = json.loads(open("repo-standard.schema.json", encoding="utf-8").read())
+          data = yaml.safe_load(open("repo.yaml", encoding="utf-8").read())
+          jsonschema.validate(instance=data, schema=schema)
+          print("PASS: repo.yaml validates against repo-standard.schema.json")
+          PY
+      - name: Build Standard v1.2.0 repo audit
+        run: bash scripts/audit-repo.sh .
+      - name: Dependency vulnerability scan (osv-scanner v2.7.1 SHA-256 verified, report-only)
+        continue-on-error: true
+        run: |
+          OSV_VER="2.7.1"
+          OSV_SHA256="fb7dab19a8bd9bbe5c3189f09d4b7ee1820c9553a23bac202648a56efd2f6ee8"
+          curl -fsSL "https://github.com/google/osv-scanner/releases/download/v${OSV_VER}/osv-scanner_linux_amd64" -o /tmp/osv-scanner
+          echo "${OSV_SHA256}  /tmp/osv-scanner" | sha256sum -c -
+          chmod +x /tmp/osv-scanner
+          /tmp/osv-scanner scan --lockfile=requirements.txt
+      - name: Secret scan (gitleaks, report-only)
+        uses: gitleaks/gitleaks-action@v2
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

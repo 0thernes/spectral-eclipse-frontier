@@ -1,0 +1,15 @@
+The Spectral Eclipse Frontier
+Copyright 2026 Alexander Stephen Donahue
+
+This product includes software and formal proofs developed by
+Alexander Stephen Donahue (Independent Researcher, Spokane, WA, USA;
+ORCID 0009-0006-8168-9648).
+
+Code, Lean 4 formal proofs, polyglot engines, scripts, tests, and CI
+workflows are licensed under the Apache License, Version 2.0 (LICENSE).
+
+Manuscripts, PDFs, figures, documentation, and datasets are licensed
+under Creative Commons Attribution 4.0 International (LICENSE-DOCS).
+
+See THIRD_PARTY_NOTICES.md for full attribution and license texts of
+vendored third-party components (moonlab, qgtl, quantum_rng).

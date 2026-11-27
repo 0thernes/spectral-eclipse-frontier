@@ -1,0 +1,81 @@
+warning: batteries: repository has local changes:
+  Z:\[Vibe Coded (AI)]\ANTIGRAVITY\spectral-eclipse-frontier\lean\.lake/packages\batteries
+'SpectralEclipse.schrodinger_solution_fidelity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.even_hasESE_of_min_ge_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.dichotomy_4x4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.dichotomy_5x5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.dichotomy_6x6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.conjecture_4_1_7x7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.conjecture_4_1_7x7_unreduced' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.even_rupture_8x8' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.odd_critical_9x9_no_ESE' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.odd_rupture_11x11_threshold' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.cluster_self_gap_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.universal_phase_transition_3R_plus_2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.theorem_9_nonsymmetric_family' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.jacobi_energy_variance_eq_b0_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.spectral_variance_eq_b0_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.mandelstam_tamm_ese_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ese_ete_duality' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_4x4_noESE_1_3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_4x4_ESE_3_5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_5x5_noESE_1_2' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_5x5_ESE_3_4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_6x6_noESE_1_3_5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_6x6_ESE_3_5_7' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_7x7_noESE_1_2_3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_7x7_ESE_3_4_5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_8x8_rupture_m1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_9x9_noESE_1_2_3_4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_9x9_noESE_1_20_21_22' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_11x11_subcrit_m5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_11x11_supercrit_m6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.NonVacuity.witness_J14_staggered_complex_ESE' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'SpectralEclipse.NonVacuity.witness_J14_qsl_variance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.AdversarialTests.refute_even_8x8_naive_divisibility' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'SpectralEclipse.AdversarialTests.refute_odd_11x11_naive_divisibility' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'SpectralEclipse.AdversarialTests.refute_11x11_threshold_m5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.AdversarialTests.refute_5x5_nonsym_no_ESE_assumption' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'SpectralEclipse.AdversarialTests.refute_qsl_saturation_for_J14' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_1_4x4' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_2_5x5' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_3_6x6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_4_conjecture_4_1' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_4_conjecture_4_1_unreduced' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_5_even_rupture_8x8' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_6_critical_9x9' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_7_odd_rupture_11x11' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_8_universal_3R_plus_2' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_9_nonsymmetric_family' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_10a_qsl_and_variance' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'SpectralEclipse.ComparatorTarget.target_theorem_10b_ese_ete_duality' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 572 theorems across SpectralEclipse — 0 disallowed axioms.
+

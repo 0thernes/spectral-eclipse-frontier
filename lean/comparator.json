@@ -1,0 +1,23 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "SpectralEclipse.ComparatorTarget.target_theorem_1_4x4",
+    "SpectralEclipse.ComparatorTarget.target_theorem_2_5x5",
+    "SpectralEclipse.ComparatorTarget.target_theorem_3_6x6",
+    "SpectralEclipse.ComparatorTarget.target_theorem_4_conjecture_4_1",
+    "SpectralEclipse.ComparatorTarget.target_theorem_4_conjecture_4_1_unreduced",
+    "SpectralEclipse.ComparatorTarget.target_theorem_5_even_rupture_8x8",
+    "SpectralEclipse.ComparatorTarget.target_theorem_6_critical_9x9",
+    "SpectralEclipse.ComparatorTarget.target_theorem_7_odd_rupture_11x11",
+    "SpectralEclipse.ComparatorTarget.target_theorem_8_universal_3R_plus_2",
+    "SpectralEclipse.ComparatorTarget.target_theorem_9_nonsymmetric_family",
+    "SpectralEclipse.ComparatorTarget.target_theorem_10a_qsl_and_variance",
+    "SpectralEclipse.ComparatorTarget.target_theorem_10b_ese_ete_duality"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

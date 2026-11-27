@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: "The Spectral Eclipse Frontier: Complete Resolution of Conjecture 4.1, Sharp Even/Odd Rupture Thresholds, Universal 3R+2 Phase Transition, Non-Symmetric Complex Eclipses, and Quantum Geometric Speed Limits"
+message: "If you use this software, Lean 4 formalization, or preprint, please cite it as below."
+type: software
+version: "1.0.0"
+date-released: "2026-11-26"
+license: Apache-2.0
+authors:
+  - family-names: "Donahue"
+    given-names: "Alexander Stephen"
+    orcid: "https://orcid.org/0009-0006-8168-9648"
+    affiliation: "Independent Researcher, Spokane, WA, USA"
+    email: "0_0@0thernes.art"
+repository-code: "https://github.com/0thernes/spectral-eclipse-frontier"
+url: "https://0thernes.github.io/spectral-eclipse-frontier/"
+keywords:
+  - perfect state transfer
+  - early state exclusion
+  - persymmetric Jacobi matrices
+  - Hochstadt inverse spectral theorem
+  - Lean 4
+  - formal verification
+  - Mandelstam-Tamm quantum speed limit
+  - Fubini-Study metric
