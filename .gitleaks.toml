@@ -1,0 +1,14 @@
+title = "Gitleaks configuration for spectral-eclipse-frontier"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allow SHA-256 digests, Lean manifest revs, and example placeholder config"
+paths = [
+  '''^data/MANIFEST\.sha256$''',
+  '''^lean/lake-manifest\.json$''',
+  '''^\.env\.example$''',
+  '''^results/.*\.json$''',
+  '''^results/.*\.log$'''
+]

@@ -1,0 +1,13 @@
+# Changelog
+
+All notable changes to `spectral-eclipse-frontier` are documented in this file.
+Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.0.0] - 2026-11-26
+
+### Added
+- **Lean 4.35.0 Formal Proof Library (`lean/SpectralEclipse/`)**: Machine-checked, sorry-free proofs of all 10 linked theorems in quantum spin-chain Early State Exclusion (ESE), including complete resolution of Conjecture 4.1 of Escobar-Garcia-Minenkova (arXiv:2507.18767v1) for $7\times 7$ symmetric PST chains, complete $4\times 4$, $5\times 5$, and $6\times 6$ dichotomies, the $9\times 9$ critical no-ESE theorem, sharp rupture thresholds $N_{\mathrm{crit}}^{\mathrm{even}} = 8$ and $N_{\mathrm{crit}}^{\mathrm{odd}} = 11$ ($M^* = 12$), universal $(R, r)$ phase boundary $N_{\mathrm{crit}}(R) = 3R + 2$, the infinite non-symmetric staggered-field $5\times 5$ complex-amplitude ESE family $J_{a,b}$ verified directly via literal matrix eigenpairs, and the exact QGTL / Mandelstam-Tamm lower bound $\tau_{\mathrm{ESE}} \ge \pi/(2 b_0)$ plus ESE-ETE duality.
+- **Palomar 6-Kernel Isolation (`lean/Challenge.lean`, `lean/Solution.lean`, `lean/comparator.json`, `lean/VerifyAxioms.lean`)**: Standalone Mathlib-only target specifications, exhaustive `Lean.collectAxioms` audit, non-vacuity witnesses, adversarial refutations, and live negative kernel rejection tests.
+- **8 Independent Computational & Quantum Engines (`engines/`)**: NASM x86-64 AVX2+FMA SpMV/Chebyshev kernel, ISO C11 Hochstadt/Sturm verifier, C++20 direct complex matrix-exponential propagator, Rust parallel multi-core spectral phase scanner (`#![forbid(unsafe_code)]`), Zig 0.17.0 arbitrary-precision rational (`std.math.big.int`) Hochstadt reconstructor, Eshkol v1.3.6 forward-mode dual-number automatic differentiation oracle, Moonlab WASM full $2^5 = 32$-dimensional multi-qubit XY simulator, and QGTL + Quantum-RNG speed-limit and pre-registered disorder-robustness engine.
+- **Pre-Registered Statistical Study (`PREREGISTRATION.md`)**: Locked prior to execution; 30-seed QRNG diagonal-disorder comparison across subcritical, critical, rupture, and staggered non-symmetric chains using paired exact permutation tests, Holm-Bonferroni correction, and 10,000-resample bootstrap 95% CIs.
+- **AMS-LaTeX White Paper & Figures (`paper/`, `dist/`)**: Publication-grade preprint with 5 vector PDF figures, zero overfull hboxes, 100% live Crossref/arXiv-verified bibliography, standalone `arxiv_submission.tar.gz`, interactive GitHub Pages Observatory & Lean Blueprint (`web/`), RFC 3161 + OpenTimestamps provenance (`data/MANIFEST.sha256.{tsr,ots}`), and 3-cycle adversarial hardening log (`HARDENING_LOG.md`).
