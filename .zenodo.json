@@ -1,0 +1,42 @@
+{
+  "title": "The Spectral Eclipse Frontier: Complete Lean 4 Resolution of Conjecture 4.1, Sharp Even/Odd Rupture Thresholds, Universal 3R+2 Phase Transitions, Complex Staggered-Field Exclusion, and Quantum Speed Limits",
+  "description": "Lean 4.35.0 / Mathlib v4.35.0 formalization of Theorems 1-10 on Early State Exclusion (ESE) in 1D quantum spin chains, resolving Conjecture 4.1 of Escobar, Garcia, and Minenkova (arXiv:2507.18767v1), establishing sharp N_crit^even = 8, Critical 9x9 No-ESE via 19 bivariate Bernstein certificates, N_crit^odd = 11 (M* = 12), universal N_crit(R) = 3R + 2 phase transitions, infinite non-symmetric complex staggered-field ESE, and exact Mandelstam-Tamm QSL / ESE-ETE duality (12 isolated Palomar targets, 572 audited theorems, 6 independent Lean kernels, 8 polyglot engines).",
+  "upload_type": "software",
+  "license": "apache-2.0",
+  "creators": [
+    {
+      "name": "Donahue, Alexander Stephen",
+      "affiliation": "Independent Researcher, Spokane, WA, USA",
+      "orcid": "0009-0006-8168-9648"
+    }
+  ],
+  "keywords": [
+    "quantum spin chains",
+    "early state exclusion",
+    "perfect state transfer",
+    "Jacobi matrices",
+    "spectral theory",
+    "quantum speed limits",
+    "Lean 4",
+    "Mathlib",
+    "formal verification"
+  ],
+  "notes": "Code and Lean 4.35.0 proofs are licensed under Apache-2.0; manuscripts, figures, and datasets are licensed under CC-BY-4.0. Independent research preprint (v1.1.0); not externally peer-reviewed. AI tools (Antigravity / Google DeepMind) assisted under human direction and audit. Software Heritage baseline: swh:1:snp:37fd5b55ad30a2e1cedc2949415bfacf4d5d1efc.",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/0thernes/spectral-eclipse-frontier",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://arxiv.org/abs/2507.18767",
+      "relation": "references",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://archive.softwareheritage.org/swh:1:snp:37fd5b55ad30a2e1cedc2949415bfacf4d5d1efc",
+      "relation": "isIdenticalTo",
+      "scheme": "url"
+    }
+  ]
+}

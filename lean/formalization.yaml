@@ -1,0 +1,135 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# SPDX-License-Identifier: Apache-2.0
+version: "v0.4"
+release_version: "1.1.0"
+
+project:
+  name: "The Spectral Eclipse Frontier: Complete Lean 4 Resolution of Conjecture 4.1, Sharp Even/Odd Rupture Thresholds, Universal 3R+2 Phase Transitions, Complex Staggered-Field Exclusion, and Quantum Speed Limits"
+  description: >-
+    Lean 4.35.0 / Mathlib v4.35.0 formalization of a 10-theorem chain on Early State
+    Exclusion (ESE) in 1D quantum spin chains with Perfect State Transfer (PST),
+    anchored in Escobar, Garcia, and Minenkova (arXiv:2507.18767v1). Across 12
+    isolated Mathlib-only Palomar Comparator targets (572 exhaustively audited
+    theorems, 18 NonVacuity witnesses, 5 AdversarialTests refutations): (1) complete
+    dichotomies for 4x4, 5x5, and 6x6 symmetric PST chains plus universal even
+    converse (Theorems 1-3); (2) complete resolution of Conjecture 4.1 (7x7 symmetric
+    PST chains) in both reduced integer and arbitrary real-scaled unreduced forms
+    (Theorem 4); (3) sharp even rupture threshold N_crit^even = 8 (Theorem 5);
+    (4) Critical 9x9 No-ESE Theorem for all 1 < b < c < d via 19 exact bivariate
+    Bernstein certificates (Theorem 6); (5) sharp odd rupture 11x11 threshold M* = 12
+    via 5 rational SOS certificates (Theorem 7); (6) universal (R, r) Krawtchouk-core
+    vs. spectral-cluster phase transition at N_crit(R) = 3R + 2 (Theorem 8); (7) first
+    infinite non-symmetric staggered-field 5x5 complex-amplitude ESE family J_{a,b}
+    with literal matrix eigenpairs, Schrodinger ODE fidelity, PST at pi, and complex
+    ESE at pi/3 (Theorem 9); and (8) exact Jacobi Fubini-Study metric g_tt = b_0^2,
+    Mandelstam-Tamm ESE speed limit tau >= pi/(2*sigma), and ESE-ETE time-reversal
+    duality (Theorem 10).
+  authors:
+    - name: "Alexander S. Donahue"
+      orcid: "0009-0006-8168-9648"
+      email: "0_0@0thernes.art"
+      affiliation: "Independent Researcher, Spokane, WA, USA"
+  responsible_maintainers:
+    - name: "Alexander S. Donahue"
+      github: "0thernes"
+      orcid: "0009-0006-8168-9648"
+      email: "0_0@0thernes.art"
+  license: "Apache-2.0"
+
+classification:
+  arxiv:
+    - "quant-ph"
+    - "math-ph"
+    - "math.SP"
+    - "cs.LO"
+  msc2020:
+    - "81P45"
+    - "81Q10"
+    - "15A18"
+    - "47B36"
+
+sources:
+  - title: "The Spectral Eclipse Frontier: Complete Resolution of Conjecture 4.1, Sharp Even/Odd Rupture Thresholds, Universal 3R+2 Phase Transition, Non-Symmetric Complex Eclipses, and Quantum Geometric Speed Limits"
+    authors:
+      - "Alexander S. Donahue"
+    id: "https://github.com/0thernes/spectral-eclipse-frontier"
+    type: "original-proof"
+    relationship: "other"
+    note: >-
+      Original Lean 4.35.0 / Mathlib formalization and companion AMS-LaTeX preprint
+      first presented in this repository (Software Heritage baseline
+      swh:1:snp:37fd5b55ad30a2e1cedc2949415bfacf4d5d1efc). No peer review, arXiv ID,
+      or external DOI is claimed prior to confirmed deposit.
+  - title: "Early State Exclusion in Quantum Spin Chains"
+    authors:
+      - "L. Escobar"
+      - "S. R. Garcia"
+      - "A. Minenkova"
+    id: "https://arxiv.org/abs/2507.18767"
+    type: "paper"
+    location: "Conjecture 4.1 and symmetric PST spin-chain framework"
+    relationship: "background"
+    note: "Poses Conjecture 4.1 on 7x7 symmetric PST chains, resolved unconditionally in reduced and unreduced forms by Theorems 4a-4b here."
+
+related_formalizations: []
+
+status:
+  scope: >-
+    Complete Lean 4.35.0 / Mathlib v4.35.0 formalization of all 12 isolated Palomar
+    Comparator targets covering Theorems 1-10 (572 exhaustively audited theorems,
+    18 NonVacuity witnesses, 5 AdversarialTests refutations). Explicitly outside
+    Lean scope: finite-M phase boundary M*(R) for R >= 4 (N >= 14, verified in
+    Rust/C++/SymPy) and the empirical 4-arm QRNG static-disorder study.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:
+    - "propext"
+    - "Classical.choice"
+    - "Quot.sound"
+  main_results:
+    - declaration: "SpectralEclipse.ComparatorTarget.target_theorem_4_conjecture_4_1"
+      file: "lean/Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "lean/comparator.json"
+    - declaration: "SpectralEclipse.ComparatorTarget.target_theorem_4_conjecture_4_1_unreduced"
+      file: "lean/Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "lean/comparator.json"
+    - declaration: "SpectralEclipse.ComparatorTarget.target_theorem_6_critical_9x9"
+      file: "lean/Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "lean/comparator.json"
+    - declaration: "SpectralEclipse.ComparatorTarget.target_theorem_8_universal_3R_plus_2"
+      file: "lean/Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "lean/comparator.json"
+    - declaration: "SpectralEclipse.ComparatorTarget.target_theorem_9_nonsymmetric_family"
+      file: "lean/Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "lean/comparator.json"
+
+automation:
+  methods:
+    - method: "manual"
+      notes: "Alexander S. Donahue conceived the research extensions, audited statement fidelity against arXiv:2507.18767v1, reviewed all formal boundaries and empirical deviations, and approved release."
+    - method: "agent"
+      models:
+        - "Gemini (Antigravity)"
+      framework: "Antigravity"
+      notes: >-
+        Assisted with Lean 4.35.0 / Mathlib proof engineering, exact bivariate Bernstein
+        and SOS certificate synthesis, 8-engine polyglot verification, and AMS-LaTeX
+        manuscript preparation under human supervision.
+
+review:
+  status: "self-assessed"
+  notes: >-
+    Not externally peer-reviewed. Machine-checked across all 6 independent Lean 4.35.0
+    proof kernels inside bubblewrap on Ubuntu 24.04 CI (run 46054312867) with hard
+    zero-error Batteries runLinter gate, live negative tamper tests, and 8-engine
+    polyglot differential verification.
